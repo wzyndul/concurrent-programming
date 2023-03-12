@@ -31,5 +31,27 @@ namespace SimpleProgram.Test
 
             Assert.AreEqual(-4, Program.add(a, b));
         }
+        [TestMethod]
+        public void MultiplyPositiveNumbers()
+        {
+        int a = 4;
+        int b = 8;
+        Assert.AreEqual(32, Program.multiply(a, b));
+        }
+        [TestMethod]
+        public void MultiplyNegativeNumbers()
+        {
+            int a = -1;
+            int b = -6;
+            Assert.AreEqual(6, Program.multiply(a, b));
+        }
+        [TestMethod]
+        public void AddMultiplyPositiveAndNegativeNumbers()
+        {
+            int a = 4;
+            int b = -8;
+
+            Assert.AreEqual(-32, Program.multiply(a, b));
+        }
     }
 }
