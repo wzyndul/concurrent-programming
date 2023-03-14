@@ -17,7 +17,7 @@ namespace SimpleProgram
         static void Main(string[] args)
         {
             int choice;
-            Console.WriteLine("choose what you want to do with 2 integers: [1] - add [2] - multiply:");
+            Console.WriteLine("Choose what you want to do with 2 integers (choose only one or the other option!): [1] - add [2] - multiply:");
             choice = Convert.ToInt32(Console.ReadLine());
             int a, b;
             Console.WriteLine("Enter 1st integer:");
@@ -26,19 +26,12 @@ namespace SimpleProgram
             b = Convert.ToInt32(Console.ReadLine());
 
             if (choice == 1) {
-                Console.WriteLine("The result of adding {0} and {1} is {2}.", a, b, add(a, b));
+                Console.WriteLine("The result of adding {0} and {1} is: {2}.", a, b, add(a, b));
             } 
             else if (choice == 2) {
-                Console.WriteLine("The result of multiplying {0} from {1} is {2}.", a, b, multiply(a, b));
-            }
-
-
-
-
-
-            
+                Console.WriteLine("The result of multiplying {0} by {1} is: {2}.", a, b, multiply(a, b));
+            } 
         }
-
      
     }
 }
