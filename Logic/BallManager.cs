@@ -1,4 +1,4 @@
-﻿using Data;
+using Data;
 
 namespace Logic
 {
