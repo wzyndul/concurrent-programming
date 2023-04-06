@@ -25,5 +25,12 @@ namespace DataTest
             Assert.AreEqual(board.BoardWidth, 80.0);
             Assert.AreEqual(board.BoardHeight, 120.0);
         }
+
+        [TestMethod]
+        public void ConnectExceptionTest()
+        {
+            Assert.ThrowsException<System.NotImplementedException>(() => DataAbstractAPI.CreateAPI(board.BoardWidth, board.BoardHeight).Connect());
+        }
+        
     }
 }

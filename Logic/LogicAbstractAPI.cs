@@ -11,7 +11,7 @@ namespace Logic
     {
         public static LogicAbstractAPI CreateAPI(double boardWidth, double boardHeight, double ballRadius)
         {
-            return new BallManager(boardWidth, boardHeight, ballRadius);
+            return new BoardManager(boardWidth, boardHeight, ballRadius);
         }
 
         public abstract void CreateBall(double xPos, double yPos, double xSpeed, double ySpeed);

@@ -1,7 +1,7 @@
 namespace LogicTest
 {
     [TestClass]
-    public class BallManagerTest
+    public class BoardManagerTest
     {
         [TestMethod]
         public void TestMethod1()

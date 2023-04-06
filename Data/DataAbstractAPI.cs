@@ -11,12 +11,14 @@ namespace Data
     public abstract class DataAbstractAPI
     {
         // A static factory method that creates a new instance
-        // of the BallsRepository class and returns it as an object of the DataAbstractAPI type
-        public static DataAbstractAPI CreateAPI() { return new BallRepository(); }
+        // of the Board class and returns it as an object of the DataAbstractAPI type
+        public static DataAbstractAPI CreateAPI(double boardWidth, double boardHeight) { 
+            return new Board(boardWidth, boardHeight); 
+        }
 
         public abstract void Connect();
-        public abstract void Add(Ball ball);
+        public abstract void AddBall(Ball ball);
         public abstract List<Ball> GetBalls();
-        public abstract void ClearBalls();
+        public abstract void ClearBoard();
     }
 }

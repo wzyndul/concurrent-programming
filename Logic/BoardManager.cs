@@ -2,14 +2,14 @@ using Data;
 
 namespace Logic
 {
-    internal class BallManager : LogicAbstractAPI
+    internal class BoardManager : LogicAbstractAPI
     {
         private double _boardHeight;
         private double _boardWidth;
         private double _ballRadius = 5.0;
-        private List<Ball> _ballRepo = new();
+        private List<Ball> _balls = new();
 
-        public BallManager(double boardHeight, double boardWidth, double ballRadius)
+        public BoardManager(double boardHeight, double boardWidth, double ballRadius)
         {
             this._boardHeight = boardHeight;
             this._boardWidth = boardWidth;
@@ -24,7 +24,7 @@ namespace Logic
             }
             
             Ball ball = new(xPos, yPos, xSpeed, ySpeed);
-            _ballRepo.Add(ball);
+            _balls.Add(ball);
         }
 
         public override void CreateRandomBallLocation()
@@ -37,12 +37,12 @@ namespace Logic
 
         public override List<Ball> GetAllBalls()
         {
-            return _ballRepo;
+            return _balls;
         }
 
         public override void ClearBoard()
         {
-            _ballRepo.Clear();
+            _balls.Clear();
         }
 
 
