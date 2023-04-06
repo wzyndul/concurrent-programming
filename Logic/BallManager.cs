@@ -2,12 +2,12 @@ using Data;
 
 namespace Logic
 {
-    public class BallManager
+    internal class BallManager : LogicAbstractAPI
     {
         private double _boardHeight;
         private double _boardWidth;
-        private double _ballRadius = 5.0;                   // tak? hardcoded
-        private BallRepository _ballRepository = new();     // ?
+        private double _ballRadius = 5.0;
+        private List<Ball> _ballRepo = new();
 
         public BallManager(double boardHeight, double boardWidth, double ballRadius)
         {
@@ -16,7 +16,7 @@ namespace Logic
             this._ballRadius = ballRadius;
         }
 
-        public void MakeBall(double xPos, double yPos, double xSpeed, double ySpeed)
+        public override void CreateBall(double xPos, double yPos, double xSpeed, double ySpeed)
         {
             if (IsBallOutOfBounds(xPos, yPos, xSpeed, ySpeed)) 
             {
@@ -24,25 +24,25 @@ namespace Logic
             }
             
             Ball ball = new(xPos, yPos, xSpeed, ySpeed);
-            _ballRepository.Add(ball);
+            _ballRepo.Add(ball);
         }
 
-        public void MakeRandomBallLocation()
+        public override void CreateRandomBallLocation()
         {
-            MakeBall(GenerateRandomDouble(_ballRadius, _boardWidth - _ballRadius),
+            CreateBall(GenerateRandomDouble(_ballRadius, _boardWidth - _ballRadius),
                      GenerateRandomDouble(_ballRadius, _boardHeight - _ballRadius),
                      GenerateRandomDouble(-5.0, 5.0), GenerateRandomDouble(-5.0, 5.0));     // 5.0 - max prędkość na razie
         }
 
 
-        public List<Ball> GetAllBalls()
+        public override List<Ball> GetAllBalls()
         {
-            return _ballRepository.GetBalls;
+            return _ballRepo;
         }
 
-        public void RemoveAllBalls()
+        public override void ClearBoard()
         {
-            // potrzebujemy czyścić board?
+            _ballRepo.Clear();
         }
 
 
