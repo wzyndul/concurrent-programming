@@ -20,6 +20,8 @@ namespace Data
         public abstract List<IBall> GetBalls();
         public abstract void ClearBoard();
         public abstract void MoveBall(IBall ball);
+
+        // idk czy te metody potrzebne, czy inaczej to robić
         public abstract (int, int) GetBoardDimensions();
         public abstract (int, int) GetBallSpeed(IBall ball);
         public abstract (int, int) GetBallCordinates(IBall ball);
