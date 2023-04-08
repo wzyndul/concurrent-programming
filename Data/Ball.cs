@@ -1,20 +1,44 @@
-﻿namespace Data
-{
-    public class Ball // czy działać na liczbach zmiennoprzecinkowych czy nie
-    {
-        public double XPosition{ get; set; }
-        public double YPosition { get; set; }
-        public double Radius { get; } // to będzie stała wartość bez możliwości zmiany
-        public double XSpeed { get; set; }
-        public double YSpeed { get; set; }
+﻿using Data;
 
-        public Ball(double xPosition, double yPosition, double xSpeed, double ySpeed)
+namespace Data
+{
+    public class Ball : IBall
+    {
+        private int _xPosition { get; set; }
+        private int _yPosition { get; set; }    
+        private int _xSpeed { get; set; }
+        private int _ySpeed { get; set; }
+        private int _Radius { get; set; }
+
+        public Ball(int xPosition, int yPosition, int xSpeed, int ySpeed)
         {
-            this.XPosition = xPosition;
-            this.YPosition = yPosition;
-            this.XSpeed = xSpeed;
-            this.YSpeed = ySpeed;
-            this.Radius = 5.0; // jakaś wartość stała dla wszystkich hednakwoa
+            _xPosition = xPosition;
+            _yPosition = yPosition;
+            _xSpeed = xSpeed;
+            _ySpeed = ySpeed;
+            _Radius = 5;
+        }
+
+        public override void MoveBall()
+        {
+            this._xPosition += _xSpeed;
+            this._yPosition += _ySpeed;
+        }
+
+        public override (int, int) GetBallPosition()
+        {
+            return (this._xPosition, this._yPosition);
+        }
+        public override (int, int) GetBallSpeed()
+        {
+            return (this._xSpeed, this._ySpeed);
+        }
+        public override int GetBallRadius()
+        {
+            return this._Radius;
         }
     }
 }
+
+
+

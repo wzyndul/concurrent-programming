@@ -10,27 +10,39 @@ namespace DataTest
     [TestClass]
     public class BoardTest
     {
-        Board board = new(40.0, 60.0);
+        private DataAbstractAPI _board = new Board(20, 30);
+        private IBall _ball;
         [TestMethod]
         public void ConstructorTest()
         {
-            Assert.AreEqual(board.BoardWidth, 40.0);
-            Assert.AreEqual(board.BoardHeight, 60.0);
+            Assert.AreEqual(_board.GetBoardDimensions(), (20, 30));
+            Assert.AreEqual(_board.GetBalls().Count(), 0);
+            
         }
         [TestMethod]
-        public void GettersSettersTest()
+        public void CreateBallTest()
         {
-            board.BoardWidth = 80.0;
-            board.BoardHeight = 120.0;
-            Assert.AreEqual(board.BoardWidth, 80.0);
-            Assert.AreEqual(board.BoardHeight, 120.0);
+            _ball = _board.CreateBall(2, 3, 4, 5);
+            Assert.AreEqual(_board.GetBallCordinates(_ball), (2, 3));
+            Assert.AreEqual(_board.GetBallSpeed(_ball), (4, 5));
+            Assert.AreEqual(_board.GetBallRadius(_ball), 5);
+        }
+        [TestMethod]
+        public void AddClearBallsTest()
+        {
+            _ball = _board.CreateBall(2, 3, 4, 5);
+            Assert.AreEqual(_board.GetBalls().Count(), 1);
+            _board.ClearBoard();
+            Assert.AreEqual(_board.GetBalls().Count(), 0);
         }
 
         [TestMethod]
-        public void ConnectExceptionTest()
+        public void MoveBallTest()
         {
-            Assert.ThrowsException<System.NotImplementedException>(() => DataAbstractAPI.CreateAPI(board.BoardWidth, board.BoardHeight).Connect());
+            _ball = _board.CreateBall(2, 3, 4, 5);
+            _board.MoveBall(_ball);
+            Assert.AreEqual(_board.GetBallCordinates(_ball), (6, 8));
         }
-        
+
     }
 }

@@ -12,13 +12,17 @@ namespace Data
     {
         // A static factory method that creates a new instance
         // of the Board class and returns it as an object of the DataAbstractAPI type
-        public static DataAbstractAPI CreateAPI(double boardWidth, double boardHeight) { 
+        public static DataAbstractAPI CreateAPI(int boardWidth, int boardHeight) { 
             return new Board(boardWidth, boardHeight); 
         }
-
-        public abstract void Connect();
-        public abstract void AddBall(Ball ball);
-        public abstract List<Ball> GetBalls();
+        public abstract void AddBall(IBall ball);
+        public abstract IBall CreateBall(int xPosition, int yPosition, int xSpeed = 0, int ySpeed = 0);
+        public abstract List<IBall> GetBalls();
         public abstract void ClearBoard();
+        public abstract void MoveBall(IBall ball);
+        public abstract (int, int) GetBoardDimensions();
+        public abstract (int, int) GetBallSpeed(IBall ball);
+        public abstract (int, int) GetBallCordinates(IBall ball);
+        public abstract int GetBallRadius(IBall ball);
     }
 }
