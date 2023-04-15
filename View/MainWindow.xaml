@@ -8,7 +8,15 @@
         Title="Pool" 
         Height="720" 
         Width="1280">
+    <!--<Window.DataContext>
+        <vm:MainViewModel
+    </Window.DataContext>-->
     <Grid>
+        <ItemsControl
+            ItemsSource="{Binding Balls}">
+            
+        </ItemsControl>
+        
         <Canvas Background="#48cfad">
         </Canvas>
 
@@ -29,7 +37,7 @@
                  Width="NaN"
                  TextWrapping="Wrap"
                  Cursor="IBeam"
-                 FontFamily="Comic Sans MS">
+                 FontFamily="Consolas">
             <TextBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -41,7 +49,7 @@
                Content="Enter No. &#10;of balls:" 
                Margin="78,106,1070,512"
                FontSize="25"
-               FontFamily="Comic Sans MS Bold" 
+               FontFamily="Consolas Bold" 
                Width="NaN" 
                Height="NaN"/>
 
@@ -90,7 +98,7 @@
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Style.Resources>
-            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Effect">

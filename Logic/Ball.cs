@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class Ball : IBall
+    internal class Ball : IBall
     {
         private int _xPosition { get; set; }
         private int _yPosition { get; set; }
@@ -29,17 +29,18 @@ namespace Logic
             this._yPosition += _ySpeed;
         }
 
-        public override (int, int) GetBallPosition()
+
+        public override void RandomizeSpeed(int x, int y)
         {
-            return (this._xPosition, this._yPosition);
+            this._xSpeed = x; this._ySpeed = y;
         }
-        public override (int, int) GetBallSpeed()
+        public override int GetXpos()
         {
-            return (this._xSpeed, this._ySpeed);
+            return this._xPosition;
         }
-        public override int GetBallRadius()
+        public override int GetYpos()
         {
-            return this._radius;
+            return this._yPosition;
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Logic
         {
             return new Ball(x, y, radius,speedX, speedY);
         }
-        public abstract (int, int) GetBallPosition();
-        public abstract (int, int) GetBallSpeed();
-        public abstract int GetBallRadius();
+        public abstract void RandomizeSpeed(int x, int y);
+        public abstract int GetXpos();
+        public abstract int GetYpos();
     }
 }
