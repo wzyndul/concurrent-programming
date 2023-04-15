@@ -37,14 +37,6 @@ namespace LogicTest
         }
 
         [TestMethod]
-        public void MoveBallTest()
-        {
-            _ball = _board.CreateBall(2, 3, 4, 5);
-            _board.MoveBall(_ball);
-            Assert.AreEqual((6, 8), _board.GetBallCordinates(_ball));
-            _board.ClearBoard();
-        }
-        [TestMethod]
         public void CreateBallInRandomPlace()
         {
             _board.CreateRandomBallLocation();

@@ -8,9 +8,9 @@
         Title="Pool" 
         Height="720" 
         Width="1280">
-    <Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>
+    <!--<Window.DataContext>
+        <vm:MainViewModel
+    </Window.DataContext>-->
     <Grid>
         <ItemsControl
             ItemsSource="{Binding Balls}">

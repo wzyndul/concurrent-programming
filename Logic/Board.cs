@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data;
 
 namespace Logic
 {
-    public class Board : LogicAbstractAPI
+    internal class Board : LogicAbstractAPI
     {
         private int _boardWidth { get; }
         private int _boardHeight { get; }
         private int _ballRadius { get; } 
         private List<IBall> _balls = new List<IBall>();
+        private DataAbstractAPI _data;
 
         public override IBall CreateBall(int xPos, int yPos, int xSpeed = 0, int ySpeed = 0)
         {
@@ -26,11 +28,12 @@ namespace Logic
         }
 
 
-        public Board(int boardWidth, int boardHeight, int ballRadius)
+        public Board(int boardWidth, int boardHeight, int ballRadius, DataAbstractAPI dataAPI)
         {
             this._boardWidth = boardWidth;
             this._boardHeight = boardHeight;
             this._ballRadius = ballRadius;
+            this._data = dataAPI;
         }
         public override void AddBall(IBall ball)
         {
@@ -47,9 +50,13 @@ namespace Logic
             return new List<IBall>(_balls); // zeby nie zwarcac referencji do naszej listy, zwracamy kopie
         }
 
-        public override void MoveBall(IBall ball)
+        public override void MoveBalls()
         {
-            ball.MoveBall();
+            foreach(IBall ball in _balls)
+            {
+                ball.RandomizeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
+                ball.MoveBall();
+            }
         }
 
         private bool IsBallOutOfBounds(int xPos, int yPos, int radius, int xSpeed, int ySpeed)

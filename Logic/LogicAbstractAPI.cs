@@ -1,4 +1,5 @@
-﻿using Logic;
+﻿using Data;
+using Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,13 @@ namespace Logic
         // of the Board class and returns it as an object of the LogicAbstractAPI type
         public static LogicAbstractAPI CreateAPI(int boardWidth, int boardHeight, int ballRadius = 5)
         {
-            return new Board(boardWidth, boardHeight, ballRadius);
+            return new Board(boardWidth, boardHeight, ballRadius, DataAbstractAPI.CreateAPI());
         }
         public abstract void AddBall(IBall ball);
         public abstract IBall CreateBall(int xPosition, int yPosition, int xSpeed = 0, int ySpeed = 0);
         public abstract List<IBall> GetBalls();
         public abstract void ClearBoard();
-        public abstract void MoveBall(IBall ball);
+        public abstract void MoveBalls();
 
         // idk czy te metody potrzebne, czy inaczej to robić
         public abstract (int, int) GetBoardDimensions();
