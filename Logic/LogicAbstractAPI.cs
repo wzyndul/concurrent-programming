@@ -16,19 +16,16 @@ namespace Logic
         {
             return new Board(boardWidth, boardHeight, ballRadius, DataAbstractAPI.CreateAPI());
         }
-        public abstract void AddBall(IBall ball);
+        public abstract void AddBalls(int number);
         public abstract IBall CreateBall(int xPosition, int yPosition, int xSpeed = 0, int ySpeed = 0);
-        public abstract List<IBall> GetBalls();
         public abstract void ClearBoard();
         public abstract void MoveBalls();
 
-        // idk czy te metody potrzebne, czy inaczej to robić
-        public abstract (int, int) GetBoardDimensions();
-        public abstract (int, int) GetBallSpeed(IBall ball);
-        public abstract (int, int) GetBallCordinates(IBall ball);
-        public abstract int GetBallRadius();
 
         public abstract IBall CreateRandomBallLocation();
+        public abstract List<IBall> GetBalls();
+
+        public abstract List<List<int>> GetAllBallsPosition();
 
 
     }

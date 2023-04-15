@@ -23,30 +23,24 @@ namespace Logic
             _radius = radius;
         }
 
-        // funkcja do jakiegos random speeda
-
         public override void MoveBall()
         {
             this._xPosition += _xSpeed;
             this._yPosition += _ySpeed;
         }
 
-        public override (int, int) GetBallPosition()
-        {
-            return (this._xPosition, this._yPosition);
-        }
-        public override (int, int) GetBallSpeed()
-        {
-            return (this._xSpeed, this._ySpeed);
-        }
-        public override int GetBallRadius()
-        {
-            return this._radius;
-        }
 
         public override void RandomizeSpeed(int x, int y)
         {
             this._xSpeed = x; this._ySpeed = y;
+        }
+        public override int GetXpos()
+        {
+            return this._xPosition;
+        }
+        public override int GetYpos()
+        {
+            return this._yPosition;
         }
     }
 }

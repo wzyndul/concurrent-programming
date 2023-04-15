@@ -13,16 +13,17 @@ namespace Logic
         private int _boardHeight { get; }
         private int _ballRadius { get; } 
         private List<IBall> _balls = new List<IBall>();
+        private List<Task> _tasks = new List<Task>();
         private DataAbstractAPI _data;
 
         public override IBall CreateBall(int xPos, int yPos, int xSpeed = 0, int ySpeed = 0)
         {
-            if (IsBallOutOfBounds(xPos, yPos, this._ballRadius, xSpeed, ySpeed))
-            {
-                throw new Exception("Ball is out of bounds");   // może custom exception albo coś innego
-            }
+            //if (IsBallOutOfBounds(xPos, yPos, this._ballRadius, xSpeed, ySpeed))
+            //{
+            //    throw new Exception("Ball is out of bounds");   // może custom exception albo coś innego
+            //}
 
-            IBall ball = new Ball(xPos, yPos, this._ballRadius, xSpeed, ySpeed);
+            IBall ball = new Ball(xPos, yPos, xSpeed, ySpeed);
             _balls.Add(ball);
             return ball;
         }
@@ -35,27 +36,39 @@ namespace Logic
             this._ballRadius = ballRadius;
             this._data = dataAPI;
         }
-        public override void AddBall(IBall ball)
+        public override void AddBalls(int n)
         {
-            _balls.Add(ball);
+            for (int i = 0; i < n; i++)
+            {
+                _tasks.Add(new Task(() =>
+                {
+                    IBall ball = CreateRandomBallLocation();
+                    while (true)
+                    {
+                        ball.RandomizeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
+                        ball.MoveBall();
+                        Thread.Sleep(1000);    // na razie cokolwiek   
+                    }
+                }));
+            }
         }
 
         public override void ClearBoard()
         {
+            foreach(Task task in _tasks)
+            {
+                task.Dispose();
+            }
             _balls.Clear();
         }
 
-        public override List<IBall> GetBalls()
-        {
-            return new List<IBall>(_balls); // zeby nie zwarcac referencji do naszej listy, zwracamy kopie
-        }
+     
 
         public override void MoveBalls()
         {
-            foreach(IBall ball in _balls)
+            foreach(Task task in _tasks)
             {
-                ball.RandomizeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
-                ball.MoveBall();
+                task.Start();
             }
         }
 
@@ -68,25 +81,11 @@ namespace Logic
             return isBallOutOfBounds;
         }
 
-        public override (int, int) GetBoardDimensions()
-        {
-            return (this._boardWidth, this._boardHeight);
-        }
-        public override (int, int) GetBallCordinates(IBall ball)
-        {
-            return ball.GetBallPosition();
-        }
-        public override (int, int) GetBallSpeed(IBall ball)
-        {
-            return ball.GetBallSpeed();
-        }
-        public override int GetBallRadius()
-        {
-            return _ballRadius;
-        }
+
+
         public override IBall CreateRandomBallLocation()
         {
-           return CreateBall(GenerateRandomInt(_ballRadius, _boardWidth - _ballRadius),
+            return CreateBall(GenerateRandomInt(_ballRadius, _boardWidth - _ballRadius),
                      GenerateRandomInt(_ballRadius, _boardHeight - _ballRadius),
                      GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));     // 5.0 - max prędkość na razie
         }
@@ -97,15 +96,23 @@ namespace Logic
             return rand.Next(min, max + 1);
         }
 
-
-
-
-
-
-
-
-
-
-
+        public override List<IBall> GetBalls()
+        {
+            return _balls.ToList();  
+        }
+        public override List<List<int>> GetAllBallsPosition()
+        {
+            List<List<int>> list = new List<List<int>>();
+            foreach (IBall ball in _balls)
+            {
+                List<int> two = new List<int>
+                {
+                    ball.GetXpos(),
+                    ball.GetYpos()
+                };
+                list.Add(two);
+            }
+            return list;
+        }
     }
 }
