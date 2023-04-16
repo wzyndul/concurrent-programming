@@ -9,10 +9,10 @@
         Title="Pool" 
         Height="720" 
         Width="1280">
-    <Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>
     <Grid>
+        <Grid.DataContext>
+            <vm:MainViewModel/>
+        </Grid.DataContext>
         <ItemsControl
             ItemsSource="{Binding Balls}">
             <ItemsControl.ItemsPanel>
@@ -29,7 +29,14 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Ellipse Height="{Binding Radius}" Width="{Binding Radius}" Stroke="#c6841e" Fill="#c6841e"/>
+                    <Path Fill="Green">
+                        <!-- inny kolor potem pls to chyba kolor kuli-->
+                        <Path.Data>
+                            <EllipseGeometry
+                                RadiusX="{Binding Radius}"
+                                RadiusY="{Binding Radius}" />
+                        </Path.Data>
+                    </Path>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -12,19 +12,19 @@ namespace ViewModel
         private ModelAbstractAPI _modelAPI;
         private ObservableCollection<IModelBall> _balls;
         private string _noOfBalls = "";
-        private bool _isButtonEnabled = true; // dla przycisków
+        //private bool _isButtonEnabled = true; // dla przycisków
         public BaseCommand StartCommand { get; set; }
         public BaseCommand StopCommand { get; set; }
 
-        public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
+        //public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
         //public MainViewModel() { }
 
-        public MainViewModel(ModelAbstractAPI modelAPI)
+        public MainViewModel()
         {
 
             StartCommand = new BaseCommand(Start);
             StopCommand = new BaseCommand(Stop);
-            _modelAPI = modelAPI ?? ModelAbstractAPI.CreateAPI();
+            _modelAPI = ModelAbstractAPI.CreateAPI();
         }
 
 

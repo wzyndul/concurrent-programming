@@ -52,6 +52,7 @@ namespace Model
 
         public override void Start(int number)    // CO TU DAĆ, NIE WIEM XD może coś innego
         {
+            _logicAPI.ClearBoard();
             _logicAPI.AddBalls(number);          
             _logicAPI.MoveBalls();
         }
