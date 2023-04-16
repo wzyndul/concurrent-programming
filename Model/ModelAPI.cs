@@ -11,19 +11,33 @@ namespace Model
     public class ModelAPI : ModelAbstractAPI
     {
         private LogicAbstractAPI _logicAPI;
-        public ModelAPI(LogicAbstractAPI logicAPI)
+        private ObservableCollection<ModelBall> _balls = new ObservableCollection<ModelBall>();
+
+        /*public ModelAPI(LogicAbstractAPI logicAPI)
         {
             _logicAPI = logicAPI ?? LogicAbstractAPI.CreateAPI(20, 30, 5);        // te wartości tak se o bo nie wiem co wpisać
         }
 
-        public ModelAPI() : this(LogicAbstractAPI.CreateAPI(20, 30, 5)) { }
+        public ModelAPI() : this(LogicAbstractAPI.CreateAPI(20, 30, 5)) { }*/
+
+        // REDO CHYBA TAK?
+        public ModelAPI()
+        {
+            _logicAPI = LogicAbstractAPI.CreateAPI(20, 30, 5);        // te wartości tak se o bo nie wiem co wpisać
+        }
+
 
         /* The ObservableCollection<T> class is similar to the List<T> class, but with the additional feature of raising events when its contents change.
          * Specifically, it implements the INotifyCollectionChanged interface, which defines the CollectionChanged event that gets raised whenever items are added, removed, or the whole list is refreshed. */
 
-        public override ObservableCollection<IBall> CreateBall()
+        public override ObservableCollection<ModelBall> GetBalls()      // ????????????
         {
-            throw new NotImplementedException();
+            _balls.Clear();
+            foreach (IBall ball in _logicAPI.GetBalls())
+            {               
+                _balls.Add(new ModelBall(ball)); 
+            }
+            return _balls;
         }
 
         public override void ClearBoard()
@@ -36,15 +50,18 @@ namespace Model
             _logicAPI.CreateRandomBallLocation(); 
         }
 
-        public override void Start()
+        public override void Start()    // CO TU DAĆ, NIE WIEM XD może coś innego
         {
-            throw new NotImplementedException();    // CO TU DAĆ, NIE WIEM XD może coś innego
+            _logicAPI.MoveBalls();  
         }
 
-        public override void Stop()
+        public override void Stop()     //  idk czy to potrzbene
         {
             throw new NotImplementedException();
         }
+
+        // no te metody to struggle
+
     }
 
 }

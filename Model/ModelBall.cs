@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    internal class ModelBall : INotifyPropertyChanged
+    public class ModelBall : INotifyPropertyChanged
     {
         private int _xPosition;
         private int _yPosition;
@@ -17,10 +17,11 @@ namespace Model
 
         public ModelBall(IBall ball)
         {
-            this._xPosition = ball.GetXPosition();          // bo sam IBall nie ma tych properties
+            this._xPosition = ball.GetXPosition();          // NIE JESTEM PEWNA CZY TO TAK NIESTETY nie chce mi się myśleć jest 3 w nocy - czy to ta sama zmienna jak ją wezmę getterem
             this._yPosition = ball.GetYPosition();
-            ball.PropertyChanged += UpdateBall; // nullability? hę? xd
+            ball.PropertyChanged += UpdateBall; // nullability? 
         }
+
 
         private void UpdateBall(Object source, PropertyChangedEventArgs e)
         {
@@ -34,6 +35,7 @@ namespace Model
                 this._yPosition = sourceBall.GetYPosition() - sourceBall.GetRadius();
             }
         }
+
 
         public int XPosition
         {

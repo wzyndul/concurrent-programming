@@ -11,7 +11,7 @@ namespace Model
             return new ModelAPI();
         }
 
-        public abstract ObservableCollection<IBall> CreateBall();
+        public abstract ObservableCollection<ModelBall> GetBalls();
         public abstract void CreateRandomBallLocation();
         public abstract void ClearBoard();
         public abstract void Start();

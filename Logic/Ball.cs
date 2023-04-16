@@ -58,7 +58,7 @@ namespace Logic
             set
             {
                 _xPosition = value;
-                RaisePropertyChanged();
+                RaisePropertyChanged("XPosition");
             }
         }
 
@@ -68,7 +68,7 @@ namespace Logic
             set
             {
                 _yPosition = value;
-                RaisePropertyChanged();
+                RaisePropertyChanged("YPosition");
             }
         }
 
