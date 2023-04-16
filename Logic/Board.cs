@@ -17,9 +17,9 @@ namespace Logic
         private DataAbstractAPI _dataAPI;
         private bool _isRunning = false;
 
-        public override IBall CreateBall(int xPos, int yPos,int radius = 5, int xSpeed = 0, int ySpeed = 0)
+        public override IBall CreateBall(int xPos, int yPos, int radius = 5, int xSpeed = 0, int ySpeed = 0)
         {
-            //if (IsBallOutOfBounds(xPos, yPos, this._ballRadius, xSpeed, ySpeed))
+            //if (IsBallOutOfBounds(xPos, yPos, radius, xSpeed, ySpeed))
             //{
             //    throw new Exception("Ball is out of bounds");   // może custom exception albo coś innego
             //}
@@ -55,6 +55,7 @@ namespace Logic
                 }));        
             }
         }
+
 
         public override void ClearBoard()
         {
@@ -96,22 +97,22 @@ namespace Logic
             }
         }
 
-        //private bool IsBallOutOfBounds(int xPos, int yPos, int radius, int xSpeed, int ySpeed)
-        //{
-        //    bool isBallOutOfBounds =   // zmienilem to idk czy dobrze
-        //        xPos > _boardWidth - radius || yPos > _boardHeight - radius ||
-        //        xSpeed > _boardWidth - radius || ySpeed > _boardHeight - radius;
+        /*private bool IsBallOutOfBounds(int xPos, int yPos, int radius, int xSpeed, int ySpeed)
+        {
+            bool isBallOutOfBounds =   // zmienilem to idk czy dobrze
+                xPos > _boardWidth - radius || yPos > _boardHeight - radius ||
+                xSpeed > _boardWidth - radius || ySpeed > _boardHeight - radius;
               
-        //    return isBallOutOfBounds;
-        //}
+            return isBallOutOfBounds;
+        }*/
 
 
 
         public override IBall CreateRandomBallLocation()
         {
-            return CreateBall(GenerateRandomInt(_ballRadius, _boardWidth - _ballRadius),
-                     GenerateRandomInt(_ballRadius, _boardHeight - _ballRadius), 5,
-                     GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));     // 5.0 - max prędkość na razie
+            return CreateBall(GenerateRandomInt(0, _boardWidth - _ballRadius),
+                     GenerateRandomInt(0, _boardHeight - _ballRadius), 5,
+                     GenerateRandomInt(-1, 1), GenerateRandomInt(-1, 1));     // 5.0 - max prędkość na razie
         }
 
         private int GenerateRandomInt(int min, int max)
