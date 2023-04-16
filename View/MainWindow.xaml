@@ -41,8 +41,6 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <!-- to wywalić jak wyżej będzie działać -->
-
         <Rectangle Fill="#f5f7fa" 
                    Margin="0,0,1000,0" 
                    Width="NaN">

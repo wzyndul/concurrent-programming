@@ -7,14 +7,14 @@ using System.Windows.Input;
 
 namespace ViewModel.MVVMBase
 {
-    public class RelayCommand : ICommand
+    public class BaseCommand : ICommand
     {
         private Action _execute;
         private Func<bool> _canExecute;
         public event EventHandler? CanExecuteChanged;
 
-        public RelayCommand(Action execute) : this(execute, null) { }   // dk
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public BaseCommand(Action execute) : this(execute, null) { }   // dk
+        public BaseCommand(Action execute, Func<bool> canExecute)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
