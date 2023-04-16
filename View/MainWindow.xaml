@@ -17,7 +17,7 @@
             ItemsSource="{Binding Balls}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Background="#48cfad">
+                    <Canvas Width="1000" Height="700"  Background="#98c1d9" Margin="282,0,140,0">
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
@@ -29,7 +29,7 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Path Fill="Green">
+                    <Path Fill="#134074">
                         <!-- inny kolor potem pls to chyba kolor kuli-->
                         <Path.Data>
                             <EllipseGeometry
@@ -81,9 +81,9 @@
                 Content="Start"
                 FontSize="25"
                 Height="NaN" 
-                Margin="68,263,1071,385" 
+                Margin="69,324,1070,324" 
                 Width="NaN"
-                Background="#a0d468"/>
+                Background="#8fc0a9"/>
 
         <Button Name="ClearBoardButton"
                 Style="{DynamicResource RoundButton}"
@@ -92,25 +92,7 @@
                 Height="NaN" 
                 Margin="68,492,1071,156" 
                 Width="NaN"
-                Background="#ed5565"/>
-
-        <Button Name="PauseButton"
-                Style="{DynamicResource RoundButton}"
-                Content="Pause"
-                FontSize="18"
-                Height="NaN" 
-                Margin="29,386,1161,274" 
-                Width="NaN"
-                Background="#ffce54"/>
-
-        <Button Name="ResumeButton"
-                Style="{DynamicResource RoundButton}"
-                Content="Resume"
-                FontSize="18"
-                Height="NaN" 
-                Margin="158,386,1032,274" 
-                Width="NaN"
-                Background="#4fc1e9"/>
+                Background="#df7373"/>
     </Grid>
 
     <!-- Button template -->

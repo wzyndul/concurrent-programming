@@ -23,7 +23,7 @@ namespace Model
         // REDO CHYBA TAK?
         public ModelAPI()
         {
-            _logicAPI = LogicAbstractAPI.CreateAPI(20, 30, 5);        // te wartości tak se o bo nie wiem co wpisać
+            _logicAPI = LogicAbstractAPI.CreateAPI(1270, 720, 5);        // te wartości tak se o bo nie wiem co wpisać
         }
 
 
