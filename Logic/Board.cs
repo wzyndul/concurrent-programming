@@ -43,7 +43,7 @@ namespace Logic
         {
             for (int i = 0; i < n; i++)
             {
-                Task task = new Task(() =>
+                _tasks.Add(new Task(() =>
                 {
                     IBall ball = CreateRandomBallLocation();
                     while (this._isRunning)
@@ -52,8 +52,7 @@ namespace Logic
                         ball.MoveBall();
                         Thread.Sleep(100);    // na razie cokolwiek   
                     }
-                });
-                _tasks.Add(task);
+                }));        
             }
         }
 
@@ -88,6 +87,7 @@ namespace Logic
 
         public override void MoveBalls()
         {
+            this._isRunning = false;
             foreach(Task task in this._tasks)
             {
              
@@ -96,14 +96,14 @@ namespace Logic
             }
         }
 
-        private bool IsBallOutOfBounds(int xPos, int yPos, int radius, int xSpeed, int ySpeed)
-        {
-            bool isBallOutOfBounds =   // zmienilem to idk czy dobrze
-                xPos > _boardWidth - radius || yPos > _boardHeight - radius ||
-                xSpeed > _boardWidth - radius || ySpeed > _boardHeight - radius;
+        //private bool IsBallOutOfBounds(int xPos, int yPos, int radius, int xSpeed, int ySpeed)
+        //{
+        //    bool isBallOutOfBounds =   // zmienilem to idk czy dobrze
+        //        xPos > _boardWidth - radius || yPos > _boardHeight - radius ||
+        //        xSpeed > _boardWidth - radius || ySpeed > _boardHeight - radius;
               
-            return isBallOutOfBounds;
-        }
+        //    return isBallOutOfBounds;
+        //}
 
 
 
@@ -124,7 +124,7 @@ namespace Logic
         {
             return _balls;  
         }
-        public override List<List<int>> GetAllBallsPosition()
+        public override List<List<int>> GetAllBallsPosition()  //do wywalenia
         {
             List<List<int>> list = new List<List<int>>();
             foreach (IBall ball in _balls)

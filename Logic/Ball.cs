@@ -29,8 +29,8 @@ namespace Logic
 
         public override void MoveBall()
         {
-            this._xPosition += _xSpeed;
-            this._yPosition += _ySpeed;
+            this.XPosition += _xSpeed;
+            this.YPosition += _ySpeed;
         }
 
 
@@ -58,7 +58,7 @@ namespace Logic
             set
             {
                 _xPosition = value;
-                RaisePropertyChanged("XPosition");
+                RaisePropertyChanged();
             }
         }
 
@@ -68,7 +68,7 @@ namespace Logic
             set
             {
                 _yPosition = value;
-                RaisePropertyChanged("YPosition");
+                RaisePropertyChanged();
             }
         }
         public override int Radius
@@ -77,7 +77,7 @@ namespace Logic
             set
             {
                 _radius = value;
-                RaisePropertyChanged("Radius");
+                RaisePropertyChanged();
             }
         }
 

@@ -16,7 +16,7 @@ namespace LogicTest
         [TestMethod]
         public void AddClearBallsTest()
         {
-            _ball = _board.CreateBall(2, 3, 4, 5);
+            _ball = _board.CreateBall(2, 3, 5, 4, 5);
             Assert.AreEqual(5, _ball.GetRadius());
             Assert.AreEqual(1, _board.GetBalls().Count());
             _board.ClearBoard();

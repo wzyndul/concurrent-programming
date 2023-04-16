@@ -15,12 +15,12 @@ namespace Model
         public int _yPosition;
         public int _radius;
 
-        public ModelBall(IBall ball)
+        public ModelBall(int xPos, int yPos, int radius)
         {
-            this._xPosition = ball.GetXPosition();          // NIE JESTEM PEWNA CZY TO TAK NIESTETY nie chce mi się myśleć jest 3 w nocy - czy to ta sama zmienna jak ją wezmę getterem
-            this._yPosition = ball.GetYPosition();
-            this._radius = ball.GetRadius();
-            ball.PropertyChanged += UpdateBall; // nullability? 
+            this._xPosition = xPos;          // NIE JESTEM PEWNA CZY TO TAK NIESTETY nie chce mi się myśleć jest 3 w nocy - czy to ta sama zmienna jak ją wezmę getterem
+            this._yPosition = yPos;
+            this._radius = radius;
+        
         }
 
 
@@ -29,18 +29,15 @@ namespace Model
             IBall sourceBall = (IBall)source;
             if (e.PropertyName == "XPosition")
             {
-                this._xPosition = sourceBall.GetXPosition() - sourceBall.GetRadius();   // the center of the ball will be aligned with the coordinates of the position property
-                //_xPosition = sourceBall.GetXPosition();
+                this.XPosition = sourceBall.GetXPosition() - sourceBall.GetRadius();   // the center of the ball will be aligned with the coordinates of the position property        
             }
             if (e.PropertyName == "YPosition")
             {
-                this._yPosition = sourceBall.GetYPosition() - sourceBall.GetRadius();
-                _yPosition = sourceBall.GetYPosition();
+                this.YPosition = sourceBall.GetYPosition() - sourceBall.GetRadius();               
             }
             if (e.PropertyName == "Radius")
             {
-                this._radius = sourceBall.GetRadius();
-                _radius = sourceBall.GetRadius();
+                this.Radius = sourceBall.GetRadius();
             }
         }
 

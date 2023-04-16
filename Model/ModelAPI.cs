@@ -34,8 +34,10 @@ namespace Model
         {
             _balls.Clear();
             foreach (IBall ball in _logicAPI.GetBalls())
-            {               
-                _balls.Add(new ModelBall(ball)); 
+            {
+                IModelBall modelBall = IModelBall.CreateModelBall(ball.XPosition, ball.YPosition, ball.Radius);
+                _balls.Add(modelBall);
+                ball.PropertyChanged += modelBall.UpdateBall!;
             }
             return _balls;
         }
@@ -52,7 +54,7 @@ namespace Model
 
         public override void Start(int number)    // CO TU DAĆ, NIE WIEM XD może coś innego
         {
-            _logicAPI.ClearBoard();
+            _logicAPI.ClearBoard(); //to mozna wywalic
             _logicAPI.AddBalls(number);          
             _logicAPI.MoveBalls();
         }
