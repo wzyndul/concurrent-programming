@@ -10,8 +10,6 @@ namespace Logic
 {
     public abstract class LogicAbstractAPI
     {
-        // A static factory method that creates a new instance
-        // of the Board class and returns it as an object of the LogicAbstractAPI type
         public static LogicAbstractAPI CreateAPI(int boardWidth, int boardHeight, int ballRadius = 5)
         {
             return new Board(boardWidth, boardHeight, ballRadius, DataAbstractAPI.CreateAPI());

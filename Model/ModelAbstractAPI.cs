@@ -12,7 +12,7 @@ namespace Model
         }
 
         public abstract ObservableCollection<IBall> CreateBall();
-        public abstract IBall CreateRandomBallLocation();
+        public abstract void CreateRandomBallLocation();
         public abstract void ClearBoard();
         public abstract void Start();
         public abstract void Stop();

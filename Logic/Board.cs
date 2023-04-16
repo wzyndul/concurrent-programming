@@ -14,7 +14,7 @@ namespace Logic
         private int _ballRadius { get; } 
         private List<IBall> _balls = new List<IBall>();
         private List<Task> _tasks = new List<Task>();
-        private DataAbstractAPI _data;
+        private DataAbstractAPI _dataAPI;
 
         public override IBall CreateBall(int xPos, int yPos, int xSpeed = 0, int ySpeed = 0)
         {
@@ -34,7 +34,7 @@ namespace Logic
             this._boardWidth = boardWidth;
             this._boardHeight = boardHeight;
             this._ballRadius = ballRadius;
-            this._data = dataAPI;
+            this._dataAPI = dataAPI ?? DataAbstractAPI.CreateAPI();
         }
         public override void AddBalls(int n)
         {
@@ -107,8 +107,8 @@ namespace Logic
             {
                 List<int> two = new List<int>
                 {
-                    ball.GetXpos(),
-                    ball.GetYpos()
+                    ball.GetXPosition(),
+                    ball.GetYPosition()
                 };
                 list.Add(two);
             }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic
 {
-    internal class Ball : IBall
+    internal class Ball : IBall, INotifyPropertyChanged
     {
         private int _xPosition { get; set; }
         private int _yPosition { get; set; }
@@ -23,6 +25,8 @@ namespace Logic
             _radius = radius;
         }
 
+
+
         public override void MoveBall()
         {
             this._xPosition += _xSpeed;
@@ -34,13 +38,45 @@ namespace Logic
         {
             this._xSpeed = x; this._ySpeed = y;
         }
-        public override int GetXpos()
+        public override int GetXPosition()
         {
             return this._xPosition;
         }
-        public override int GetYpos()
+        public override int GetYPosition()
         {
             return this._yPosition;
+        }
+        public override int GetRadius() 
+        {
+            return this._radius;
+        }
+
+        // Properties needed for ModelBall
+        public override int XPosition
+        {
+            get => _xPosition;
+            set
+            {
+                _xPosition = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public override int YPosition
+        {
+            get => _yPosition;
+            set
+            {
+                _yPosition = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
+        public override event PropertyChangedEventHandler? PropertyChanged;
+        protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

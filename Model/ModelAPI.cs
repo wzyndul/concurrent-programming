@@ -10,16 +10,16 @@ namespace Model
 {
     public class ModelAPI : ModelAbstractAPI
     {
-        private LogicAbstractAPI _logic;
-        // COŚ TU JESZCZE?
-        public ModelAPI(LogicAbstractAPI logic)
+        private LogicAbstractAPI _logicAPI;
+        public ModelAPI(LogicAbstractAPI logicAPI)
         {
-            _logic = logic ?? LogicAbstractAPI.CreateAPI(20, 30, 5);        // te wartości tak se o bo nie wiem co wpisać
+            _logicAPI = logicAPI ?? LogicAbstractAPI.CreateAPI(20, 30, 5);        // te wartości tak se o bo nie wiem co wpisać
         }
 
         public ModelAPI() : this(LogicAbstractAPI.CreateAPI(20, 30, 5)) { }
 
-        // METODY DO ZROBIENIA
+        /* The ObservableCollection<T> class is similar to the List<T> class, but with the additional feature of raising events when its contents change.
+         * Specifically, it implements the INotifyCollectionChanged interface, which defines the CollectionChanged event that gets raised whenever items are added, removed, or the whole list is refreshed. */
 
         public override ObservableCollection<IBall> CreateBall()
         {
@@ -28,17 +28,17 @@ namespace Model
 
         public override void ClearBoard()
         {
-            throw new NotImplementedException();
+            _logicAPI.ClearBoard();
         }
 
-        public override IBall CreateRandomBallLocation()
+        public override void CreateRandomBallLocation() // moge dac voida zamiast IBalla? xd
         {
-            throw new NotImplementedException();
+            _logicAPI.CreateRandomBallLocation(); 
         }
 
         public override void Start()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();    // CO TU DAĆ, NIE WIEM XD może coś innego
         }
 
         public override void Stop()
