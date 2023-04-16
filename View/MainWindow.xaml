@@ -4,21 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="Pool" 
         Height="720" 
         Width="1280">
-    <!--<Window.DataContext>
-        <vm:MainViewModel
-    </Window.DataContext>-->
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
     <Grid>
         <ItemsControl
             ItemsSource="{Binding Balls}">
-            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Background="#48cfad">
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding XPosition}" />
+                    <Setter Property="Canvas.Top" Value="{Binding YPosition}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Path Fill="Green">
+                        <!-- inny kolor potem pls to chyba kolor kuli-->
+                        <Path.Data>
+                            <EllipseGeometry
+                                RadiusX="{Binding Radius}"
+                                RadiusY="{Binding Radius}" />
+                        </Path.Data>
+                    </Path>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
-        <Canvas Background="#48cfad">
-        </Canvas>
+
+        <!-- to wywalić jak wyżej będzie działać -->
 
         <Rectangle Fill="#f5f7fa" 
                    Margin="0,0,1000,0" 
@@ -32,6 +55,8 @@
         </Rectangle>
 
         <TextBox Name="TextBox"
+                 IsEnabled="{Binding IsButtonEnabled}"
+                 Text="{Binding NoOfBalls}"
                  Height="NaN" 
                  Margin="46,197,1046,461" 
                  Width="NaN"
@@ -54,6 +79,7 @@
                Height="NaN"/>
 
         <Button Name="StartButton"
+                Command="{Binding StartCommand}"
                 Style="{DynamicResource RoundButton}"
                 Content="Start"
                 FontSize="25"
