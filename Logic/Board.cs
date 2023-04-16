@@ -17,12 +17,8 @@ namespace Logic
         private DataAbstractAPI _dataAPI;
         private bool _isRunning = false;
 
-        public override IBall CreateBall(int xPos, int yPos, int radius = 5, int xSpeed = 0, int ySpeed = 0)
+        public override IBall CreateBall(int xPos, int yPos, int radius = 10, int xSpeed = 0, int ySpeed = 0)
         {
-            //if (IsBallOutOfBounds(xPos, yPos, radius, xSpeed, ySpeed))
-            //{
-            //    throw new Exception("Ball is out of bounds");   // może custom exception albo coś innego
-            //}
 
             IBall ball = new Ball(xPos, yPos, radius, xSpeed, ySpeed);
             _balls.Add(ball);
@@ -48,9 +44,18 @@ namespace Logic
                     IBall ball = CreateRandomBallLocation();
                     while (!this._isRunning)
                     {
-                        ball.ChangeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
-                        ball.MoveBall();
-                        Thread.Sleep(100);    // na razie cokolwiek   
+                        lock (ball)
+                        {
+                            ball.ChangeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
+                            if (ball.CheckBorderColision(_boardWidth, _boardHeight))
+                            {
+                                ball.MoveBall();
+                                Thread.Sleep(100);
+                            }
+                            else {
+                                continue;
+                            }
+                        }
                     }
                 }));        
             }
@@ -77,7 +82,10 @@ namespace Logic
 
             foreach (Task task in _tasks)
             {
-                task.Dispose();
+                try
+                {
+                    task.Dispose();
+                }catch (Exception ex) { }
             }
             _tasks.Clear();
             _balls.Clear();
@@ -97,22 +105,13 @@ namespace Logic
             }
         }
 
-        /*private bool IsBallOutOfBounds(int xPos, int yPos, int radius, int xSpeed, int ySpeed)
-        {
-            bool isBallOutOfBounds =   // zmienilem to idk czy dobrze
-                xPos > _boardWidth - radius || yPos > _boardHeight - radius ||
-                xSpeed > _boardWidth - radius || ySpeed > _boardHeight - radius;
-              
-            return isBallOutOfBounds;
-        }*/
-
-
+    
 
         public override IBall CreateRandomBallLocation()
         {
             return CreateBall(GenerateRandomInt(0, _boardWidth - _ballRadius),
-                     GenerateRandomInt(0, _boardHeight - _ballRadius), 5,
-                     GenerateRandomInt(-1, 1), GenerateRandomInt(-1, 1));     // 5.0 - max prędkość na razie
+                     GenerateRandomInt(0, _boardHeight - _ballRadius), 10,
+                     GenerateRandomInt(-1, 1), GenerateRandomInt(-1, 1));    
         }
 
         private int GenerateRandomInt(int min, int max)

@@ -14,10 +14,10 @@
             <vm:MainViewModel/>
         </Grid.DataContext>
         <ItemsControl
-            ItemsSource="{Binding Balls}" Margin="596,92,104,92" Width="800" Height="700">
+            ItemsSource="{Binding Balls}" Margin="600,90,100,00" Width="800" Height="700">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Width="800" Height="700"  Background="#98c1d9">
+                    <Canvas Background="#98c1d9">
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
