@@ -1,11 +1,13 @@
 ﻿using Logic;
 using Model;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using ViewModel.MVVMBase;
 
 namespace ViewModel
 {
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
         private ModelAbstractAPI _modelAPI;
         private ObservableCollection<IModelBall> _balls;
@@ -15,12 +17,13 @@ namespace ViewModel
         public BaseCommand StopCommand { get; set; }
 
         //public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
+        public MainViewModel() { }
 
         public MainViewModel(ModelAbstractAPI modelAPI)
         {
 
-            StartCommand = new BaseCommand(Start, EnableButton);
-            //StopCommand = new RelayCommand(...);
+            StartCommand = new BaseCommand(Start);
+            StopCommand = new BaseCommand(Stop);
             _modelAPI = modelAPI ?? ModelAbstractAPI.CreateAPI();
         }
 
@@ -90,6 +93,12 @@ namespace ViewModel
         private bool DisableButton()
         {
             return !_isButtonEnabled;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
