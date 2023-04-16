@@ -7,17 +7,17 @@
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="Pool" 
-        Height="720" 
-        Width="1280">
+        Height="900" 
+        Width="1500">
     <Grid>
         <Grid.DataContext>
             <vm:MainViewModel/>
         </Grid.DataContext>
         <ItemsControl
-            ItemsSource="{Binding Balls}">
+            ItemsSource="{Binding Balls}" Margin="596,92,104,92" Width="800" Height="700">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Width="1000" Height="700"  Background="#98c1d9" Margin="282,0,140,0">
+                    <Canvas Width="800" Height="700"  Background="#98c1d9">
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
@@ -41,24 +41,16 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <Rectangle Fill="#f5f7fa" 
-                   Margin="0,0,1000,0" 
-                   Width="NaN">
-            <Rectangle.Effect>
-                <DropShadowEffect ShadowDepth="2"
-                                  Color="#FFA5A5A5"
-                                  Opacity="0.5"
-                                  BlurRadius="2"/>
-            </Rectangle.Effect>
-        </Rectangle>
-
         <TextBox Name="TextBox"
                  Text="{Binding NoOfBalls, UpdateSourceTrigger=PropertyChanged}"
-                 Height="NaN" 
-                 Margin="46,197,1046,461" 
-                 Width="NaN"
+                 Height="80" 
+                 HorizontalAlignment="Left"
+                 Margin="200,220,0,0"
+                 VerticalAlignment="Top"
+                 Width="200"
                  TextWrapping="Wrap"
                  Cursor="IBeam"
+                 FontSize="25"
                  FontFamily="Consolas">
             <TextBox.Resources>
                 <Style TargetType="Border">
@@ -69,29 +61,33 @@
 
         <Label Name="EnterBallsLabel"
                Content="Enter No. &#10;of balls:" 
-               Margin="78,106,1070,512"
+               HorizontalAlignment="Left"
+               Margin="230,100,0,0"
+               VerticalAlignment="Top"
                FontSize="25"
-               FontFamily="Consolas Bold" 
-               Width="NaN" 
-               Height="NaN"/>
+               FontFamily="Consolas Bold" />
 
         <Button Name="StartButton"
                 Command="{Binding StartCommand}"
                 Style="{DynamicResource RoundButton}"
                 Content="Start"
                 FontSize="25"
-                Height="NaN" 
-                Margin="69,324,1070,324" 
-                Width="NaN"
+                Height="100" 
+                HorizontalAlignment="Left"
+                Margin="200,400,0,0"
+                VerticalAlignment="Top"
+                Width="200"
                 Background="#8fc0a9"/>
 
         <Button Name="ClearBoardButton"
                 Style="{DynamicResource RoundButton}"
                 Content="Clear Board"
                 FontSize="20"
-                Height="NaN" 
-                Margin="68,492,1071,156" 
-                Width="NaN"
+                Height="100" 
+                HorizontalAlignment="Left"
+                Margin="200,600,0,0"
+                VerticalAlignment="Top"
+                Width="200"
                 Background="#df7373"/>
     </Grid>
 
