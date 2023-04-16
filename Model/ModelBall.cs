@@ -17,18 +17,18 @@ namespace Model
 
         public ModelBall(int xPos, int yPos, int radius)
         {
-            this._xPosition = xPos;          // NIE JESTEM PEWNA CZY TO TAK NIESTETY nie chce mi się myśleć jest 3 w nocy - czy to ta sama zmienna jak ją wezmę getterem
+            this._xPosition = xPos;        
             this._yPosition = yPos;
             this._radius = radius;
         }
 
 
-        public override void UpdateBall(Object source, PropertyChangedEventArgs e) // to musi byc public teraz
+        public override void UpdateBall(Object source, PropertyChangedEventArgs e) 
         {
             IBall sourceBall = (IBall)source;
             if (e.PropertyName == "XPosition")
             {
-                this.XPosition = sourceBall.XPosition - sourceBall.Radius;   // the center of the ball will be aligned with the coordinates of the position property        
+                this.XPosition = sourceBall.XPosition - sourceBall.Radius;       
             }
             if (e.PropertyName == "YPosition")
             {

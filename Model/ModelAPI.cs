@@ -19,10 +19,7 @@ namespace Model
         }
 
 
-        /* The ObservableCollection<T> class is similar to the List<T> class, but with the additional feature of raising events when its contents change.
-         * Specifically, it implements the INotifyCollectionChanged interface, which defines the CollectionChanged event that gets raised whenever items are added, removed, or the whole list is refreshed. */
-
-        public override ObservableCollection<IModelBall> GetBalls()      // ????????????
+        public override ObservableCollection<IModelBall> GetBalls()   
         {
             _balls.Clear();
             foreach (IBall ball in _logicAPI.GetBalls())
@@ -39,24 +36,19 @@ namespace Model
             _logicAPI.ClearBoard();
         }
 
-        public override void CreateRandomBallLocation() // moge dac voida zamiast IBalla? xd
+        public override void CreateRandomBallLocation() 
         {
             _logicAPI.CreateRandomBallLocation(); 
         }
 
-        public override void Start(int number)    // CO TU DAĆ, NIE WIEM XD może coś innego
+        public override void Start(int number)    
         {
-           // _logicAPI.ClearBoard();
+            _logicAPI.ClearBoard();
             _logicAPI.AddBalls(number);          
             _logicAPI.MoveBalls();
         }
 
-        public override void Stop()     //  idk czy to potrzbene
-        {
-            throw new NotImplementedException();
-        }
 
-        // no te metody to struggle
 
     }
 

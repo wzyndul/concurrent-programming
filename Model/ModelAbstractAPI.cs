@@ -15,8 +15,6 @@ namespace Model
         public abstract void CreateRandomBallLocation();
         public abstract void ClearBoard();
         public abstract void Start(int number);
-        public abstract void Stop();
-
-        // DO ZROBIENIA METODY
+        
     }
 }
