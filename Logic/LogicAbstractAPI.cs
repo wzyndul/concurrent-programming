@@ -22,11 +22,5 @@ namespace Logic
 
         public abstract IBall CreateRandomBallLocation();
         public abstract List<IBall> GetBalls();
-
-        public abstract List<List<int>> GetAllBallsPosition();
-      
-     
-
-
     }
 }

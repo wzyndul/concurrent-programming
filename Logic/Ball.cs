@@ -38,18 +38,6 @@ namespace Logic
         {
             this._xSpeed = x; this._ySpeed = y;
         }
-        public override int GetXPosition()
-        {
-            return this._xPosition;
-        }
-        public override int GetYPosition()
-        {
-            return this._yPosition;
-        }
-        public override int GetRadius() 
-        {
-            return this._radius;
-        }
 
         // Properties needed for ModelBall
         public override int XPosition

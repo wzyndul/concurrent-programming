@@ -46,7 +46,7 @@ namespace Logic
                 _tasks.Add(new Task(() =>
                 {
                     IBall ball = CreateRandomBallLocation();
-                    while (this._isRunning)
+                    while (!this._isRunning)
                     {
                         ball.ChangeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
                         ball.MoveBall();
@@ -58,7 +58,7 @@ namespace Logic
 
         public override void ClearBoard()
         {
-            _isRunning = false;
+            _isRunning = true;
             bool isAllTasksCompleted = false;
 
             while (!isAllTasksCompleted)
@@ -123,20 +123,6 @@ namespace Logic
         public override List<IBall> GetBalls()
         {
             return _balls;  
-        }
-        public override List<List<int>> GetAllBallsPosition()  //do wywalenia
-        {
-            List<List<int>> list = new List<List<int>>();
-            foreach (IBall ball in _balls)
-            {
-                List<int> two = new List<int>
-                {
-                    ball.GetXPosition(),
-                    ball.GetYPosition()
-                };
-                list.Add(two);
-            }
-            return list;
         }
     }
     

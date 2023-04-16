@@ -18,7 +18,7 @@ namespace LogicTest
         public void AddClearBallsTest()
         {
             _ball = _board.CreateBall(2, 3, 5, 4, 5);
-            Assert.AreEqual(5, _ball.GetRadius());
+            Assert.AreEqual(5, _ball.Radius);
             Assert.AreEqual(1, _board.GetBalls().Count());
             _board.ClearBoard();
             Assert.AreEqual(0, _board.GetBalls().Count());
@@ -55,10 +55,10 @@ namespace LogicTest
             _board.AddBalls(5); //5 taskow
             _board.MoveBalls();   //rusza je tutaj
             Thread.Sleep(1000);
-            List<int> first = _board.GetAllBallsPosition()[0];
+            int firstX = _board.GetBalls().ToArray()[0].XPosition;
             Thread.Sleep(1000);
-            List<int> second = _board.GetAllBallsPosition()[0];
-            Assert.AreNotEqual(first, second);
+            int secondX = _board.GetBalls().ToArray()[0].XPosition;
+            Assert.AreNotEqual(firstX, secondX);
         }
 
         private ModelAbstractAPI _modelApi = ModelAbstractAPI.CreateAPI();

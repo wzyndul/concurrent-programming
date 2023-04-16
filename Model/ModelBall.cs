@@ -28,15 +28,15 @@ namespace Model
             IBall sourceBall = (IBall)source;
             if (e.PropertyName == "XPosition")
             {
-                this.XPosition = sourceBall.GetXPosition() - sourceBall.GetRadius();   // the center of the ball will be aligned with the coordinates of the position property        
+                this.XPosition = sourceBall.XPosition - sourceBall.Radius;   // the center of the ball will be aligned with the coordinates of the position property        
             }
             if (e.PropertyName == "YPosition")
             {
-                this.YPosition = sourceBall.GetYPosition() - sourceBall.GetRadius();               
+                this.YPosition = sourceBall.YPosition - sourceBall.Radius;               
             }
             if (e.PropertyName == "Radius")
             {
-                this.Radius = sourceBall.GetRadius();
+                this.Radius = sourceBall.Radius;
             }
         }
 
