@@ -29,14 +29,7 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Path Fill="Green">
-                        <!-- inny kolor potem pls to chyba kolor kuli-->
-                        <Path.Data>
-                            <EllipseGeometry
-                                RadiusX="{Binding Radius}"
-                                RadiusY="{Binding Radius}" />
-                        </Path.Data>
-                    </Path>
+                    <Ellipse Height="{Binding Radius}" Width="{Binding Radius}" Stroke="#c6841e" Fill="#c6841e"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
@@ -53,8 +46,7 @@
         </Rectangle>
 
         <TextBox Name="TextBox"
-                 IsEnabled="{Binding IsButtonEnabled}"
-                 Text="{Binding NoOfBalls}"
+                 Text="{Binding NoOfBalls, UpdateSourceTrigger=PropertyChanged}"
                  Height="NaN" 
                  Margin="46,197,1046,461" 
                  Width="NaN"

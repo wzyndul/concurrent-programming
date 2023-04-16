@@ -71,6 +71,15 @@ namespace Logic
                 RaisePropertyChanged("YPosition");
             }
         }
+        public override int Radius
+        {
+            get => _radius;
+            set
+            {
+                _radius = value;
+                RaisePropertyChanged("Radius");
+            }
+        }
 
 
         public override event PropertyChangedEventHandler? PropertyChanged;

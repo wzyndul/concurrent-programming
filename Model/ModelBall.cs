@@ -13,12 +13,13 @@ namespace Model
     {
         public int _xPosition;
         public int _yPosition;
-        // bez radius nie
+        public int _radius;
 
         public ModelBall(IBall ball)
         {
             this._xPosition = ball.GetXPosition();          // NIE JESTEM PEWNA CZY TO TAK NIESTETY nie chce mi się myśleć jest 3 w nocy - czy to ta sama zmienna jak ją wezmę getterem
             this._yPosition = ball.GetYPosition();
+            this._radius = ball.GetRadius();
             ball.PropertyChanged += UpdateBall; // nullability? 
         }
 
@@ -35,6 +36,11 @@ namespace Model
             {
                 this._yPosition = sourceBall.GetYPosition() - sourceBall.GetRadius();
                 _yPosition = sourceBall.GetYPosition();
+            }
+            if (e.PropertyName == "Radius")
+            {
+                this._radius = sourceBall.GetRadius();
+                _radius = sourceBall.GetRadius();
             }
         }
 
@@ -57,6 +63,15 @@ namespace Model
                 _yPosition = value;
                 RaisePropertyChanged();
             }
+        }
+
+        public override int Radius 
+        {
+            get => _radius;
+            set
+            {
+                _radius = value; RaisePropertyChanged();
+            } 
         }
 
         public override event PropertyChangedEventHandler? PropertyChanged;

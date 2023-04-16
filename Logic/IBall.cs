@@ -22,6 +22,7 @@ namespace Logic
         // Properties needed for ModelBall
         public abstract int XPosition { get; set; }
         public abstract int YPosition { get; set; }
+        public abstract int Radius { get; set; }
 
         public abstract event PropertyChangedEventHandler? PropertyChanged;
     }

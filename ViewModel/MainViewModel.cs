@@ -16,8 +16,8 @@ namespace ViewModel
         public BaseCommand StartCommand { get; set; }
         public BaseCommand StopCommand { get; set; }
 
-        //public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
-        public MainViewModel() { }
+        public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
+        //public MainViewModel() { }
 
         public MainViewModel(ModelAbstractAPI modelAPI)
         {
@@ -36,6 +36,7 @@ namespace ViewModel
             {
                 _modelAPI.CreateRandomBallLocation();
             }
+            _balls = _modelAPI.GetBalls();
             RaisePropertyChanged("Balls");
             
             //exceptions, try, cos tam
@@ -67,33 +68,33 @@ namespace ViewModel
             set
             {
                 _noOfBalls = value;
-                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(NoOfBalls));
             }
         }
 
-        public bool IsButtonEnabled
-        {
-            get => _isButtonEnabled;
-            set
-            {
-                _isButtonEnabled = value; RaisePropertyChanged();
-            }
-        }
+        //public bool IsButtonEnabled
+        //{
+        //    get => _isButtonEnabled;
+        //    set
+        //    {
+        //        _isButtonEnabled = value; RaisePropertyChanged();
+        //    }
+        //}
 
-        public bool IsButtonDisabled
-        {
-            get => !_isButtonEnabled;
-        }
+        //public bool IsButtonDisabled
+        //{
+        //    get => !_isButtonEnabled;
+        //}
 
-        private bool EnableButton()
-        {
-            return _isButtonEnabled;
-        }
+        //private bool EnableButton()
+        //{
+        //    return _isButtonEnabled;
+        //}
 
-        private bool DisableButton()
-        {
-            return !_isButtonEnabled;
-        }
+        //private bool DisableButton()
+        //{
+        //    return !_isButtonEnabled;
+        //}
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
