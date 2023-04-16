@@ -13,17 +13,9 @@ namespace Model
         private LogicAbstractAPI _logicAPI;
         private ObservableCollection<IModelBall> _balls = new ObservableCollection<IModelBall>();
 
-        /*public ModelAPI(LogicAbstractAPI logicAPI)
-        {
-            _logicAPI = logicAPI ?? LogicAbstractAPI.CreateAPI(20, 30, 5);        // te wartości tak se o bo nie wiem co wpisać
-        }
-
-        public ModelAPI() : this(LogicAbstractAPI.CreateAPI(20, 30, 5)) { }*/
-
-        // REDO CHYBA TAK?
         public ModelAPI()
         {
-            _logicAPI = LogicAbstractAPI.CreateAPI(1270, 720, 5);        // te wartości tak se o bo nie wiem co wpisać
+            _logicAPI = LogicAbstractAPI.CreateAPI(800, 700, 5);       
         }
 
 
