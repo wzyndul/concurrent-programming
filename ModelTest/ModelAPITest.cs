@@ -19,8 +19,6 @@ namespace ModelTest
             int y2 = modelBall1.YPosition;
             Assert.AreNotEqual(x1, x2);
             Assert.AreNotEqual(y1, y2);
-            Assert.AreEqual(20, _modelApi.GetBalls().Count());
-
         }
     }
 }

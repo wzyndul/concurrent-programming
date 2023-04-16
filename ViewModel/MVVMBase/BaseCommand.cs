@@ -13,7 +13,7 @@ namespace ViewModel.MVVMBase
         private Func<bool> _canExecute;
         public event EventHandler? CanExecuteChanged;
 
-        public BaseCommand(Action execute) : this(execute, null) { }   // dk
+        public BaseCommand(Action execute) : this(execute, null) { }   
         public BaseCommand(Action execute, Func<bool> canExecute)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));

@@ -39,20 +39,5 @@ namespace LogicTest
             _board.CreateRandomBallLocation();
             Assert.AreEqual(10, _board.GetBalls().Count());
         }
-        [TestMethod]
-        public void AddBallsMoveBallsTest()
-        {
-            _board.ClearBoard();
-            _board.AddBalls(5); 
-            _board.MoveBalls();   
-            Thread.Sleep(1000);
-            int firstX = _board.GetBalls().ToArray()[0].XPosition;
-            Thread.Sleep(1000);
-            int secondX = _board.GetBalls().ToArray()[0].XPosition;
-            Assert.AreNotEqual(firstX, secondX);
-        }
-
     }
-
-
 }

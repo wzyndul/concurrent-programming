@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Data;
 
@@ -39,9 +40,10 @@ namespace Logic
         {
             for (int i = 0; i < n; i++)
             {
+                IBall ball = CreateRandomBallLocation();
                 _tasks.Add(new Task(() =>
                 {
-                    IBall ball = CreateRandomBallLocation();
+                    
                     while (!this._isRunning)
                     {
                         lock (ball)
@@ -52,12 +54,13 @@ namespace Logic
                                 ball.MoveBall();
                                 Thread.Sleep(100);
                             }
-                            else {
+                            else
+                            {
                                 continue;
                             }
                         }
                     }
-                }));        
+                }));
             }
         }
 
