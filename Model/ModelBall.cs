@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class ModelBall : INotifyPropertyChanged
+    internal class ModelBall : IModelBall, INotifyPropertyChanged
     {
         public int _xPosition;
         public int _yPosition;
@@ -23,7 +23,7 @@ namespace Model
         }
 
 
-        private void UpdateBall(Object source, PropertyChangedEventArgs e)
+        public override void UpdateBall(Object source, PropertyChangedEventArgs e) // to musi byc public teraz
         {
             IBall sourceBall = (IBall)source;
             if (e.PropertyName == "XPosition")
@@ -39,7 +39,7 @@ namespace Model
         }
 
 
-        public int XPosition
+        public override int XPosition
         {
             get => _xPosition;
             set
@@ -49,7 +49,7 @@ namespace Model
             }
         }
 
-        public int YPosition
+        public override int YPosition
         {
             get => _yPosition;
             set
@@ -59,7 +59,7 @@ namespace Model
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public override event PropertyChangedEventHandler? PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

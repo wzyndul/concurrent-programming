@@ -8,21 +8,22 @@ namespace ViewModel
     public class MainViewModel : BaseViewModel
     {
         private ModelAbstractAPI _modelAPI;
-        private ObservableCollection<ModelBall> _balls;
+        private ObservableCollection<IModelBall> _balls;
         private string _noOfBalls = "";
         private bool _isButtonEnabled = true; // dla przycisków
-        public RelayCommand StartCommand { get; set; }
-        public RelayCommand StopCommand { get; set; }
+        public BaseCommand StartCommand { get; set; }
+        public BaseCommand StopCommand { get; set; }
 
-        public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
+        //public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
 
         public MainViewModel(ModelAbstractAPI modelAPI)
         {
 
-            StartCommand = new RelayCommand(Start, EnableButton);
+            StartCommand = new BaseCommand(Start, EnableButton);
             //StopCommand = new RelayCommand(...);
             _modelAPI = modelAPI ?? ModelAbstractAPI.CreateAPI();
         }
+
 
         public void Start()
         {
@@ -45,7 +46,7 @@ namespace ViewModel
             // wszystko potrzebne do stopu apki uzywajac modelapi
         }
 
-        public ObservableCollection<ModelBall> Balls
+        public ObservableCollection<IModelBall> Balls
         {
             get => _balls;
 

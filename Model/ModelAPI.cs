@@ -11,7 +11,7 @@ namespace Model
     public class ModelAPI : ModelAbstractAPI
     {
         private LogicAbstractAPI _logicAPI;
-        private ObservableCollection<ModelBall> _balls = new ObservableCollection<ModelBall>();
+        private ObservableCollection<IModelBall> _balls = new ObservableCollection<IModelBall>();
 
         /*public ModelAPI(LogicAbstractAPI logicAPI)
         {
@@ -30,7 +30,7 @@ namespace Model
         /* The ObservableCollection<T> class is similar to the List<T> class, but with the additional feature of raising events when its contents change.
          * Specifically, it implements the INotifyCollectionChanged interface, which defines the CollectionChanged event that gets raised whenever items are added, removed, or the whole list is refreshed. */
 
-        public override ObservableCollection<ModelBall> GetBalls()      // ????????????
+        public override ObservableCollection<IModelBall> GetBalls()      // ????????????
         {
             _balls.Clear();
             foreach (IBall ball in _logicAPI.GetBalls())
