@@ -16,7 +16,7 @@ namespace Logic
         private int _ySpeed { get; set; }
         private int _radius { get; set; }
 
-        public Ball(int xPosition, int yPosition, int radius, int xSpeed = 0, int ySpeed = 0)
+        internal Ball(int xPosition, int yPosition, int radius, int xSpeed = 0, int ySpeed = 0)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
@@ -34,7 +34,7 @@ namespace Logic
         }
 
 
-        public override void RandomizeSpeed(int x, int y)
+        public override void ChangeSpeed(int x, int y)
         {
             this._xSpeed = x; this._ySpeed = y;
         }

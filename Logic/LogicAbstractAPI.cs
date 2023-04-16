@@ -24,6 +24,8 @@ namespace Logic
         public abstract List<IBall> GetBalls();
 
         public abstract List<List<int>> GetAllBallsPosition();
+      
+     
 
 
     }

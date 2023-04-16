@@ -10,7 +10,7 @@
         Height="720" 
         Width="1280">
     <Window.DataContext>
-        <vm:ViewModel/>
+        <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <ItemsControl

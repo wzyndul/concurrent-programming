@@ -13,7 +13,7 @@ namespace ViewModel
         private bool _isButtonEnabled = true; // dla przycisków
         public RelayCommand StartCommand { get; set; }
         public RelayCommand StopCommand { get; set; }
-        
+
         public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
 
         public MainViewModel(ModelAbstractAPI modelAPI)
@@ -48,8 +48,8 @@ namespace ViewModel
             }
         }
 
-        public string NoOfBalls 
-        { 
+        public string NoOfBalls
+        {
             get => _noOfBalls;
 
             set
@@ -62,8 +62,8 @@ namespace ViewModel
         public bool IsButtonEnabled
         {
             get => _isButtonEnabled;
-            set 
-            { 
+            set
+            {
                 _isButtonEnabled = value; RaisePropertyChanged();
             }
         }
@@ -84,3 +84,4 @@ namespace ViewModel
             _isButtonEnabled = false;
         }
     }
+}

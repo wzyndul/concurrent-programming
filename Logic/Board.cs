@@ -11,9 +11,9 @@ namespace Logic
     {
         private int _boardWidth { get; }
         private int _boardHeight { get; }
-        private int _ballRadius { get; } 
-        private List<IBall> _balls = new List<IBall>();
-        private List<Task> _tasks = new List<Task>();
+        private int _ballRadius { get; }
+        private List<IBall> _balls;
+        private List<Task> _tasks;
         private DataAbstractAPI _dataAPI;
 
         public override IBall CreateBall(int xPos, int yPos, int xSpeed = 0, int ySpeed = 0)
@@ -35,6 +35,8 @@ namespace Logic
             this._boardHeight = boardHeight;
             this._ballRadius = ballRadius;
             this._dataAPI = dataAPI ?? DataAbstractAPI.CreateAPI();
+            this._balls = new List<IBall>();
+            this._tasks = new List<Task>();
         }
         public override void AddBalls(int n)
         {
@@ -45,7 +47,7 @@ namespace Logic
                     IBall ball = CreateRandomBallLocation();
                     while (true)
                     {
-                        ball.RandomizeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
+                        ball.ChangeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
                         ball.MoveBall();
                         Thread.Sleep(1000);    // na razie cokolwiek   
                     }
@@ -115,4 +117,5 @@ namespace Logic
             return list;
         }
     }
+    
 }
