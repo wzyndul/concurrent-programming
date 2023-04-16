@@ -12,6 +12,7 @@ namespace Logic
     {
         public static LogicAbstractAPI CreateAPI(int boardWidth, int boardHeight, int ballRadius = 5)
         {
+            Console.WriteLine("jestem w LOgicku");
             return new Board(boardWidth, boardHeight, ballRadius, DataAbstractAPI.CreateAPI());
         }
         public abstract void AddBalls(int number);

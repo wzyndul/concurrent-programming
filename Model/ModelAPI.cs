@@ -32,6 +32,7 @@ namespace Model
 
         public override ObservableCollection<ModelBall> GetBalls()      // ????????????
         {
+            Console.WriteLine(_logicAPI.GetBalls().Count);
             _balls.Clear();
             foreach (IBall ball in _logicAPI.GetBalls())
             {               
@@ -50,8 +51,11 @@ namespace Model
             _logicAPI.CreateRandomBallLocation(); 
         }
 
-        public override void Start()    // CO TU DAĆ, NIE WIEM XD może coś innego
+        public override void Start(int number)    // CO TU DAĆ, NIE WIEM XD może coś innego
         {
+            _logicAPI.AddBalls(number);
+            Console.WriteLine("w starcie" + _logicAPI.GetBalls().Count);
+           
             _logicAPI.MoveBalls();  
         }
 

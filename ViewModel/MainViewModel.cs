@@ -18,8 +18,9 @@ namespace ViewModel
 
         public MainViewModel(ModelAbstractAPI modelAPI)
         {
-            // StartCommand = new RelayCommand(...);
-            // StopCommand = new RelayCommand(...);
+
+            StartCommand = new RelayCommand(Start, EnableButton);
+            //StopCommand = new RelayCommand(...);
             _modelAPI = modelAPI ?? ModelAbstractAPI.CreateAPI();
         }
 
@@ -27,9 +28,16 @@ namespace ViewModel
         {
             // wszystko potrzebne do startu apki uzywajac modelapi
             int noOfBalls = int.Parse(_noOfBalls);
+            for(int i = 0; i < noOfBalls; i++) 
+            {
+                _modelAPI.CreateRandomBallLocation();
+            }
+            RaisePropertyChanged("Balls");
+            
             //exceptions, try, cos tam
             // musimy przekazywać ilość do dodania z AddBalls w Logice
-            _modelAPI.Start();  // itd 
+            _modelAPI.Start(noOfBalls);  // itd 
+
         }
 
         public void Stop()
@@ -73,15 +81,14 @@ namespace ViewModel
             get => !_isButtonEnabled;
         }
 
-        private void EnableButton()
+        private bool EnableButton()
         {
-            // coś tu można jeszcze co nie
-            _isButtonEnabled = true;
+            return _isButtonEnabled;
         }
 
-        private void DisableButton()
+        private bool DisableButton()
         {
-            _isButtonEnabled = false;
+            return !_isButtonEnabled;
         }
     }
 }
