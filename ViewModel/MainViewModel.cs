@@ -12,36 +12,25 @@ namespace ViewModel
         private ModelAbstractAPI _modelAPI;
         private ObservableCollection<IModelBall> _balls;
         private string _noOfBalls = "";
-        private bool _isButtonEnabled = true; // dla przycisków
+
         public BaseCommand StartCommand { get; set; }
         public BaseCommand StopCommand { get; set; }
 
-        //public MainViewModel() : this(ModelAbstractAPI.CreateAPI()) { }
-        public MainViewModel() { }
+     
 
-        public MainViewModel(ModelAbstractAPI modelAPI)
+        public MainViewModel()
         {
-
             StartCommand = new BaseCommand(Start);
             StopCommand = new BaseCommand(Stop);
-            _modelAPI = modelAPI ?? ModelAbstractAPI.CreateAPI();
+            _modelAPI = ModelAbstractAPI.CreateAPI();
         }
 
 
         public void Start()
         {
-            // wszystko potrzebne do startu apki uzywajac modelapi
             int noOfBalls = int.Parse(_noOfBalls);
-            for(int i = 0; i < noOfBalls; i++) 
-            {
-                _modelAPI.CreateRandomBallLocation();
-            }
-            RaisePropertyChanged("Balls");
-            
-            //exceptions, try, cos tam
-            // musimy przekazywać ilość do dodania z AddBalls w Logice
-            _modelAPI.Start(noOfBalls);  // itd 
-
+            _modelAPI.Start(noOfBalls);
+            RaisePropertyChanged(nameof(Balls));
         }
 
         public void Stop()
@@ -51,13 +40,7 @@ namespace ViewModel
 
         public ObservableCollection<IModelBall> Balls
         {
-            get => _balls;
-
-            set
-            {
-                _balls = value;
-                RaisePropertyChanged(nameof(Balls));
-            }
+            get => _modelAPI.GetBalls();
         }
 
         public string NoOfBalls
@@ -71,32 +54,8 @@ namespace ViewModel
             }
         }
 
-        public bool IsButtonEnabled
-        {
-            get => _isButtonEnabled;
-            set
-            {
-                _isButtonEnabled = value; RaisePropertyChanged();
-            }
-        }
-
-        public bool IsButtonDisabled
-        {
-            get => !_isButtonEnabled;
-        }
-
-        private bool EnableButton()
-        {
-            return _isButtonEnabled;
-        }
-
-        private bool DisableButton()
-        {
-            return !_isButtonEnabled;
-        }
-
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

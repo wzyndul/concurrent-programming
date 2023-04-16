@@ -7,17 +7,17 @@
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="Pool" 
-        Height="720" 
-        Width="1280">
-    <Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>
+        Height="900" 
+        Width="1500">
     <Grid>
+        <Grid.DataContext>
+            <vm:MainViewModel/>
+        </Grid.DataContext>
         <ItemsControl
-            ItemsSource="{Binding Balls}">
+            ItemsSource="{Binding Balls}" Margin="596,92,104,92" Width="800" Height="700">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Background="#48cfad">
+                    <Canvas Width="800" Height="700"  Background="#98c1d9">
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
@@ -29,7 +29,7 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Path Fill="Green">
+                    <Path Fill="#134074">
                         <!-- inny kolor potem pls to chyba kolor kuli-->
                         <Path.Data>
                             <EllipseGeometry
@@ -41,25 +41,16 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <Rectangle Fill="#f5f7fa" 
-                   Margin="0,0,1000,0" 
-                   Width="NaN">
-            <Rectangle.Effect>
-                <DropShadowEffect ShadowDepth="2"
-                                  Color="#FFA5A5A5"
-                                  Opacity="0.5"
-                                  BlurRadius="2"/>
-            </Rectangle.Effect>
-        </Rectangle>
-
         <TextBox Name="TextBox"
-                 IsEnabled="{Binding IsButtonEnabled}"
-                 Text="{Binding NoOfBalls}"
-                 Height="NaN" 
-                 Margin="46,197,1046,461" 
-                 Width="NaN"
+                 Text="{Binding NoOfBalls, UpdateSourceTrigger=PropertyChanged}"
+                 Height="80" 
+                 HorizontalAlignment="Left"
+                 Margin="200,220,0,0"
+                 VerticalAlignment="Top"
+                 Width="200"
                  TextWrapping="Wrap"
                  Cursor="IBeam"
+                 FontSize="25"
                  FontFamily="Consolas">
             <TextBox.Resources>
                 <Style TargetType="Border">
@@ -70,48 +61,34 @@
 
         <Label Name="EnterBallsLabel"
                Content="Enter No. &#10;of balls:" 
-               Margin="78,106,1070,512"
+               HorizontalAlignment="Left"
+               Margin="230,100,0,0"
+               VerticalAlignment="Top"
                FontSize="25"
-               FontFamily="Consolas Bold" 
-               Width="NaN" 
-               Height="NaN"/>
+               FontFamily="Consolas Bold" />
 
         <Button Name="StartButton"
                 Command="{Binding StartCommand}"
                 Style="{DynamicResource RoundButton}"
                 Content="Start"
                 FontSize="25"
-                Height="NaN" 
-                Margin="68,263,1071,385" 
-                Width="NaN"
-                Background="#a0d468"/>
+                Height="100" 
+                HorizontalAlignment="Left"
+                Margin="200,400,0,0"
+                VerticalAlignment="Top"
+                Width="200"
+                Background="#8fc0a9"/>
 
         <Button Name="ClearBoardButton"
                 Style="{DynamicResource RoundButton}"
                 Content="Clear Board"
                 FontSize="20"
-                Height="NaN" 
-                Margin="68,492,1071,156" 
-                Width="NaN"
-                Background="#ed5565"/>
-
-        <Button Name="PauseButton"
-                Style="{DynamicResource RoundButton}"
-                Content="Pause"
-                FontSize="18"
-                Height="NaN" 
-                Margin="29,386,1161,274" 
-                Width="NaN"
-                Background="#ffce54"/>
-
-        <Button Name="ResumeButton"
-                Style="{DynamicResource RoundButton}"
-                Content="Resume"
-                FontSize="18"
-                Height="NaN" 
-                Margin="158,386,1032,274" 
-                Width="NaN"
-                Background="#4fc1e9"/>
+                Height="100" 
+                HorizontalAlignment="Left"
+                Margin="200,600,0,0"
+                VerticalAlignment="Top"
+                Width="200"
+                Background="#df7373"/>
     </Grid>
 
     <!-- Button template -->

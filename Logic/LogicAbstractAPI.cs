@@ -15,18 +15,12 @@ namespace Logic
             return new Board(boardWidth, boardHeight, ballRadius, DataAbstractAPI.CreateAPI());
         }
         public abstract void AddBalls(int number);
-        public abstract IBall CreateBall(int xPosition, int yPosition, int xSpeed = 0, int ySpeed = 0);
+        public abstract IBall CreateBall(int xPosition, int yPosition,int radius = 5, int xSpeed = 0, int ySpeed = 0);
         public abstract void ClearBoard();
         public abstract void MoveBalls();
 
 
         public abstract IBall CreateRandomBallLocation();
         public abstract List<IBall> GetBalls();
-
-        public abstract List<List<int>> GetAllBallsPosition();
-      
-     
-
-
     }
 }

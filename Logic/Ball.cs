@@ -29,26 +29,14 @@ namespace Logic
 
         public override void MoveBall()
         {
-            this._xPosition += _xSpeed;
-            this._yPosition += _ySpeed;
+            this.XPosition += _xSpeed;
+            this.YPosition += _ySpeed;
         }
 
 
         public override void ChangeSpeed(int x, int y)
         {
             this._xSpeed = x; this._ySpeed = y;
-        }
-        public override int GetXPosition()
-        {
-            return this._xPosition;
-        }
-        public override int GetYPosition()
-        {
-            return this._yPosition;
-        }
-        public override int GetRadius() 
-        {
-            return this._radius;
         }
 
         // Properties needed for ModelBall
@@ -58,7 +46,7 @@ namespace Logic
             set
             {
                 _xPosition = value;
-                RaisePropertyChanged("XPosition");
+                RaisePropertyChanged();
             }
         }
 
@@ -68,13 +56,22 @@ namespace Logic
             set
             {
                 _yPosition = value;
-                RaisePropertyChanged("YPosition");
+                RaisePropertyChanged();
+            }
+        }
+        public override int Radius
+        {
+            get => _radius;
+            set
+            {
+                _radius = value;
+                RaisePropertyChanged();
             }
         }
 
 
         public override event PropertyChangedEventHandler? PropertyChanged;
-        protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
