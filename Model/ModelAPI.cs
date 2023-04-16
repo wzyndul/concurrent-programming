@@ -15,7 +15,7 @@ namespace Model
 
         public ModelAPI()
         {
-            _logicAPI = LogicAbstractAPI.CreateAPI(800, 700, 5);       
+            _logicAPI = LogicAbstractAPI.CreateAPI(800, 700, 10);       
         }
 
 
@@ -46,7 +46,7 @@ namespace Model
 
         public override void Start(int number)    // CO TU DAĆ, NIE WIEM XD może coś innego
         {
-            _logicAPI.ClearBoard(); //to mozna wywalic
+           // _logicAPI.ClearBoard();
             _logicAPI.AddBalls(number);          
             _logicAPI.MoveBalls();
         }

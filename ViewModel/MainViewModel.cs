@@ -16,7 +16,7 @@ namespace ViewModel
         public BaseCommand StartCommand { get; set; }
         public BaseCommand StopCommand { get; set; }
 
-     
+
 
         public MainViewModel()
         {
@@ -35,7 +35,7 @@ namespace ViewModel
 
         public void Stop()
         {
-            // wszystko potrzebne do stopu apki uzywajac modelapi
+            _modelAPI.ClearBoard();
         }
 
         public ObservableCollection<IModelBall> Balls

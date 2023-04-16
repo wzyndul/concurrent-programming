@@ -69,11 +69,17 @@ namespace Logic
             }
         }
 
-
-        public override event PropertyChangedEventHandler? PropertyChanged;
+    public override event PropertyChangedEventHandler? PropertyChanged;
         private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public override bool CheckBorderColision(int width, int height)
+        {
+            if(_xPosition + _radius +_xSpeed >= width || _yPosition + _radius + _ySpeed >= height
+                || _xPosition - _radius + _xSpeed <= 0 || _yPosition - _radius + _ySpeed <= 0) {  return false; }
+            return true;
         }
     }
 }

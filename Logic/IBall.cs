@@ -16,6 +16,7 @@ namespace Logic
         }
         public abstract void ChangeSpeed(int x, int y);
 
+        public abstract bool CheckBorderColision(int width, int height);
 
         // Properties needed for ModelBall
         public abstract int XPosition { get; set; }
