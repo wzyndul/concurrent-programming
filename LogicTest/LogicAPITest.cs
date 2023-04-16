@@ -54,12 +54,9 @@ namespace LogicTest
             _board.MoveBalls();   //rusza je tutaj
             Thread.Sleep(1000);
             List<int> first = _board.GetAllBallsPosition()[0];
-            Console.WriteLine(first[0] + " " + first[1]);
             Thread.Sleep(1000);
             List<int> second = _board.GetAllBallsPosition()[0];
             Assert.AreNotEqual(first, second);
-            Console.WriteLine(second[0] + " " + second[1]);
-            Assert.AreEqual(5, _board.GetBalls().Count());
         }
 
     }

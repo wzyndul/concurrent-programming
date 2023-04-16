@@ -11,8 +11,8 @@ namespace Model
 {
     public class ModelBall : INotifyPropertyChanged
     {
-        private int _xPosition;
-        private int _yPosition;
+        public int _xPosition;
+        public int _yPosition;
         // bez radius nie
 
         public ModelBall(IBall ball)
@@ -29,10 +29,12 @@ namespace Model
             if (e.PropertyName == "XPosition")
             {
                 this._xPosition = sourceBall.GetXPosition() - sourceBall.GetRadius();   // the center of the ball will be aligned with the coordinates of the position property
+                //_xPosition = sourceBall.GetXPosition();
             }
             if (e.PropertyName == "YPosition")
             {
                 this._yPosition = sourceBall.GetYPosition() - sourceBall.GetRadius();
+                _yPosition = sourceBall.GetYPosition();
             }
         }
 

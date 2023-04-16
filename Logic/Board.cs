@@ -49,7 +49,7 @@ namespace Logic
                     {
                         ball.ChangeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
                         ball.MoveBall();
-                        Thread.Sleep(1000);    // na razie cokolwiek   
+                        Thread.Sleep(100);    // na razie cokolwiek   
                     }
                 }));
             }
@@ -100,7 +100,7 @@ namespace Logic
 
         public override List<IBall> GetBalls()
         {
-            return _balls.ToList();  
+            return _balls;  
         }
         public override List<List<int>> GetAllBallsPosition()
         {
