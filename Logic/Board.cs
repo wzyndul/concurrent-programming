@@ -48,7 +48,7 @@ namespace Logic
                     {
                         lock (ball)
                         {
-                            ball.ChangeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
+                            ball.ChangeSpeed(GenerateRandomInt(-30, 30), GenerateRandomInt(-30, 30));
                             if (ball.CheckBorderColision(_boardWidth, _boardHeight))
                             {
                                 ball.MoveBall();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class DataAPI : DataAbstractAPI
+    internal class DataAPI : DataAbstractAPI
     {
         public override void Connect()
         {
