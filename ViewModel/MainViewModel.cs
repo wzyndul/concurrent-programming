@@ -1,9 +1,7 @@
-﻿using Logic;
-using Model;
+﻿using Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ViewModel.MVVMBase;
 
 namespace ViewModel
 {
@@ -13,15 +11,14 @@ namespace ViewModel
         private ObservableCollection<IModelBall> _balls;
         private string _noOfBalls = "";
 
-        public BaseCommand StartCommand { get; set; }
-        public BaseCommand StopCommand { get; set; }
-
+        public Command StartCommand { get; set; }
+        public Command StopCommand { get; set; }
 
 
         public MainViewModel()
         {
-            StartCommand = new BaseCommand(Start);
-            StopCommand = new BaseCommand(Stop);
+            StartCommand = new Command(Start);
+            StopCommand = new Command(Stop);
             _modelAPI = ModelAbstractAPI.CreateAPI();
         }
 

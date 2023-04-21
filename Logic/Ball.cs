@@ -69,7 +69,7 @@ namespace Logic
             }
         }
 
-    public override event PropertyChangedEventHandler? PropertyChanged;
+        public override event PropertyChangedEventHandler? PropertyChanged;
         private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -81,5 +81,6 @@ namespace Logic
                 || _xPosition - _radius + _xSpeed <= 0 || _yPosition - _radius + _ySpeed <= 0) {  return false; }
             return true;
         }
+
     }
 }

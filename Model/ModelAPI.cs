@@ -8,14 +8,21 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class ModelAPI : ModelAbstractAPI
+    internal class ModelAPI : ModelAbstractAPI
     {
         private LogicAbstractAPI _logicAPI;
         private ObservableCollection<IModelBall> _balls = new ObservableCollection<IModelBall>();
 
         public ModelAPI()
         {
-            _logicAPI = LogicAbstractAPI.CreateAPI(800, 700, 10);       
+            _logicAPI = LogicAbstractAPI.CreateAPI(580, 420, 10);       
+        }
+
+        public override void Start(int number)
+        {
+            _logicAPI.ClearBoard();
+            _logicAPI.AddBalls(number);
+            _logicAPI.MoveBalls();
         }
 
 
@@ -39,13 +46,6 @@ namespace Model
         public override void CreateRandomBallLocation() 
         {
             _logicAPI.CreateRandomBallLocation(); 
-        }
-
-        public override void Start(int number)    
-        {
-            _logicAPI.ClearBoard();
-            _logicAPI.AddBalls(number);          
-            _logicAPI.MoveBalls();
         }
 
 

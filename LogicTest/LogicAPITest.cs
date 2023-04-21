@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logic;
-using Model;
 
 namespace LogicTest
 {
@@ -27,16 +26,10 @@ namespace LogicTest
         [TestMethod]
         public void CreateBallInRandomPlaceTest()
         {
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
-            _board.CreateRandomBallLocation();
+            for (int i = 0; i < 10; i++)
+            {
+                _board.CreateRandomBallLocation();
+            }
             Assert.AreEqual(10, _board.GetBalls().Count());
         }
     }

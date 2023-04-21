@@ -1,4 +1,5 @@
 ﻿<Window x:Class="View.MainWindow"
+        ResizeMode="NoResize"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,19 +7,19 @@
         xmlns:local="clr-namespace:View"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
-        Title="Pool" 
-        Height="900" 
-        Width="1500">
+        Title="Balls" 
+        Height="500" 
+        Width="800">
     <Grid>
         <Grid.DataContext>
             <vm:MainViewModel/>
         </Grid.DataContext>
-        <ItemsControl
-            ItemsSource="{Binding Balls}" Margin="600,90,100,00" Width="800" Height="700">
+
+        <!-- Items Control -->
+        <ItemsControl Height="420" ItemsSource="{Binding Balls}" Margin="190,7,20,7">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Background="#98c1d9">
-                    </Canvas>
+                    <Canvas Background="#98c1d9" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
@@ -30,28 +31,48 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Path Fill="#134074">
-                        <!-- inny kolor potem pls to chyba kolor kuli-->
                         <Path.Data>
                             <EllipseGeometry
                                 RadiusX="{Binding Radius}"
-                                RadiusY="{Binding Radius}" />
+                                RadiusY="{Binding Radius}"/>
                         </Path.Data>
                     </Path>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
+        <!-- Elements -->
+        <Label Name="EnterBallsLabel"
+            Content="Enter No.&#10;of balls:"
+            FontSize="15"
+            Height="50"
+            HorizontalAlignment="Left"
+            Margin="50,100,0,0"
+            VerticalAlignment="Top"
+            Width="100"
+            FontFamily="Consolas"/>
+
+        <Button Name="StartButton"
+            Command="{Binding StartCommand}"
+            Style="{DynamicResource RoundButton}"
+            Content="Start"
+            FontSize="20"
+            Height="40"
+            HorizontalAlignment="Left"
+            Margin="45,230,0,0"
+            VerticalAlignment="Top"
+            Width="100"
+            Background="#8fc0a9"/>
+
         <TextBox Name="TextBox"
-                 Text="{Binding NoOfBalls, UpdateSourceTrigger=PropertyChanged}"
-                 Height="80" 
-                 HorizontalAlignment="Left"
-                 Margin="200,220,0,0"
-                 VerticalAlignment="Top"
-                 Width="200"
-                 TextWrapping="Wrap"
-                 Cursor="IBeam"
-                 FontSize="25"
-                 FontFamily="Consolas">
+            Text="{Binding NoOfBalls, UpdateSourceTrigger=PropertyChanged}"
+            FontSize="20"
+            HorizontalAlignment="Left"
+            Margin="45,170,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="100"
+            FontFamily="Consolas">
             <TextBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -59,37 +80,17 @@
             </TextBox.Resources>
         </TextBox>
 
-        <Label Name="EnterBallsLabel"
-               Content="Enter No. &#10;of balls:" 
-               HorizontalAlignment="Left"
-               Margin="230,100,0,0"
-               VerticalAlignment="Top"
-               FontSize="25"
-               FontFamily="Consolas Bold" />
-
-        <Button Name="StartButton"
-                Command="{Binding StartCommand}"
-                Style="{DynamicResource RoundButton}"
-                Content="Start"
-                FontSize="25"
-                Height="100" 
-                HorizontalAlignment="Left"
-                Margin="200,0,0,0"
-                VerticalAlignment="Center"
-                Width="200"
-                Background="#8fc0a9"/>
-
         <Button Name="StopButton"
-                Command="{Binding StopCommand}"
-                Style="{DynamicResource RoundButton}"
-                Content="Stop"
-                FontSize="25"
-                Height="100" 
-                HorizontalAlignment="Left"
-                Margin="200,600,0,0"
-                VerticalAlignment="Top"
-                Width="200"
-                Background="#df7373"/>
+            Command="{Binding StopCommand}"
+            Style="{DynamicResource RoundButton}"
+            Content="Stop"
+            FontSize="20"
+            Height="40"
+            HorizontalAlignment="Left"
+            Margin="45,300,0,0"
+            VerticalAlignment="Top"
+            Width="100" 
+            Background="#df7373"/>
     </Grid>
 
     <!-- Button template -->
@@ -111,7 +112,6 @@
                                   BlurRadius="2"/>
                 </Setter.Value>
             </Setter>
-
         </Style>
     </Window.Resources>
 </Window>
