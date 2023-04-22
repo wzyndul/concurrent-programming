@@ -17,6 +17,7 @@ namespace Logic
         private List<Task> _tasks;
         private DataAbstractAPI _dataAPI;
         private bool _isRunning = false;
+        private SemaphoreSlim _Semaphore = new SemaphoreSlim(1);
 
         public override IBall CreateBall(int xPos, int yPos, int radius, int xSpeed = 0, int ySpeed = 0)
         {
@@ -41,33 +42,29 @@ namespace Logic
             for (int i = 0; i < n; i++)
             {
                 IBall ball = CreateRandomBallLocation();
-                _tasks.Add(new Task(() =>
+                Task task = new Task(async () =>
                 {
 
-                    while (!this._isRunning)
+                    while (this._isRunning)
                     {
-                        lock (ball)
+                        await this._Semaphore.WaitAsync();
+                        ball.ChangeSpeed(GenerateRandomInt(-3, 3), GenerateRandomInt(-3, 3));
+                        if (ball.CheckBorderColision(_boardWidth, _boardHeight))
                         {
-                            ball.ChangeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
-                            if (ball.CheckBorderColision(_boardWidth, _boardHeight))
-                            {
-                                ball.MoveBall();
-                                Thread.Sleep(20);
-                            }
-                            else
-                            {
-                                continue;
-                            }
+                            ball.MoveBall();
                         }
+                        _Semaphore.Release();
+                        await Task.Delay(30);
                     }
-                }));
+                });
+                _tasks.Add(task);
             }
         }
 
 
         public override void ClearBoard()
         {
-            _isRunning = true;
+            _isRunning = false;
             bool isAllTasksCompleted = false;
 
             while (!isAllTasksCompleted)
@@ -100,13 +97,14 @@ namespace Logic
 
         public override void MoveBalls()
         {
-            this._isRunning = false;
+            this._isRunning = true;
             foreach (Task task in this._tasks)
             {
 
                 task.Start();
 
             }
+
         }
 
 
