@@ -54,7 +54,7 @@ namespace Logic
                             ball.MoveBall();
                         }
                         _Semaphore.Release();
-                        await Task.Delay(30);
+                        await Task.Delay(10);
                     }
                 });
                 _tasks.Add(task);
