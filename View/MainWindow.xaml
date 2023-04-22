@@ -16,7 +16,7 @@
         </Grid.DataContext>
 
         <!-- Items Control -->
-        <ItemsControl Height="420" ItemsSource="{Binding Balls}" Margin="190,7,20,7">
+        <ItemsControl Width="580" Height="420" ItemsSource="{Binding Balls}" Margin="190,7,20,7">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas Background="#98c1d9" />

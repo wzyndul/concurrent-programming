@@ -15,7 +15,7 @@ namespace Model
 
         public ModelAPI()
         {
-            _logicAPI = LogicAbstractAPI.CreateAPI(580, 420, 10);       
+            _logicAPI = LogicAbstractAPI.CreateAPI(580, 420, 10);  // board 580 x 420     
         }
 
         public override void Start(int number)

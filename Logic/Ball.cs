@@ -77,8 +77,8 @@ namespace Logic
 
         public override bool CheckBorderColision(int width, int height)
         {
-            if(_xPosition + _radius +_xSpeed >= width || _yPosition + _radius + _ySpeed >= height
-                || _xPosition - _radius + _xSpeed <= 0 || _yPosition - _radius + _ySpeed <= 0) {  return false; }
+            if (_xPosition + _xSpeed >= width || _yPosition + _ySpeed >= height
+                || _xPosition + -_radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
             return true;
         }
 

@@ -43,16 +43,16 @@ namespace Logic
                 IBall ball = CreateRandomBallLocation();
                 _tasks.Add(new Task(() =>
                 {
-                    
+
                     while (!this._isRunning)
                     {
                         lock (ball)
                         {
-                            ball.ChangeSpeed(GenerateRandomInt(-30, 30), GenerateRandomInt(-30, 30));
+                            ball.ChangeSpeed(GenerateRandomInt(-5, 5), GenerateRandomInt(-5, 5));
                             if (ball.CheckBorderColision(_boardWidth, _boardHeight))
                             {
                                 ball.MoveBall();
-                                Thread.Sleep(100);
+                                Thread.Sleep(20);
                             }
                             else
                             {
@@ -88,33 +88,34 @@ namespace Logic
                 try
                 {
                     task.Dispose();
-                }catch (Exception ex) { }
+                }
+                catch (Exception ex) { }
             }
             _tasks.Clear();
             _balls.Clear();
         }
 
-        
+
 
 
         public override void MoveBalls()
         {
             this._isRunning = false;
-            foreach(Task task in this._tasks)
+            foreach (Task task in this._tasks)
             {
-             
+
                 task.Start();
 
             }
         }
 
-    
+
 
         public override IBall CreateRandomBallLocation()
         {
-            return CreateBall(GenerateRandomInt(0, _boardWidth - _ballRadius),
-                     GenerateRandomInt(0, _boardHeight - _ballRadius), 10,
-                     GenerateRandomInt(-1, 1), GenerateRandomInt(-1, 1));    
+            return CreateBall(GenerateRandomInt(0 + 2 * _ballRadius, _boardWidth - _ballRadius),
+                     GenerateRandomInt(0 + 2 * _ballRadius, _boardHeight - _ballRadius), 10,
+                     GenerateRandomInt(-1, 1), GenerateRandomInt(-1, 1));
         }
 
         private int GenerateRandomInt(int min, int max)
@@ -125,8 +126,8 @@ namespace Logic
 
         public override List<IBall> GetBalls()
         {
-            return _balls;  
+            return _balls;
         }
     }
-    
+
 }
