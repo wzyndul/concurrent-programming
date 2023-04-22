@@ -13,9 +13,9 @@ namespace Model
         private LogicAbstractAPI _logicAPI;
         private ObservableCollection<IModelBall> _balls = new ObservableCollection<IModelBall>();
 
-        public ModelAPI()
+        public ModelAPI(LogicAbstractAPI logicAbstractAPI)
         {
-            _logicAPI = LogicAbstractAPI.CreateAPI(580, 420, 10);  // board 580 x 420     
+            _logicAPI = logicAbstractAPI;   
         }
 
         public override void Start(int number)

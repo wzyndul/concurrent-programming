@@ -6,9 +6,9 @@ namespace Model
 {
     public abstract class ModelAbstractAPI
     {
-        public static ModelAbstractAPI CreateAPI()
+        public static ModelAbstractAPI CreateAPI(LogicAbstractAPI logicAbstractAPI = default)
         {
-            return new ModelAPI();
+            return new ModelAPI(logicAbstractAPI ?? LogicAbstractAPI.CreateAPI(580, 420, 10));
         }
 
         public abstract ObservableCollection<IModelBall> GetBalls();

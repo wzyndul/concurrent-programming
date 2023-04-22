@@ -18,7 +18,7 @@ namespace Logic
         private DataAbstractAPI _dataAPI;
         private bool _isRunning = false;
 
-        public override IBall CreateBall(int xPos, int yPos, int radius = 10, int xSpeed = 0, int ySpeed = 0)
+        public override IBall CreateBall(int xPos, int yPos, int radius, int xSpeed = 0, int ySpeed = 0)
         {
 
             IBall ball = new Ball(xPos, yPos, radius, xSpeed, ySpeed);
@@ -32,7 +32,7 @@ namespace Logic
             this._boardWidth = boardWidth;
             this._boardHeight = boardHeight;
             this._ballRadius = ballRadius;
-            this._dataAPI = dataAPI ?? DataAbstractAPI.CreateAPI();
+            this._dataAPI = dataAPI;
             this._balls = new List<IBall>();
             this._tasks = new List<Task>();
         }
@@ -114,7 +114,7 @@ namespace Logic
         public override IBall CreateRandomBallLocation()
         {
             return CreateBall(GenerateRandomInt(0 + 2 * _ballRadius, _boardWidth - _ballRadius),
-                     GenerateRandomInt(0 + 2 * _ballRadius, _boardHeight - _ballRadius), 10,
+                     GenerateRandomInt(0 + 2 * _ballRadius, _boardHeight - _ballRadius), _ballRadius,
                      GenerateRandomInt(-1, 1), GenerateRandomInt(-1, 1));
         }
 
