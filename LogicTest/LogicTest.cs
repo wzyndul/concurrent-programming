@@ -8,7 +8,7 @@ using Logic;
 namespace LogicTest
 {
     [TestClass]
-    public class LogicApiTest
+    public class LogicTest
     {
         //private LogicAbstractAPI _board = LogicAbstractAPI.CreateAPI(20, 30, 5);
         //private IBall _ball;
