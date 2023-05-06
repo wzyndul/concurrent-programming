@@ -25,7 +25,7 @@ namespace Model
 
         public override void UpdateBall(Object source, PropertyChangedEventArgs e) 
         {
-            IBall sourceBall = (IBall)source;
+            ILogicBall sourceBall = (ILogicBall)source;
             if (e.PropertyName == "XPosition")
             {
                 this.XPosition = sourceBall.XPosition - sourceBall.Radius;       

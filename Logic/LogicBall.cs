@@ -5,10 +5,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Data;
+using Logic;
 
 namespace Logic
 {
-    internal class Ball : IBall, INotifyPropertyChanged
+    internal class LogicBall : ILogicBall
     {
         private int _xPosition { get; set; }
         private int _yPosition { get; set; }
@@ -16,7 +18,7 @@ namespace Logic
         private int _ySpeed { get; set; }
         private int _radius { get; set; }
 
-        internal Ball(int xPosition, int yPosition, int radius, int xSpeed = 0, int ySpeed = 0)
+        internal LogicBall(int xPosition, int yPosition, int radius, int xSpeed = 0, int ySpeed = 0)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
@@ -26,18 +28,6 @@ namespace Logic
         }
 
 
-
-        public override void MoveBall()
-        {
-            this.XPosition += _xSpeed;
-            this.YPosition += _ySpeed;
-        }
-
-
-        public override void ChangeSpeed(int x, int y)
-        {
-            this._xSpeed = x; this._ySpeed = y;
-        }
 
         // Properties needed for ModelBall
         public override int XPosition
@@ -75,12 +65,13 @@ namespace Logic
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public override bool CheckBorderColision(int width, int height)
+        public override void UpdateBall(object source, PropertyChangedEventArgs e)
         {
-            if (_xPosition + _xSpeed + _radius >= width || _yPosition + _ySpeed + _radius>= height
-                || _xPosition + -_radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
-            return true;
+            IDataBall sourceBall = (IDataBall)source;
+            GetType().GetProperty(e.PropertyName!)!.SetValue(
+                this, sourceBall.GetType().GetProperty(e.PropertyName!)!.GetValue(sourceBall)
+            );
         }
-
     }
 }
+

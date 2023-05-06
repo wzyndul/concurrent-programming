@@ -2,56 +2,59 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Data;
 
 namespace Logic
 {
-    internal class Board : LogicAbstractAPI
+    internal class BallManager : LogicAbstractAPI
     {
         private int _boardWidth { get; }
         private int _boardHeight { get; }
         private int _ballRadius { get; }
-        private List<IBall> _balls;
+        private DataAbstractAPI _data;
+        private List<ILogicBall> _balls;
         private List<Task> _tasks;
-        private DataAbstractAPI _dataAPI;
         private bool _isRunning = false;
         private SemaphoreSlim _Semaphore = new SemaphoreSlim(1);
 
-        public override IBall CreateBall(int xPos, int yPos, int radius, int xSpeed = 0, int ySpeed = 0)
+        public override ILogicBall CreateBall(int xPos, int yPos, int radius, int xSpeed = 0, int ySpeed = 0)
         {
 
-            IBall ball = new Ball(xPos, yPos, radius, xSpeed, ySpeed);
+            ILogicBall ball = new LogicBall(xPos, yPos, radius, xSpeed, ySpeed);
             _balls.Add(ball);
             return ball;
         }
 
 
-        public Board(int boardWidth, int boardHeight, int ballRadius, DataAbstractAPI dataAPI)
+        public BallManager(DataAbstractAPI dataLayer)
         {
-            this._boardWidth = boardWidth;
-            this._boardHeight = boardHeight;
-            this._ballRadius = ballRadius;
-            this._dataAPI = dataAPI;
-            this._balls = new List<IBall>();
+            this._data = dataLayer;
+            this._boardWidth = _data.BoardWidth;
+            this._boardHeight = _data.BoardHeight;
+            this._ballRadius = _data.BallRadius;
+            this._balls = new List<ILogicBall>();
             this._tasks = new List<Task>();
         }
         public override void AddBalls(int n)
         {
             for (int i = 0; i < n; i++)
             {
-                IBall ball = CreateRandomBallLocation();
+                IDataBall dataBall = _data.CreateRandomBallLocation();
+                ILogicBall logicBall = CreateBall(dataBall.XPosition, dataBall.YPosition, dataBall.Radius, dataBall.XSpeed, dataBall.YSpeed);
+                dataBall.PropertyChanged += logicBall.UpdateBall!;
+                _balls.Add(logicBall);
+
                 Task task = new Task(async () =>
                 {
 
                     while (this._isRunning)
                     {
                         await this._Semaphore.WaitAsync();
-                        ball.ChangeSpeed(GenerateRandomInt(-3, 3), GenerateRandomInt(-3, 3));
-                        if (ball.CheckBorderColision(_boardWidth, _boardHeight))
+                        //dataBall.ChangeSpeed(GenerateRandomInt(-3, 3), GenerateRandomInt(-3, 3));
+                        if (dataBall.CheckBorderColision(_boardWidth, _boardHeight))
                         {
-                            ball.MoveBall();
+                            dataBall.MoveBall();
                         }
                         _Semaphore.Release();
                         await Task.Delay(10);
@@ -106,26 +109,17 @@ namespace Logic
             }
 
         }
-
-
-
-        public override IBall CreateRandomBallLocation()
-        {
-            return CreateBall(GenerateRandomInt(0 + 2 * _ballRadius, _boardWidth - _ballRadius),
-                     GenerateRandomInt(0 + 2 * _ballRadius, _boardHeight - _ballRadius), _ballRadius,
-                     GenerateRandomInt(-1, 1), GenerateRandomInt(-1, 1));
-        }
-
         private int GenerateRandomInt(int min, int max)
         {
             Random rand = new Random();
             return rand.Next(min, max + 1);
         }
 
-        public override List<IBall> GetBalls()
+
+
+        public override List<ILogicBall> GetBalls()
         {
             return _balls;
         }
     }
-
 }
