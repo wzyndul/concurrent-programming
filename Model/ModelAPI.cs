@@ -29,7 +29,7 @@ namespace Model
         public override ObservableCollection<IModelBall> GetBalls()   
         {
             _balls.Clear();
-            foreach (IBall ball in _logicAPI.GetBalls())
+            foreach (ILogicBall ball in _logicAPI.GetBalls())
             {
                 IModelBall modelBall = IModelBall.CreateModelBall(ball.XPosition, ball.YPosition, ball.Radius);
                 _balls.Add(modelBall);
@@ -41,11 +41,6 @@ namespace Model
         public override void ClearBoard()
         {
             _logicAPI.ClearBoard();
-        }
-
-        public override void CreateRandomBallLocation() 
-        {
-            _logicAPI.CreateRandomBallLocation(); 
         }
 
 
