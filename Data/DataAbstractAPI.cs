@@ -8,16 +8,16 @@ namespace Data
 {
     public abstract class DataAbstractAPI
     {
-        public static DataAbstractAPI CreateAPI(int boardWidth, int boardHeight, int ballRadius)
+        public static DataAbstractAPI CreateAPI(int boardWidth, int boardHeight, double ballRadius)
         {
             return new Board(boardWidth, boardHeight, ballRadius);
         }
-        public abstract IDataBall CreateBall(int xPosition, int yPosition, int radius, int xSpeed = 0, int ySpeed = 0);
+        public abstract IDataBall CreateBall(double xPosition, double yPosition, double radius, int weight, double xSpeed = 0.0, double ySpeed = 0.0);
         public abstract void ClearBoard();
         public abstract List<IDataBall> GetBalls();
         public abstract int BoardWidth { get; }
         public abstract int BoardHeight { get; }
-        public abstract int BallRadius { get; }
+        public abstract double BallRadius { get; }
         public abstract IDataBall CreateRandomBallLocation();
     }
 }

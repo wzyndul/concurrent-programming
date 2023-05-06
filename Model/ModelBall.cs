@@ -11,11 +11,11 @@ namespace Model
 {
     internal class ModelBall : IModelBall, INotifyPropertyChanged
     {
-        private int _xPosition { get; set; }
-        private int _yPosition { get; set; }
-        private int _radius { get; set; }
+        private double _xPosition { get; set; }
+        private double _yPosition { get; set; }
+        private double _radius { get; set; }
 
-        public ModelBall(int xPos, int yPos, int radius)
+        public ModelBall(double xPos, double yPos, double radius)
         {
             this._xPosition = xPos;        
             this._yPosition = yPos;
@@ -41,7 +41,7 @@ namespace Model
         }
 
 
-        public override int XPosition
+        public override double XPosition
         {
             get => _xPosition;
             set
@@ -51,7 +51,7 @@ namespace Model
             }
         }
 
-        public override int YPosition
+        public override double YPosition
         {
             get => _yPosition;
             set
@@ -61,7 +61,7 @@ namespace Model
             }
         }
 
-        public override int Radius 
+        public override double Radius 
         {
             get => _radius;
             set

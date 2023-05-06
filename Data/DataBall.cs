@@ -10,19 +10,21 @@ namespace Data
 {
     internal class DataBall : IDataBall, INotifyPropertyChanged
     {
-        private int _xPosition { get; set; }
-        private int _yPosition { get; set; }
-        private int _xSpeed { get; set; }
-        private int _ySpeed { get; set; }
-        private int _radius { get; set; }
+        private double _xPosition { get; set; }
+        private double _yPosition { get; set; }
+        private double _xSpeed { get; set; }
+        private double _ySpeed { get; set; }
+        private double _radius { get; set; }
+        private int _weight { get; set; }
 
-        internal DataBall(int xPosition, int yPosition, int radius, int xSpeed = 0, int ySpeed = 0)
+        internal DataBall(double xPosition, double yPosition, double radius, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
             _xSpeed = xSpeed;
             _ySpeed = ySpeed;
             _radius = radius;
+            _weight = weight;
         }
 
 
@@ -34,13 +36,13 @@ namespace Data
         }
 
 
-        public override void ChangeSpeed(int x, int y)
+        public override void ChangeSpeed(double x, double y)
         {
             this._xSpeed = x; this._ySpeed = y;
         }
 
         // Properties needed for ModelBall
-        public override int XPosition
+        public override double XPosition
         {
             get => _xPosition;
             set
@@ -50,7 +52,7 @@ namespace Data
             }
         }
 
-        public override int YPosition
+        public override double YPosition
         {
             get => _yPosition;
             set
@@ -59,7 +61,7 @@ namespace Data
                 RaisePropertyChanged();
             }
         }
-        public override int Radius
+        public override double Radius
         {
             get => _radius;
             set
@@ -69,14 +71,18 @@ namespace Data
             }
         }
 
-        public override int XSpeed
+        public override double XSpeed
         {
             get => _xSpeed;
         }
 
-        public override int YSpeed
+        public override double YSpeed
         {
             get => _ySpeed;
+        }
+        public override int Weight
+        {
+            get => _weight;
         }
 
         public override event PropertyChangedEventHandler? PropertyChanged;

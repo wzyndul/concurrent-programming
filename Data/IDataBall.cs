@@ -10,21 +10,22 @@ namespace Data
     public abstract class IDataBall
     {
         public abstract void MoveBall();
-        public static IDataBall CreateBall(int x, int y, int radius, int speedX = 0, int speedY = 0)
+        public static IDataBall CreateBall(double x, double y, double radius, int weight, double speedX = 0.0, double speedY = 0.0)
         {
-            return new DataBall(x, y, radius, speedX, speedY);
+            return new DataBall(x, y, radius, weight, speedX, speedY);
         }
-        public abstract void ChangeSpeed(int x, int y);
+        public abstract void ChangeSpeed(double x, double y);
 
         public abstract bool CheckBorderColision(int width, int height);
 
         // Properties needed for ModelBall
-        public abstract int XPosition { get; set; }
-        public abstract int YPosition { get; set; }
-        public abstract int Radius { get; set; }
-        public abstract int XSpeed { get; }
-        public abstract int YSpeed { get; }
+        public abstract double XPosition { get; set; }
+        public abstract double YPosition { get; set; }
+        public abstract double Radius { get; set; }
+        public abstract double XSpeed { get; }
+        public abstract double YSpeed { get; }
 
+        public abstract int Weight { get;}
         public abstract event PropertyChangedEventHandler? PropertyChanged;
     }
 }

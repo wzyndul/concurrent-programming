@@ -11,17 +11,17 @@ namespace Logic
     {
         private int _boardWidth { get; }
         private int _boardHeight { get; }
-        private int _ballRadius { get; }
+        private double _ballRadius { get; }
         private DataAbstractAPI _data;
         private List<ILogicBall> _balls;
         private List<Task> _tasks;
         private bool _isRunning = false;
         private SemaphoreSlim _Semaphore = new SemaphoreSlim(1);
 
-        public override ILogicBall CreateBall(int xPos, int yPos, int radius, int xSpeed = 0, int ySpeed = 0)
+        public override ILogicBall CreateBall(double xPos, double yPos, double radius, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
 
-            ILogicBall ball = new LogicBall(xPos, yPos, radius, xSpeed, ySpeed);
+            ILogicBall ball = new LogicBall(xPos, yPos, radius, weight, xSpeed, ySpeed);
             _balls.Add(ball);
             return ball;
         }
@@ -41,7 +41,7 @@ namespace Logic
             for (int i = 0; i < n; i++)
             {
                 IDataBall dataBall = _data.CreateRandomBallLocation();
-                ILogicBall logicBall = CreateBall(dataBall.XPosition, dataBall.YPosition, dataBall.Radius, dataBall.XSpeed, dataBall.YSpeed);
+                ILogicBall logicBall = CreateBall(dataBall.XPosition, dataBall.YPosition, dataBall.Radius, dataBall.Weight, dataBall.XSpeed, dataBall.YSpeed);
                 dataBall.PropertyChanged += logicBall.UpdateBall!;
                 _balls.Add(logicBall);
 
@@ -50,8 +50,7 @@ namespace Logic
 
                     while (this._isRunning)
                     {
-                        await this._Semaphore.WaitAsync();
-                        //dataBall.ChangeSpeed(GenerateRandomInt(-3, 3), GenerateRandomInt(-3, 3));
+                        await this._Semaphore.WaitAsync();                     
                         if (dataBall.CheckBorderColision(_boardWidth, _boardHeight))
                         {
                             dataBall.MoveBall();
@@ -109,13 +108,6 @@ namespace Logic
             }
 
         }
-        private int GenerateRandomInt(int min, int max)
-        {
-            Random rand = new Random();
-            return rand.Next(min, max + 1);
-        }
-
-
 
         public override List<ILogicBall> GetBalls()
         {
