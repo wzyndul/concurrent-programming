@@ -14,7 +14,6 @@ namespace Data
         {
             return new DataBall(x, y, radius, weight, speedX, speedY);
         }
-        public abstract void ChangeSpeed(double x, double y);
 
         public abstract bool CheckBorderColision(int width, int height);
 
@@ -22,8 +21,10 @@ namespace Data
         public abstract double XPosition { get; set; }
         public abstract double YPosition { get; set; }
         public abstract double Radius { get; set; }
-        public abstract double XSpeed { get; }
-        public abstract double YSpeed { get; }
+        public abstract double XSpeed { get; set; }
+        public abstract double YSpeed { get; set; }
+        public abstract void OppositeXSpeed();
+        public abstract void OppositeYSpeed();
 
         public abstract int Weight { get;}
         public abstract event PropertyChangedEventHandler? PropertyChanged;

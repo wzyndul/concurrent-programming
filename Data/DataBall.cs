@@ -36,10 +36,6 @@ namespace Data
         }
 
 
-        public override void ChangeSpeed(double x, double y)
-        {
-            this._xSpeed = x; this._ySpeed = y;
-        }
 
         // Properties needed for ModelBall
         public override double XPosition
@@ -74,11 +70,18 @@ namespace Data
         public override double XSpeed
         {
             get => _xSpeed;
+            set {
+                _xSpeed = value; RaisePropertyChanged();
+            }
         }
 
         public override double YSpeed
         {
             get => _ySpeed;
+            set
+            {
+                _ySpeed = value; RaisePropertyChanged();
+            }
         }
         public override int Weight
         {
@@ -94,8 +97,20 @@ namespace Data
         public override bool CheckBorderColision(int width, int height)
         {
             if (_xPosition + _xSpeed + _radius >= width || _yPosition + _ySpeed + _radius >= height
-                || _xPosition + -_radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
+                || _xPosition - _radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
             return true;
+        }
+      
+
+        public override void OppositeXSpeed()
+        {
+            XSpeed *= -1.0;
+        }
+
+        public override void OppositeYSpeed()
+        {
+            YSpeed *= -1.0;
         }
     }
 }
+

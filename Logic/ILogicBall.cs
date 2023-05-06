@@ -17,6 +17,8 @@ namespace Logic
         public abstract double XPosition { get; set; }
         public abstract double YPosition { get; set; }
         public abstract double Radius { get; set; }
+        public abstract double XSpeed { get; set; }
+        public abstract double YSpeed { get; set; }
 
         public abstract event PropertyChangedEventHandler? PropertyChanged;
         public abstract void UpdateBall(Object source, PropertyChangedEventArgs e);

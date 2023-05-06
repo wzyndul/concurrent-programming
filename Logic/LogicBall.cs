@@ -61,6 +61,25 @@ namespace Logic
             }
         }
 
+        public override double XSpeed
+        {
+            get => _xSpeed;
+            set
+            {
+                _xSpeed = value;
+                RaisePropertyChanged();
+            }
+        }
+        public override double YSpeed
+        {
+            get => _ySpeed;
+            set
+            {
+                _ySpeed = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public override event PropertyChangedEventHandler? PropertyChanged;
         private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {

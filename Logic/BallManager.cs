@@ -50,17 +50,32 @@ namespace Logic
 
                     while (this._isRunning)
                     {
-                        await this._Semaphore.WaitAsync();                     
-                        if (dataBall.CheckBorderColision(_boardWidth, _boardHeight))
-                        {
-                            dataBall.MoveBall();
-                        }
+                        await this._Semaphore.WaitAsync();
+                        //if (dataBall.CheckBorderColision(_boardWidth, _boardHeight))
+                        //{
+                        //    dataBall.MoveBall();
+                        //}
+                        WallCollision(dataBall);
+                        dataBall.MoveBall();
                         _Semaphore.Release();
                         await Task.Delay(10);
                     }
                 });
                 _tasks.Add(task);
             }
+        }
+
+        private void WallCollision(IDataBall ball)
+        {
+            if (ball.XPosition + ball.XSpeed + ball.Radius >= _boardWidth || ball.XPosition + ball.XSpeed <= 2 * ball.Radius) {
+                ball.OppositeXSpeed();
+            }
+
+            if (ball.YPosition + ball.YSpeed + ball.Radius >= _boardHeight || ball.YPosition + ball.YSpeed <= 2 * ball.Radius)
+            {
+                ball.OppositeYSpeed();
+            }
+
         }
 
 
