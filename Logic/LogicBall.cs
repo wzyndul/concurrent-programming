@@ -16,16 +16,16 @@ namespace Logic
         private double _yPosition { get; set; }
         private double _xSpeed { get; set; }
         private double _ySpeed { get; set; }
-        private double _radius { get; set; }
+        //private double _radius { get; set; }
         private int _weight { get; set; }
 
-        internal LogicBall(double xPosition, double yPosition, double radius, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        internal LogicBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
             _xSpeed = xSpeed;
             _ySpeed = ySpeed;
-            _radius = radius;
+            //_radius = radius;
             _weight = weight;
         }
 
@@ -51,7 +51,7 @@ namespace Logic
                 RaisePropertyChanged();
             }
         }
-        public override double Radius
+        /*public override double Radius
         {
             get => _radius;
             set
@@ -59,7 +59,7 @@ namespace Logic
                 _radius = value;
                 RaisePropertyChanged();
             }
-        }
+        }*/
 
         public override double XSpeed
         {

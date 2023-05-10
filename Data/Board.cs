@@ -10,7 +10,8 @@ namespace Data
     {
         private int _boardWidth { get; }
         private int _boardHeight { get; }
-        private double _ballRadius { get; }
+        private double _ballRadius { get; } = 10.0;
+
 
         public override int BoardWidth {
             get => _boardWidth;
@@ -28,10 +29,10 @@ namespace Data
         private List<IDataBall> _balls;
 
 
-        public override IDataBall CreateBall(double xPos, double yPos, double radius, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        public override IDataBall CreateBall(double xPos, double yPos, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
 
-            IDataBall ball = new DataBall(xPos, yPos, radius, weight, xSpeed, ySpeed);
+            IDataBall ball = new DataBall(xPos, yPos, weight, xSpeed, ySpeed);
             _balls.Add(ball);
             return ball;
         }
@@ -45,6 +46,13 @@ namespace Data
             this._balls = new List<IDataBall>();
         }
 
+        // do poprawienia, musi skądś brać xpos, ypos, xspeed i yspeed
+        /*public override bool CheckBorderColision(int width, int height)
+        {
+            if (_xPosition + _xSpeed + _ballRadius >= width || _yPosition + _ySpeed + _ballRadius >= height
+                || _xPosition - _ballRadius * 2 + _xSpeed <= 0 || _yPosition - _ballRadius * 2 + _ySpeed <= 0) { return false; }
+            return true;
+        }*/
 
 
         public override void ClearBoard()
@@ -61,7 +69,7 @@ namespace Data
         public override IDataBall CreateRandomBallLocation()
         {
             return CreateBall(GenerateRandomDouble(0 + 2 * _ballRadius, _boardWidth - _ballRadius),
-                     GenerateRandomDouble(0 + 2 * _ballRadius, _boardHeight - _ballRadius), _ballRadius, GenerateRandomInt(1, 5),
+                     GenerateRandomDouble(0 + 2 * _ballRadius, _boardHeight - _ballRadius), 20,                 // tu ustawiamy wagę?
                      GenerateRandomDouble(-1, 1), GenerateRandomDouble(-1, 1));
         }
 
@@ -75,6 +83,8 @@ namespace Data
             Random rand = new Random();
             return rand.Next(min, max + 1);
         }
+
+
 
     }
 }

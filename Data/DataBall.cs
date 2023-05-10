@@ -14,21 +14,21 @@ namespace Data
         private double _yPosition { get; set; }
         private double _xSpeed { get; set; }
         private double _ySpeed { get; set; }
-        private double _radius { get; set; }
+        //private double _radius { get; set; }
         private int _weight { get; set; }
 
-        internal DataBall(double xPosition, double yPosition, double radius, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        internal DataBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
             _xSpeed = xSpeed;
             _ySpeed = ySpeed;
-            _radius = radius;
+            //_radius = radius;
             _weight = weight;
         }
 
 
-
+        // miało być prywatne ponoć
         public override void MoveBall()
         {
             this.XPosition += _xSpeed;
@@ -57,7 +57,13 @@ namespace Data
                 RaisePropertyChanged();
             }
         }
-        public override double Radius
+
+        public override int Weight
+        {
+            get => _weight;
+        }
+
+        /*public override double Radius
         {
             get => _radius;
             set
@@ -65,7 +71,7 @@ namespace Data
                 _radius = value;
                 RaisePropertyChanged();
             }
-        }
+        }*/
 
         public override double XSpeed
         {
@@ -83,10 +89,6 @@ namespace Data
                 _ySpeed = value; RaisePropertyChanged();
             }
         }
-        public override int Weight
-        {
-            get => _weight;
-        }
 
         public override event PropertyChangedEventHandler? PropertyChanged;
         private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
@@ -94,12 +96,13 @@ namespace Data
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public override bool CheckBorderColision(int width, int height)
+        // przeniesione do boarda ale na razie tu zostawiam
+        /*public override bool CheckBorderColision(int width, int height)
         {
             if (_xPosition + _xSpeed + _radius >= width || _yPosition + _ySpeed + _radius >= height
                 || _xPosition - _radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
             return true;
-        }
+        }*/
       
 
         public override void OppositeXSpeed()

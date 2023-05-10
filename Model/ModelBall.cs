@@ -13,13 +13,13 @@ namespace Model
     {
         private double _xPosition { get; set; }
         private double _yPosition { get; set; }
-        private double _radius { get; set; }
+        //private double _radius { get; set; }
 
-        public ModelBall(double xPos, double yPos, double radius)
+        public ModelBall(double xPos, double yPos)
         {
             this._xPosition = xPos;        
             this._yPosition = yPos;
-            this._radius = radius;
+            //this._radius = radius;
         }
 
 
@@ -28,16 +28,16 @@ namespace Model
             ILogicBall sourceBall = (ILogicBall)source;
             if (e.PropertyName == "XPosition")
             {
-                this.XPosition = sourceBall.XPosition - sourceBall.Radius;       
+                this.XPosition = sourceBall.XPosition - 10.0; //- sourceBall.Radius;       
             }
             if (e.PropertyName == "YPosition")
             {
-                this.YPosition = sourceBall.YPosition - sourceBall.Radius;               
+                this.YPosition = sourceBall.YPosition - 10.0; //- sourceBall.Radius;               
             }
-            if (e.PropertyName == "Radius")
+            /*if (e.PropertyName == "Radius")
             {
                 this.Radius = sourceBall.Radius;
-            }
+            }*/
         }
 
 
@@ -61,7 +61,7 @@ namespace Model
             }
         }
 
-        public override double Radius 
+        /*public override double Radius 
         {
             get => _radius;
             set
@@ -69,7 +69,7 @@ namespace Model
                 _radius = value; 
                 RaisePropertyChanged();
             } 
-        }
+        }*/
 
         public override event PropertyChangedEventHandler? PropertyChanged;
         private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)

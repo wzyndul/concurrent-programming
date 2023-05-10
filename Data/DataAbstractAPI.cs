@@ -12,7 +12,9 @@ namespace Data
         {
             return new Board(boardWidth, boardHeight, ballRadius);
         }
-        public abstract IDataBall CreateBall(double xPosition, double yPosition, double radius, int weight, double xSpeed = 0.0, double ySpeed = 0.0);
+        public abstract IDataBall CreateBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0);
+        // wstępnie dodaned
+        //public abstract bool CheckBorderColision(int width, int height);
         public abstract void ClearBoard();
         public abstract List<IDataBall> GetBalls();
         public abstract int BoardWidth { get; }
