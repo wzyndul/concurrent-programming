@@ -13,38 +13,71 @@ namespace Data
     {
         private double _xPosition { get; set; }
         private double _yPosition { get; set; }
+        private int _weight { get; }
         private double _xSpeed { get; set; }
         private double _ySpeed { get; set; }
-        //private double _radius { get; set; }
-        private int _weight { get; }
 
+        private bool _movedBall { get; set; }
+        private SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+        private List<Task> _tasks;
         internal DataBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
             _xSpeed = xSpeed;
             _ySpeed = ySpeed;
-            //_radius = radius;
             _weight = weight;
+            Task.Run(StartMoving);
+            _movedBall = false;
         }
 
-
-        // miało być prywatne ponoć???
-/*        public override void MoveBall()
+        private void MoveBall()
         {
-            this.XPosition += _xSpeed;
-            this.YPosition += _ySpeed;
-        }*/
+            XPosition += XSpeed;
+            YPosition += YSpeed;
+        }
 
-
-        // przeniesione do boarda ale na razie tu zostawiam
-        /*public override bool CheckBorderColision(int width, int height)
+        private async void StartMoving()
         {
-            if (_xPosition + _xSpeed + _radius >= width || _yPosition + _ySpeed + _radius >= height
-                || _xPosition - _radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
-            return true;
-        }*/
+            while (true)
+            {
+                if (!_movedBall)
+                {
+                    await this._semaphore.WaitAsync();
+                    MoveBall();
+                    _semaphore.Release();
+                    await Task.Delay(10);
+                }
+            }
+        }
 
+        public override void StopMoving()
+        {
+            bool isAllTasksCompleted = false;
+
+            while (!isAllTasksCompleted)
+            {
+                isAllTasksCompleted = true;
+                foreach (Task task in _tasks)
+                {
+                    if (!task.IsCompleted)
+                    {
+                        isAllTasksCompleted = false;
+                        break;
+                    }
+                }
+            }
+
+            foreach (Task task in _tasks)
+            {
+                try
+                {
+                    task.Dispose();
+                }
+                catch (Exception ex) { }
+            }
+            _tasks.Clear();
+        }
 
 
         // Properties 
@@ -80,15 +113,6 @@ namespace Data
             get => _weight;
         }
 
-        /*public override double Radius
-        {
-            get => _radius;
-            set
-            {
-                _radius = value;
-                RaisePropertyChanged();
-            }
-        }*/
 
         public override double XSpeed
         {

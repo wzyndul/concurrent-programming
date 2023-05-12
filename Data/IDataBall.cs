@@ -14,10 +14,7 @@ namespace Data
             return new DataBall(x, y, weight, speedX, speedY);
         }
 
-        //public abstract void MoveBall();
-
-
-        //public abstract bool CheckBorderColision(int width, int height);
+        public abstract void StopMoving();
 
         // Properties 
         public abstract double XPosition { get; set; }

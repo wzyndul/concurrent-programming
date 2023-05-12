@@ -18,6 +18,5 @@ namespace Logic
         public abstract void AddBalls(int number);
         public abstract List<ILogicBall> GetBalls();
         public abstract void ClearBoard();
-        public abstract void MoveBalls();
     }
 }

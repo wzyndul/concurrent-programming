@@ -16,10 +16,9 @@ namespace Model
             return new ModelBall(xPos, yPos); 
         }
         
-        // Properties needed for ModelBall
+        // Properties 
         public abstract double XPosition { get; set; }
         public abstract double YPosition { get; set; }
-        //public abstract double Radius { get; set; }
 
         public abstract event PropertyChangedEventHandler? PropertyChanged;
 

@@ -22,7 +22,6 @@ namespace Model
         {
             _logicAPI.ClearBoard();
             _logicAPI.AddBalls(number);
-            _logicAPI.MoveBalls();
         }
 
 

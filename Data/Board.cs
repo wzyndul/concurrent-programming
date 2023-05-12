@@ -34,6 +34,7 @@ namespace Data
 
         public override void ClearBoard()
         {
+            foreach (IDataBall b in _balls) { b.StopMoving(); }
             _balls.Clear();
         }
 

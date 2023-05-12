@@ -17,8 +17,7 @@ namespace Logic
         private double _yPosition { get; set; }
         private double _xSpeed { get; set; }
         private double _ySpeed { get; set; }
-        //private double _radius { get; set; }
-        private int _weight { get; set; }
+        private int _weight { get; }
 
         internal LogicBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
@@ -26,7 +25,6 @@ namespace Logic
             _yPosition = yPosition;
             _xSpeed = xSpeed;
             _ySpeed = ySpeed;
-            //_radius = radius;
             _weight = weight;
         }
 
@@ -57,16 +55,6 @@ namespace Logic
                 }
             }
         }
-
-        /*public override double Radius
-        {
-            get => _radius;
-            set
-            {
-                _radius = value;
-                RaisePropertyChanged();
-            }
-        }*/
 
         public override double XSpeed
         {
@@ -106,9 +94,9 @@ namespace Logic
 
         public override void UpdateBall(Object source, PropertyChangedEventArgs e)
         {
-            IDataBall sourceBall = (IDataBall)source;
+            //IDataBall sourceBall = (IDataBall)source;
             GetType().GetProperty(e.PropertyName!)!.SetValue(
-                this, sourceBall.GetType().GetProperty(e.PropertyName!)!.GetValue(sourceBall)
+                this, source.GetType().GetProperty(e.PropertyName!)!.GetValue(source)
             );
             /*            this.XPosition = sourceBall.XPosition;
                         this.XPosition = sourceBall.YPosition;*/
