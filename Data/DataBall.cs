@@ -30,11 +30,11 @@ namespace Data
 
 
         // miało być prywatne ponoć???
-        public override void MoveBall()
+/*        public override void MoveBall()
         {
             this.XPosition += _xSpeed;
             this.YPosition += _ySpeed;
-        }
+        }*/
 
 
         // przeniesione do boarda ale na razie tu zostawiam
@@ -44,17 +44,6 @@ namespace Data
                 || _xPosition - _radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
             return true;
         }*/
-
-
-        public override void OppositeXSpeed()
-        {
-            XSpeed *= -1.0;
-        }
-
-        public override void OppositeYSpeed()
-        {
-            YSpeed *= -1.0;
-        }
 
 
 

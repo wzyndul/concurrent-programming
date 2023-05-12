@@ -104,12 +104,14 @@ namespace Logic
             }
         }
 
-        public override void UpdateBall(object source, PropertyChangedEventArgs e)
+        public override void UpdateBall(Object source, PropertyChangedEventArgs e)
         {
             IDataBall sourceBall = (IDataBall)source;
             GetType().GetProperty(e.PropertyName!)!.SetValue(
                 this, sourceBall.GetType().GetProperty(e.PropertyName!)!.GetValue(sourceBall)
             );
+            /*            this.XPosition = sourceBall.XPosition;
+                        this.XPosition = sourceBall.YPosition;*/
         }
     }
 }

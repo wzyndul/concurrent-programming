@@ -58,7 +58,8 @@ namespace Logic
                         //    dataBall.MoveBall();
                         //}
                         WallCollision(dataBall);
-                        dataBall.MoveBall();
+                        BallCollision(dataBall);
+                        MoveBall(dataBall);
                         _Semaphore.Release();
                         await Task.Delay(10);
                     }
@@ -114,19 +115,70 @@ namespace Logic
 
         }
 
+        private void MoveBall(IDataBall ball)
+        {
+            ball.XPosition += ball.XSpeed;
+            ball.YPosition += ball.YSpeed;
+        }
+
         private void WallCollision(IDataBall ball)
         {
             if (ball.XPosition + ball.XSpeed + _ballRadius >= _boardWidth || ball.XPosition + ball.XSpeed <= 2 * _ballRadius)
             {
-                ball.OppositeXSpeed();
+                ball.XSpeed *= -1.0;
             }
 
             if (ball.YPosition + ball.YSpeed + _ballRadius >= _boardHeight || ball.YPosition + ball.YSpeed <= 2 * _ballRadius)
             {
-                ball.OppositeYSpeed();
+                ball.YSpeed *= -1.0;
             }
 
         }
+
+        // używamy?
+        private bool CheckBorderCollision(IDataBall ball, int width, int height)
+        {
+            if (ball.XPosition + ball.XSpeed + _ballRadius >= width || ball.YPosition + ball.YSpeed + _ballRadius >= height
+                || ball.XPosition - _ballRadius * 2 + ball.XSpeed <= 0 || ball.YPosition - _ballRadius * 2 + ball.YSpeed <= 0) { return false; }
+            return true;
+        }
+
+        private void BallCollision(IDataBall ball)
+        {
+            List<IDataBall> collidingBalls = new List<IDataBall>();
+            foreach (IDataBall otherBall in _data.GetBalls())
+            {
+                double distance = Math.Sqrt(Math.Pow(ball.XPosition + ball.XSpeed - (otherBall.XPosition + otherBall.XSpeed), 2)
+                                + Math.Pow(ball.YPosition + ball.YSpeed - (otherBall.YPosition + otherBall.YSpeed), 2));
+                if (otherBall != ball && distance <= _ballRadius * 2)
+                {
+                    collidingBalls.Add(otherBall);
+                }
+            }
+
+           lock (collidingBalls)
+           {
+                foreach (IDataBall otherBall in collidingBalls)
+                {
+                    double otherBallXSpeed = otherBall.XSpeed * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
+                                           + ball.Weight * ball.XSpeed * 2 / (otherBall.Weight + ball.Weight);
+                    double otherBallYSpeed = otherBall.YSpeed * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
+                                           + ball.Weight * ball.YSpeed * 2 / (otherBall.Weight + ball.Weight);
+
+                    double ballXSpeed = ball.XSpeed * (ball.Weight - otherBall.Weight) / (ball.Weight + ball.Weight)
+                                      + otherBall.Weight * otherBall.XSpeed * 2 / (ball.Weight + otherBall.Weight);
+                    double ballYSpeed = ball.YSpeed * (ball.Weight - otherBall.Weight) / (ball.Weight + ball.Weight)
+                                      + otherBall.Weight * otherBall.YSpeed * 2 / (ball.Weight + otherBall.Weight);
+
+                    otherBall.XSpeed = otherBallXSpeed;
+                    otherBall.YSpeed = otherBallYSpeed;
+                    ball.XSpeed = ballXSpeed;
+                    ball.YSpeed = ballYSpeed;
+                }
+           }
+
+        }
+
 
     }
 }

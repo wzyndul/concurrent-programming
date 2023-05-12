@@ -46,8 +46,8 @@ namespace Data
 
         public override IDataBall CreateRandomBallLocation()
         {
-            return CreateBall(GenerateRandomDouble(0 + 2 * _ballRadius, _boardWidth - _ballRadius),
-                     GenerateRandomDouble(0 + 2 * _ballRadius, _boardHeight - _ballRadius), 20,                 // tu ustawiamy wagę?
+            return CreateBall(GenerateRandomDouble(4 * _ballRadius, _boardWidth - _ballRadius),
+                     GenerateRandomDouble(4 * _ballRadius, _boardHeight - _ballRadius), 20,                 // tu ustawiamy wagę?
                      GenerateRandomDouble(-1.5, 1.5), GenerateRandomDouble(-1.5, 1.5));
         }
 
@@ -74,7 +74,12 @@ namespace Data
         private double GenerateRandomDouble(double min, double max)
         {
             Random rand = new Random();
-            return rand.NextDouble() * (max - min) + min;
+            double value;
+            do
+            {
+                value = rand.NextDouble() * (max - min) + min;
+            } while (value == 0);
+            return value;
         }
         private int GenerateRandomInt(int min, int max)
         {
