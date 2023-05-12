@@ -10,22 +10,7 @@ namespace Data
     {
         private int _boardWidth { get; }
         private int _boardHeight { get; }
-        private double _ballRadius { get; } = 10.0;
-
-
-        public override int BoardWidth {
-            get => _boardWidth;
-            }
-
-        public override int BoardHeight
-        {
-            get => _boardHeight;
-        }
-        public override double BallRadius
-        {
-            get => _ballRadius;
-        }
-
+        private double _ballRadius { get; } 
         private List<IDataBall> _balls;
 
 
@@ -38,21 +23,13 @@ namespace Data
         }
 
 
-        public Board(int boardWidth, int boardHeight, double ballRadius)
+        public Board(int boardWidth, int boardHeight, double ballRadius = 10.0)             // tu dodałam 10.0 na razie
         {
             this._boardWidth = boardWidth;
             this._boardHeight = boardHeight;
             this._ballRadius = ballRadius;
             this._balls = new List<IDataBall>();
         }
-
-        // do poprawienia, musi skądś brać xpos, ypos, xspeed i yspeed
-        /*public override bool CheckBorderColision(int width, int height)
-        {
-            if (_xPosition + _xSpeed + _ballRadius >= width || _yPosition + _ySpeed + _ballRadius >= height
-                || _xPosition - _ballRadius * 2 + _xSpeed <= 0 || _yPosition - _ballRadius * 2 + _ySpeed <= 0) { return false; }
-            return true;
-        }*/
 
 
         public override void ClearBoard()
@@ -61,17 +38,38 @@ namespace Data
         }
 
 
-
         public override List<IDataBall> GetBalls()
         {
             return _balls;
         }
+
+
         public override IDataBall CreateRandomBallLocation()
         {
             return CreateBall(GenerateRandomDouble(0 + 2 * _ballRadius, _boardWidth - _ballRadius),
                      GenerateRandomDouble(0 + 2 * _ballRadius, _boardHeight - _ballRadius), 20,                 // tu ustawiamy wagę?
-                     GenerateRandomDouble(-1, 1), GenerateRandomDouble(-1, 1));
+                     GenerateRandomDouble(-1.5, 1.5), GenerateRandomDouble(-1.5, 1.5));
         }
+
+
+
+        public override int BoardWidth
+        {
+            get => _boardWidth;
+        }
+
+        public override int BoardHeight
+        {
+            get => _boardHeight;
+        }
+
+        public override double BallRadius
+        {
+            get => _ballRadius;
+        }
+
+
+        // Helper methods
 
         private double GenerateRandomDouble(double min, double max)
         {
@@ -83,8 +81,6 @@ namespace Data
             Random rand = new Random();
             return rand.Next(min, max + 1);
         }
-
-
 
     }
 }

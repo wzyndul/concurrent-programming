@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,11 +27,11 @@ namespace Model
         public override void UpdateBall(Object source, PropertyChangedEventArgs e) 
         {
             ILogicBall sourceBall = (ILogicBall)source;
-            if (e.PropertyName == "XPosition")
+            if (e.PropertyName == nameof(ILogicBall.XPosition))
             {
                 this.XPosition = sourceBall.XPosition - 10.0; //- sourceBall.Radius;       
             }
-            if (e.PropertyName == "YPosition")
+            if (e.PropertyName == nameof(ILogicBall.YPosition))
             {
                 this.YPosition = sourceBall.YPosition - 10.0; //- sourceBall.Radius;               
             }
@@ -46,8 +47,11 @@ namespace Model
             get => _xPosition;
             set
             {
-                _xPosition = value;
-                RaisePropertyChanged();
+                if (_xPosition != value)
+                {
+                    _xPosition = value;
+                    RaisePropertyChanged(() => XPosition);
+                }
             }
         }
 
@@ -56,8 +60,11 @@ namespace Model
             get => _yPosition;
             set
             {
-                _yPosition = value;
-                RaisePropertyChanged();
+                if (_yPosition != value)
+                {
+                    _yPosition = value;
+                    RaisePropertyChanged(() => YPosition);
+                }
             }
         }
 
@@ -72,9 +79,13 @@ namespace Model
         }*/
 
         public override event PropertyChangedEventHandler? PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        private void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (propertyExpression.Body is MemberExpression memberExpression)
+            {
+                string propertyName = memberExpression.Member.Name;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

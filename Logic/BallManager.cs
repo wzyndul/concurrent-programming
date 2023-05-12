@@ -11,21 +11,13 @@ namespace Logic
     {
         private int _boardWidth { get; }
         private int _boardHeight { get; }
-        private double _ballRadius { get; }         // tu stala wartosc??
+        private double _ballRadius { get; }        
         private DataAbstractAPI _data;
         private List<ILogicBall> _balls;
+        
         private List<Task> _tasks;
         private bool _isRunning = false;
         private SemaphoreSlim _Semaphore = new SemaphoreSlim(1);
-
-        public override ILogicBall CreateBall(double xPos, double yPos,  int weight, double xSpeed = 0.0, double ySpeed = 0.0)
-        {
-
-            ILogicBall ball = new LogicBall(xPos, yPos, weight, xSpeed, ySpeed);
-            _balls.Add(ball);
-            return ball;
-        }
-
 
         public BallManager(DataAbstractAPI dataLayer)
         {
@@ -36,6 +28,16 @@ namespace Logic
             this._balls = new List<ILogicBall>();
             this._tasks = new List<Task>();
         }
+
+        public override ILogicBall CreateBall(double xPos, double yPos,  int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        {
+
+            ILogicBall ball = new LogicBall(xPos, yPos, weight, xSpeed, ySpeed);
+            _balls.Add(ball);
+            return ball;
+        }
+
+
         public override void AddBalls(int n)
         {
             for (int i = 0; i < n; i++)
@@ -65,19 +67,10 @@ namespace Logic
             }
         }
 
-        private void WallCollision(IDataBall ball)
+        public override List<ILogicBall> GetBalls()
         {
-            if (ball.XPosition + ball.XSpeed + _ballRadius >= _boardWidth || ball.XPosition + ball.XSpeed <= 2 * _ballRadius) {
-                ball.OppositeXSpeed();
-            }
-
-            if (ball.YPosition + ball.YSpeed + _ballRadius >= _boardHeight || ball.YPosition + ball.YSpeed <= 2 * _ballRadius)
-            {
-                ball.OppositeYSpeed();
-            }
-
+            return _balls;
         }
-
 
         public override void ClearBoard()
         {
@@ -109,9 +102,6 @@ namespace Logic
             _balls.Clear();
         }
 
-
-
-
         public override void MoveBalls()
         {
             this._isRunning = true;
@@ -124,9 +114,19 @@ namespace Logic
 
         }
 
-        public override List<ILogicBall> GetBalls()
+        private void WallCollision(IDataBall ball)
         {
-            return _balls;
+            if (ball.XPosition + ball.XSpeed + _ballRadius >= _boardWidth || ball.XPosition + ball.XSpeed <= 2 * _ballRadius)
+            {
+                ball.OppositeXSpeed();
+            }
+
+            if (ball.YPosition + ball.YSpeed + _ballRadius >= _boardHeight || ball.YPosition + ball.YSpeed <= 2 * _ballRadius)
+            {
+                ball.OppositeYSpeed();
+            }
+
         }
+
     }
 }

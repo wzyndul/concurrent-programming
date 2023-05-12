@@ -10,14 +10,13 @@ namespace DataTest
     [TestClass]
     public class DataBallTest
     {
-        private IDataBall _ball = IDataBall.CreateBall(0, 0, 10, 10, 1, 1);
+        private IDataBall _ball = IDataBall.CreateBall(0, 0, 10, 1, 1);
 
         [TestMethod]
         public void TestCreateBall()
         {
             Assert.AreEqual(0, _ball.XPosition);
             Assert.AreEqual(0, _ball.YPosition);
-            Assert.AreEqual(10, _ball.Radius);
             Assert.AreEqual(10, _ball.Weight);
         }
 
@@ -27,13 +26,6 @@ namespace DataTest
             _ball.MoveBall();
             Assert.AreEqual(1, _ball.XPosition);
             Assert.AreEqual(1, _ball.YPosition);
-        }
-
-        [TestMethod]
-        public void TestCheckBorderCollision()
-        {
-            var result = _ball.CheckBorderColision(10, 10); 
-            Assert.IsFalse(result);
         }
 
         [TestMethod]
