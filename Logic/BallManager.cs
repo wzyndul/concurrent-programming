@@ -46,9 +46,9 @@ namespace Logic
                 IDataBall dataBall = _data.CreateRandomBallLocation();
                 ILogicBall logicBall = CreateBall(dataBall.XPosition, dataBall.YPosition);
 
-                dataBall.PropertyChanged += logicBall.UpdateBall!;
-                dataBall.PropertyChanged += WallCollision!;
-                dataBall.PropertyChanged += BallsCollision!;
+                dataBall.DataBallPositionChanged += logicBall.UpdateBall!;
+                dataBall.DataBallPositionChanged += WallCollision!;
+                dataBall.DataBallPositionChanged += BallsCollision!;
 
                 _balls.Add(logicBall);
 
@@ -66,7 +66,7 @@ namespace Logic
         }
 
 
-        private void WallCollision(Object source, PropertyChangedEventArgs e)
+        private void WallCollision(Object source, DataBallEventArgs e)
         {
             IDataBall ball = (IDataBall)source;
             if (ball.XPosition + ball.XSpeed + _ballRadius >= _boardWidth || ball.XPosition + ball.XSpeed <= 2 * _ballRadius)
@@ -84,7 +84,7 @@ namespace Logic
 
 
 
-        private void BallsCollision(Object source, PropertyChangedEventArgs e)
+        private void BallsCollision(Object source, DataBallEventArgs e)
         {
             IDataBall ball = (IDataBall)source;
             List<IDataBall> collidingBalls = new List<IDataBall>();

@@ -22,17 +22,11 @@ namespace Model
         }
 
 
-        public override void UpdateBall(Object source, PropertyChangedEventArgs e) 
+        public override void UpdateBall(Object source, LogicBallEventArgs e) 
         {
             ILogicBall sourceBall = (ILogicBall)source;
-            if (e.PropertyName == nameof(ILogicBall.XPosition))
-            {
-                this.XPosition = sourceBall.XPosition - 10.0;       
-            }
-            if (e.PropertyName == nameof(ILogicBall.YPosition))
-            {
-                this.YPosition = sourceBall.YPosition - 10.0;               
-            }
+            XPosition = sourceBall.XPosition;
+            YPosition = sourceBall.YPosition;
         }
 
 

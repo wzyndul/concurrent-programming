@@ -16,9 +16,8 @@ namespace Logic
         }
         public abstract double XPosition { get; set; }
         public abstract double YPosition { get; set; }
-  
 
-        public abstract event PropertyChangedEventHandler? PropertyChanged;
-        public abstract void UpdateBall(Object source, PropertyChangedEventArgs e);
+        public abstract event EventHandler<LogicBallEventArgs> LogicBallPositionChanged;
+        public abstract void UpdateBall(Object source, DataBallEventArgs e);
     }
 }

@@ -9,6 +9,7 @@ namespace Data
 {
     public abstract class IDataBall
     {
+        public abstract event EventHandler<DataBallEventArgs> DataBallPositionChanged;
         public static IDataBall CreateBall(double x, double y, int weight, double speedX = 0.0, double speedY = 0.0)
         {
             return new DataBall(x, y, weight, speedX, speedY);
@@ -24,6 +25,6 @@ namespace Data
         public abstract double XSpeed { get; set; }
         public abstract double YSpeed { get; set; }
 
-        public abstract event PropertyChangedEventHandler? PropertyChanged;
+        
     }
 }

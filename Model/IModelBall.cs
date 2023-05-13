@@ -10,7 +10,7 @@ namespace Model
 {
     public abstract class IModelBall
     {
-        public abstract void UpdateBall(Object source, PropertyChangedEventArgs e);
+        public abstract void UpdateBall(Object source, LogicBallEventArgs e);
         public static IModelBall CreateModelBall(double xPos, double yPos)
         { 
             return new ModelBall(xPos, yPos); 

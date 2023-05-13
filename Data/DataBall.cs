@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class DataBall : IDataBall, INotifyPropertyChanged
+    internal class DataBall : IDataBall
     {
         private double _xPosition { get; set; }
         private double _yPosition { get; set; }
@@ -20,6 +20,7 @@ namespace Data
         private bool _movedBall { get; set; }
         private SemaphoreSlim _semaphore = new SemaphoreSlim(1);
         private List<Task> _tasks;
+        public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
         internal DataBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
             _xPosition = xPosition;
@@ -35,6 +36,9 @@ namespace Data
         {
             XPosition += XSpeed;
             YPosition += YSpeed;
+            DataBallEventArgs args = new DataBallEventArgs(this);
+            DataBallPositionChanged?.Invoke(this, args);
+
         }
 
         private async void StartMoving()
@@ -100,7 +104,6 @@ namespace Data
                 if (_xPosition != value)
                 {
                     _xPosition = value;
-                    RaisePropertyChanged(() => XPosition);
                 }
             }
         }
@@ -113,7 +116,6 @@ namespace Data
                 if (_yPosition != value)
                 {
                     _yPosition = value;
-                    RaisePropertyChanged(() => YPosition);
                 }
             }
         }
@@ -147,15 +149,7 @@ namespace Data
             }
         }
 
-        public override event PropertyChangedEventHandler? PropertyChanged;
-        private void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
-        {
-            if (propertyExpression.Body is MemberExpression memberExpression)
-            {
-                string propertyName = memberExpression.Member.Name;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+        
 
     }
 }

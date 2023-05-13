@@ -33,8 +33,7 @@ namespace Logic
             {
                 if (_xPosition != value)
                 {
-                    _xPosition = value;
-                    RaisePropertyChanged(() => XPosition);
+                    _xPosition = value;                   
                 }
             }
         }
@@ -46,32 +45,21 @@ namespace Logic
             {
                 if (_yPosition != value)
                 {
-                    _yPosition = value;
-                    RaisePropertyChanged(() => YPosition);
+                    _yPosition = value;                 
                 }
             }
         }
 
+        public override event EventHandler<LogicBallEventArgs> LogicBallPositionChanged;
 
-        public override event PropertyChangedEventHandler? PropertyChanged;
-        private void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
-        {
-            if (propertyExpression.Body is MemberExpression memberExpression)
-            {
-                string propertyName = memberExpression.Member.Name;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
-        public override void UpdateBall(Object source, PropertyChangedEventArgs e)
+        public override void UpdateBall(object source, DataBallEventArgs e)
         {
-            // obie wersje chyba dzialaja
-            //IDataBall sourceBall = (IDataBall)source;
-            GetType().GetProperty(e.PropertyName!)!.SetValue(
-                this, source.GetType().GetProperty(e.PropertyName!)!.GetValue(source)
-            );
-            //this.XPosition = sourceBall.XPosition;
-            //this.YPosition = sourceBall.YPosition;
+            IDataBall ball = (IDataBall)source;
+            XPosition = ball.XPosition;
+            YPosition = ball.YPosition;
+            LogicBallEventArgs args = new LogicBallEventArgs(this);
+            LogicBallPositionChanged?.Invoke(this, args);
         }
     }
 }
