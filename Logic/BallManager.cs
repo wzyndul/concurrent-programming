@@ -29,10 +29,10 @@ namespace Logic
             this._tasks = new List<Task>();
         }
 
-        public override ILogicBall CreateBall(double xPos, double yPos,  int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        public override ILogicBall CreateBall(double xPos, double yPos)
         {
 
-            ILogicBall ball = new LogicBall(xPos, yPos, weight, xSpeed, ySpeed);
+            ILogicBall ball = new LogicBall(xPos, yPos);
             _balls.Add(ball);
             return ball;
         }
@@ -44,7 +44,7 @@ namespace Logic
             for (int i = 0; i < n; i++)
             {
                 IDataBall dataBall = _data.CreateRandomBallLocation();
-                ILogicBall logicBall = CreateBall(dataBall.XPosition, dataBall.YPosition, dataBall.Weight, dataBall.XSpeed, dataBall.YSpeed);
+                ILogicBall logicBall = CreateBall(dataBall.XPosition, dataBall.YPosition);
 
                 dataBall.PropertyChanged += logicBall.UpdateBall!;
                 dataBall.PropertyChanged += WallCollision!;

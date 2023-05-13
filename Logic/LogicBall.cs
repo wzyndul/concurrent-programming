@@ -15,17 +15,13 @@ namespace Logic
     {
         private double _xPosition { get; set; }
         private double _yPosition { get; set; }
-        private double _xSpeed { get; set; }
-        private double _ySpeed { get; set; }
-        private int _weight { get; }
 
-        internal LogicBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+
+        internal LogicBall(double xPosition, double yPosition)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
-            _xSpeed = xSpeed;
-            _ySpeed = ySpeed;
-            _weight = weight;
+
         }
 
 
@@ -56,31 +52,6 @@ namespace Logic
             }
         }
 
-        public override double XSpeed
-        {
-            get => _xSpeed;
-            set
-            {
-                if (_xSpeed != value)
-                {
-                    _xSpeed = value;
-                    RaisePropertyChanged(() => XSpeed);
-                }
-            }
-        }
-
-        public override double YSpeed
-        {
-            get => _ySpeed;
-            set
-            {
-                if (_ySpeed != value)
-                {
-                    _ySpeed = value;
-                    RaisePropertyChanged(() => YSpeed);
-                }
-            }
-        }
 
         public override event PropertyChangedEventHandler? PropertyChanged;
         private void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
@@ -94,12 +65,13 @@ namespace Logic
 
         public override void UpdateBall(Object source, PropertyChangedEventArgs e)
         {
+            // obie wersje chyba dzialaja
             //IDataBall sourceBall = (IDataBall)source;
             GetType().GetProperty(e.PropertyName!)!.SetValue(
                 this, source.GetType().GetProperty(e.PropertyName!)!.GetValue(source)
             );
-            /*            this.XPosition = sourceBall.XPosition;
-                        this.XPosition = sourceBall.YPosition;*/
+            //this.XPosition = sourceBall.XPosition;
+            //this.YPosition = sourceBall.YPosition;
         }
     }
 }

@@ -130,8 +130,7 @@ namespace Data
             {
                 if (_xSpeed != value)
                 {
-                    _xSpeed = value;
-                    RaisePropertyChanged(() => XSpeed);
+                    _xSpeed = value;               
                 }
             }
         }
@@ -143,7 +142,6 @@ namespace Data
                 if (_ySpeed != value)
                 {
                     _ySpeed = value;
-                    RaisePropertyChanged(() => YSpeed);
                 }
             }
         }
