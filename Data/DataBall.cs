@@ -63,6 +63,7 @@ namespace Data
         public override void StopMoving()
         {
             bool isAllTasksCompleted = false;
+           
 
             while (!isAllTasksCompleted)
             {
