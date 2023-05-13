@@ -40,7 +40,7 @@ namespace Logic
 
         public override void AddBalls(int n)
         {
-            Barrier barrier = new Barrier(n);
+            //Barrier barrier = new Barrier(n);  // czy to potrzebne
             for (int i = 0; i < n; i++)
             {
                 IDataBall dataBall = _data.CreateRandomBallLocation();
@@ -52,25 +52,6 @@ namespace Logic
 
                 _balls.Add(logicBall);
 
-
-/*                Task task = new Task(async () =>
-                {
-
-                    while (this._isRunning)
-                    {
-                        await this._Semaphore.WaitAsync();
-                        //if (dataBall.CheckBorderColision(_boardWidth, _boardHeight))
-                        //{
-                        //    dataBall.MoveBall();
-                        //}
-                        WallCollision(dataBall);
-                        BallCollision(dataBall);
-                        MoveBall(dataBall);
-                        _Semaphore.Release();
-                        await Task.Delay(10);
-                    }
-                });
-                _tasks.Add(task);*/
             }
         }
 
@@ -81,31 +62,6 @@ namespace Logic
 
         public override void ClearBoard()
         {
-/*            bool isAllTasksCompleted = false;
-
-            while (!isAllTasksCompleted)
-            {
-                isAllTasksCompleted = true;
-                foreach (Task task in _tasks)
-                {
-                    if (!task.IsCompleted)
-                    {
-                        isAllTasksCompleted = false;
-                        break;
-                    }
-                }
-            }
-
-            foreach (Task task in _tasks)
-            {
-                try
-                {
-                    task.Dispose();
-                }
-                catch (Exception ex) { }
-            }
-            _tasks.Clear();*/
-
             _balls.Clear();
         }
 
@@ -125,13 +81,8 @@ namespace Logic
 
         }
 
-        // używamy?
-        private bool CheckBorderCollision(IDataBall ball, int width, int height)
-        {
-            if (ball.XPosition + ball.XSpeed + _ballRadius >= width || ball.YPosition + ball.YSpeed + _ballRadius >= height
-                || ball.XPosition - _ballRadius * 2 + ball.XSpeed <= 0 || ball.YPosition - _ballRadius * 2 + ball.YSpeed <= 0) { return false; }
-            return true;
-        }
+
+
 
         private void BallsCollision(Object source, PropertyChangedEventArgs e)
         {
@@ -169,6 +120,20 @@ namespace Logic
             }
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /*        private void BallsCollision(Object source, PropertyChangedEventArgs e)
                 {

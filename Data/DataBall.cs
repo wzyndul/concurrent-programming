@@ -41,13 +41,22 @@ namespace Data
         {
             while (true)
             {
-                if (!_movedBall)
+                //if (!_movedBall)
+                //{
+                //    await this._semaphore.WaitAsync();
+                //    MoveBall();
+                //    _semaphore.Release();
+                //    await Task.Delay(10);
+                //}
+
+
+                // druga wersja
+                lock (this)
                 {
-                    await this._semaphore.WaitAsync();
                     MoveBall();
-                    _semaphore.Release();
-                    await Task.Delay(10);
                 }
+                await Task.Delay(10);
+
             }
         }
 
