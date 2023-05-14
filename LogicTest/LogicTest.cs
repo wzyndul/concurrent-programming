@@ -98,27 +98,31 @@ namespace LogicTest
             }
         }
 
-        
-        [TestMethod]
-        public void CreateBallGetBallsTest()
-        {
-            ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
-            LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
-            ILogicBall ball = logicAPI.CreateBall(1, 1);
-            Assert.AreEqual(1, ball.Position.X);
-            Assert.AreEqual(1, ball.Position.Y);
-            CollectionAssert.Contains(logicAPI.GetBalls(), ball);
-        }
+
+        // TESTS
 
         [TestMethod]
         public void GetBallsTest()
         {
             ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
             LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
-            logicAPI.CreateBall(1, 1);
-            logicAPI.CreateBall(5, 5);
-            Assert.AreEqual(2, logicAPI.GetBalls().Count());
+            for (int i = 0; i < 10; i++)
+            {
+                logicAPI.CreateBall(1, 1);
+            }
+            Assert.AreEqual(10, logicAPI.GetBalls().Count);
         }
+
+
+        [TestMethod]
+        public void AddBallsTest()
+        {
+            ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
+            LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
+            logicAPI.AddBalls(5);
+            Assert.AreEqual(5, logicAPI.GetBalls().Count());
+        }
+
 
         [TestMethod]
         public void ClearBoardTest()
@@ -126,8 +130,19 @@ namespace LogicTest
             ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
             LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
             logicAPI.AddBalls(5);
+            Assert.AreEqual(5, logicAPI.GetBalls().Count());
             logicAPI.ClearBoard();
             Assert.AreEqual(0, logicAPI.GetBalls().Count());
+        }
+
+        [TestMethod]
+        public void BoardParameterTest()
+        {
+            ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
+            LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
+            Assert.AreEqual(400, impostorDataAPI.BoardHeight);
+            Assert.AreEqual(500, impostorDataAPI.BoardWidth);
+            Assert.AreEqual(10, impostorDataAPI.BallRadius);
         }
     }
 }

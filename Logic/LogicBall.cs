@@ -14,7 +14,7 @@ namespace Logic
 {
     internal class LogicBall : ILogicBall
     {
-        private Vector2 _position { get; set; }
+        private Vector2 _position;
 
 
         internal LogicBall(float xPosition, float yPosition)
@@ -28,13 +28,6 @@ namespace Logic
         public override Vector2 Position
         {
             get => _position;
-            set
-            {
-                if (_position != value)
-                {
-                    _position = value;
-                }
-            }
         }
 
         public override event EventHandler<LogicBallEventArgs> LogicBallPositionChanged;
@@ -43,10 +36,9 @@ namespace Logic
         public override void UpdateBall(object source, DataBallEventArgs e)
         {
             IDataBall ball = (IDataBall)source;
-            Position = ball.Position;
+            _position = ball.Position;
             LogicBallEventArgs args = new LogicBallEventArgs(this);
             LogicBallPositionChanged?.Invoke(this, args);
         }
     }
 }
-

@@ -12,9 +12,9 @@ namespace Data
 {
     internal class DataBall : IDataBall
     {
-        private Vector2 _position { get; set; }
+        private Vector2 _position;
         private int _weight { get; }
-        private Vector2 _velocity { get; set; }
+        private Vector2 _velocity;
         private bool _isRunning;
 
         public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
@@ -29,9 +29,8 @@ namespace Data
 
         private void MoveBall()
         {
-            Vector2 movedPos = new Vector2(Position.X + Velocity.X, Position.Y + Velocity.Y);
-            Position = movedPos;
-
+            _position.X += Velocity.X;
+            _position.Y += Velocity.Y;
             DataBallEventArgs args = new DataBallEventArgs(this);
             DataBallPositionChanged?.Invoke(this, args);
 
@@ -41,11 +40,9 @@ namespace Data
         {
             while (_isRunning)
             {
-                lock (this)
-                {
-                    MoveBall();
-                }
-                await Task.Delay(10);
+
+            MoveBall();           
+            await Task.Delay(10);
 
             }
         }
@@ -63,13 +60,6 @@ namespace Data
         public override Vector2 Position
         {
             get => _position;
-            set
-            {
-                if (_position != value)
-                {
-                    _position = value;
-                }
-            }
         }
 
         public override int Weight

@@ -15,7 +15,7 @@ namespace Logic
         {
             return new LogicBall(x, y);
         }
-        public abstract Vector2 Position { get; set; }
+        public abstract Vector2 Position { get;}
 
         public abstract event EventHandler<LogicBallEventArgs> LogicBallPositionChanged;
         public abstract void UpdateBall(Object source, DataBallEventArgs e);

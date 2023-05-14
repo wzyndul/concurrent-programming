@@ -18,7 +18,7 @@ namespace Data
 
 
         // Properties 
-        public abstract Vector2 Position { get; set; }
+        public abstract Vector2 Position { get; }
         public abstract int Weight { get; }
         public abstract Vector2 Velocity { get; set; }
         public abstract void TurnOff();

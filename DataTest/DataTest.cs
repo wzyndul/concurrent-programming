@@ -13,15 +13,36 @@ namespace DataTest
     {
         private DataAbstractAPI _board = DataAbstractAPI.CreateAPI(800, 600, 10);
 
+        [TestMethod]
+        public void GetBallsTest()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                _board.CreateBall(1, 1, 10, 1, 1);
+            }
+            Assert.AreEqual(10, _board.GetBalls().Count());
+        }
+
 
         [TestMethod]
         public void ClearBoardTest()
         {
             _board.CreateBall(1, 1, 10, 1, 1);
             _board.CreateBall(5, 5, 10, 5, 5);
-            Assert.IsTrue(_board.GetBalls().Count == 2);
+            Assert.AreEqual(2, _board.GetBalls().Count());
             _board.ClearBoard();
-            Assert.IsTrue(_board.GetBalls().Count == 0);
+            Assert.AreEqual(0, _board.GetBalls().Count());
+        }
+
+        [TestMethod]
+        public void BallParameterTest()
+        {
+            IDataBall ball = _board.CreateBall(1, 1, 20, 1, 1);
+            Assert.IsNotNull(_board.GetBalls());
+            Assert.IsNotNull(ball);
+            Assert.AreEqual(20, ball.Weight);
+            Assert.AreEqual(1, ball.Velocity.X);
+            Assert.AreEqual(1, ball.Velocity.Y);
         }
 
         [TestMethod]

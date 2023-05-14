@@ -82,7 +82,7 @@
         <Button Name="StopButton"
             Command="{Binding StopCommand}"
             Style="{DynamicResource RoundButton}"
-            Content="Stop"
+            Content="Clear"
             FontSize="20"
             Height="40"
             HorizontalAlignment="Left"
