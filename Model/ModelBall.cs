@@ -19,7 +19,6 @@ namespace Model
 
         public ModelBall(float xPos, float yPos)
         {
-            _position = new Vector2(xPos, yPos);
             _xPosition = xPos;
             _yPosition = yPos;
         }
@@ -28,24 +27,11 @@ namespace Model
         public override void UpdateBall(Object source, LogicBallEventArgs e) 
         {
             ILogicBall sourceBall = (ILogicBall)source;
-            Position = new Vector2(sourceBall.Position.X, sourceBall.Position.Y);
+            XPosition = sourceBall.Position.X;
+            YPosition = sourceBall.Position.Y;
         }
 
 
-        // Properties
-
-        public override Vector2 Position
-        {
-            get => _position;
-            set
-            {
-                if (_position != value)
-                {
-                    _position = value;
-                    RaisePropertyChanged(() => Position);
-                }
-            }
-        }
 
         public override float XPosition
         {
