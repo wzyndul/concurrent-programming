@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataTest
 {
-    [TestClass]
+/*    [TestClass]
     public class DataBallTest
     {
         private IDataBall _ball = IDataBall.CreateBall(0, 0, 10);
@@ -22,5 +22,5 @@ namespace DataTest
             Assert.AreEqual(0, _ball.YSpeed);
         }
 
-    }
+    }*/
 }

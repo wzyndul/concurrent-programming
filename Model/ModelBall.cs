@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,25 +13,41 @@ namespace Model
 {
     internal class ModelBall : IModelBall, INotifyPropertyChanged
     {
-        private double _xPosition { get; set; }
-        private double _yPosition { get; set; }
+        private Vector2 _position { get; set; }
+        private float _xPosition { get; set; }
+        private float _yPosition { get; set; }
 
-        public ModelBall(double xPos, double yPos)
+        public ModelBall(float xPos, float yPos)
         {
-            this._xPosition = xPos;        
-            this._yPosition = yPos;
+            _position = new Vector2(xPos, yPos);
+            _xPosition = xPos;
+            _yPosition = yPos;
         }
 
 
         public override void UpdateBall(Object source, LogicBallEventArgs e) 
         {
             ILogicBall sourceBall = (ILogicBall)source;
-            XPosition = sourceBall.XPosition;
-            YPosition = sourceBall.YPosition;
+            Position = new Vector2(sourceBall.Position.X, sourceBall.Position.Y);
         }
 
 
-        public override double XPosition
+        // Properties
+
+        public override Vector2 Position
+        {
+            get => _position;
+            set
+            {
+                if (_position != value)
+                {
+                    _position = value;
+                    RaisePropertyChanged(() => Position);
+                }
+            }
+        }
+
+        public override float XPosition
         {
             get => _xPosition;
             set
@@ -43,7 +60,10 @@ namespace Model
             }
         }
 
-        public override double YPosition
+
+
+
+        public override float YPosition
         {
             get => _yPosition;
             set

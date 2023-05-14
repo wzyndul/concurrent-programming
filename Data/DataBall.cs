@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,17 +12,15 @@ namespace Data
 {
     internal class DataBall : IDataBall
     {
-        private double _xPosition { get; set; }
-        private double _yPosition { get; set; }
+        private Vector2 _position { get; set; }
         private int _weight { get; }
-        private double _xSpeed { get; set; }
-        private double _ySpeed { get; set; }
+        private float _xSpeed { get; set; }
+        private float _ySpeed { get; set; }
 
         public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
-        internal DataBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        internal DataBall(float xPosition, float yPosition, int weight, float xSpeed, float ySpeed)
         {
-            _xPosition = xPosition;
-            _yPosition = yPosition;
+            _position = new Vector2(xPosition, yPosition);
             _xSpeed = xSpeed;
             _ySpeed = ySpeed;
             _weight = weight;
@@ -30,8 +29,9 @@ namespace Data
 
         private void MoveBall()
         {
-            XPosition += XSpeed;
-            YPosition += YSpeed;
+            Vector2 movedPos = new Vector2(Position.X + XSpeed, Position.Y + YSpeed);
+            Position = movedPos;
+            
             DataBallEventArgs args = new DataBallEventArgs(this);
             DataBallPositionChanged?.Invoke(this, args);
 
@@ -53,26 +53,14 @@ namespace Data
 
         // Properties 
 
-        public override double XPosition
+        public override Vector2 Position
         {
-            get => _xPosition;
+            get => _position;
             set
             {
-                if (_xPosition != value)
+                if (_position != value)
                 {
-                    _xPosition = value;
-                }
-            }
-        }
-
-        public override double YPosition
-        {
-            get => _yPosition;
-            set
-            {
-                if (_yPosition != value)
-                {
-                    _yPosition = value;
+                    _position = value;
                 }
             }
         }
@@ -83,7 +71,7 @@ namespace Data
         }
 
 
-        public override double XSpeed
+        public override float XSpeed
         {
             get => _xSpeed;
             set
@@ -94,7 +82,7 @@ namespace Data
                 }
             }
         }
-        public override double YSpeed
+        public override float YSpeed
         {
             get => _ySpeed;
             set

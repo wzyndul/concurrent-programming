@@ -14,7 +14,7 @@ namespace Data
         private List<IDataBall> _balls;
 
 
-        public override IDataBall CreateBall(double xPos, double yPos, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        public override IDataBall CreateBall(float xPos, float yPos, int weight, float xSpeed, float ySpeed)
         {
 
             IDataBall ball = new DataBall(xPos, yPos, weight, xSpeed, ySpeed);
@@ -46,25 +46,25 @@ namespace Data
 
         public override IDataBall CreateRandomBallLocation(List<IDataBall> balls)
         {
-            double xPos;
-            double yPos;
+            float xPos;
+            float yPos;
 
             // generate random position until it is not the same as any existing ball
             do
             {
-                xPos = GenerateRandomDouble(4 * _ballRadius, _boardWidth - _ballRadius);
-                yPos = GenerateRandomDouble(4 * _ballRadius, _boardHeight - _ballRadius);
-            } while (balls.Any(b => Math.Sqrt(Math.Pow(b.XPosition - xPos, 2) + Math.Pow(b.YPosition - yPos, 2)) <= 2 * _ballRadius));
+                xPos = GenerateRandomFloat(4f * (float)_ballRadius, (float)_boardWidth - (float)_ballRadius);
+                yPos = GenerateRandomFloat(4f * (float)_ballRadius, (float)_boardHeight - (float)_ballRadius);
+            } while (balls.Any(b => Math.Sqrt(Math.Pow(b.Position.X - xPos, 2) + Math.Pow(b.Position.Y - yPos, 2)) <= 2 * _ballRadius));
 
-            double xSpeed;
-            double ySpeed;
+            float xSpeed;
+            float ySpeed;
 
             // speed can't be 0
             do
             {
-                xSpeed = GenerateRandomDouble(-1.5, 1.5);
-                ySpeed = GenerateRandomDouble(-1.5, 1.5);
-            } while (xSpeed == 0 || ySpeed == 0);
+                xSpeed = GenerateRandomFloat(-1.5f, 1.5f);
+                ySpeed = GenerateRandomFloat(-1.5f, 1.5f);
+            } while (xSpeed == 0f || ySpeed == 0f);
 
             return CreateBall(xPos, yPos, 20, xSpeed, ySpeed);
         }
@@ -90,10 +90,10 @@ namespace Data
 
         // Helper methods
 
-        private double GenerateRandomDouble(double min, double max)
+        private float GenerateRandomFloat(float min, float max)
         {
             Random rand = new Random();
-            return rand.NextDouble() * (max - min) + min;
+            return (float)rand.NextDouble() * (max - min) + min;
         }
         private int GenerateRandomInt(int min, int max)
         {

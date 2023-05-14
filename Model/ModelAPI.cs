@@ -30,7 +30,7 @@ namespace Model
             _balls.Clear();
             foreach (ILogicBall ball in _logicAPI.GetBalls())
             {
-                IModelBall modelBall = IModelBall.CreateModelBall(ball.XPosition, ball.YPosition);
+                IModelBall modelBall = IModelBall.CreateModelBall(ball.Position.X, ball.Position.Y);
                 _balls.Add(modelBall);
                 ball.LogicBallPositionChanged += modelBall.UpdateBall!;
             }
