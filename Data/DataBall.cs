@@ -17,9 +17,6 @@ namespace Data
         private double _xSpeed { get; set; }
         private double _ySpeed { get; set; }
 
-        private bool _movedBall { get; set; }
-        private SemaphoreSlim _semaphore = new SemaphoreSlim(1);
-        private List<Task> _tasks;
         public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
         internal DataBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
@@ -29,7 +26,6 @@ namespace Data
             _ySpeed = ySpeed;
             _weight = weight;
             Task.Run(StartMoving);
-            _movedBall = false;
         }
 
         private void MoveBall()
@@ -45,16 +41,6 @@ namespace Data
         {
             while (true)
             {
-                //if (!_movedBall)
-                //{
-                //    await this._semaphore.WaitAsync();
-                //    MoveBall();
-                //    _semaphore.Release();
-                //    await Task.Delay(10);
-                //}
-
-
-                // druga wersja
                 lock (this)
                 {
                     MoveBall();
@@ -62,35 +48,6 @@ namespace Data
                 await Task.Delay(10);
 
             }
-        }
-
-        public override void StopMoving()
-        {
-            bool isAllTasksCompleted = false;
-           
-
-            while (!isAllTasksCompleted)
-            {
-                isAllTasksCompleted = true;
-                foreach (Task task in _tasks)
-                {
-                    if (!task.IsCompleted)
-                    {
-                        isAllTasksCompleted = false;
-                        break;
-                    }
-                }
-            }
-
-            foreach (Task task in _tasks)
-            {
-                try
-                {
-                    task.Dispose();
-                }
-                catch (Exception ex) { }
-            }
-            _tasks.Clear();
         }
 
 

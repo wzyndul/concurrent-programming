@@ -15,13 +15,11 @@ namespace Data
             return new DataBall(x, y, weight, speedX, speedY);
         }
 
-        public abstract void StopMoving();
 
         // Properties 
         public abstract double XPosition { get; set; }
         public abstract double YPosition { get; set; }
         public abstract int Weight { get; }
-        //public abstract double Radius { get; set; }
         public abstract double XSpeed { get; set; }
         public abstract double YSpeed { get; set; }
 

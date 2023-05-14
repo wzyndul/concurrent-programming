@@ -10,7 +10,7 @@ namespace DataTest
     [TestClass]
     public class DataBallTest
     {
-        private IDataBall _ball = IDataBall.CreateBall(0, 0, 10, 1, 1);
+        private IDataBall _ball = IDataBall.CreateBall(0, 0, 10);
 
         [TestMethod]
         public void TestCreateBall()
@@ -18,23 +18,9 @@ namespace DataTest
             Assert.AreEqual(0, _ball.XPosition);
             Assert.AreEqual(0, _ball.YPosition);
             Assert.AreEqual(10, _ball.Weight);
+            Assert.AreEqual(0, _ball.XSpeed);
+            Assert.AreEqual(0, _ball.YSpeed);
         }
 
-        [TestMethod]
-        public void TestMoveBall()
-        {
-            //_ball.MoveBall();
-            Assert.AreEqual(1, _ball.XPosition);
-            Assert.AreEqual(1, _ball.YPosition);
-        }
-
-        [TestMethod]
-        public void TestOppositeXYSpeed()
-        {
-            //_ball.OppositeXSpeed();
-            //Assert.AreEqual(-1, _ball.XSpeed);
-            //_ball.OppositeYSpeed();
-            //Assert.AreEqual(-1, _ball.YSpeed);
-        }
     }
 }

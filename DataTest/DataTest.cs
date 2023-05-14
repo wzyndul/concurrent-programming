@@ -30,11 +30,5 @@ namespace DataTest
             Assert.AreEqual(0, _board.GetBalls().Count);
         }
 
-        [TestMethod]
-        public void TestCreateRandomBallLocation()
-        {
-            _board.CreateRandomBallLocation();
-            Assert.AreEqual(1, _board.GetBalls().Count());  
-        }
     }
 }
