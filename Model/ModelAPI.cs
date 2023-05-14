@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,18 +23,17 @@ namespace Model
         {
             _logicAPI.ClearBoard();
             _logicAPI.AddBalls(number);
-            _logicAPI.MoveBalls();
         }
 
 
         public override ObservableCollection<IModelBall> GetBalls()   
         {
             _balls.Clear();
-            foreach (IBall ball in _logicAPI.GetBalls())
+            foreach (ILogicBall ball in _logicAPI.GetBalls())
             {
-                IModelBall modelBall = IModelBall.CreateModelBall(ball.XPosition, ball.YPosition, ball.Radius);
+                IModelBall modelBall = IModelBall.CreateModelBall(ball.Position.X, ball.Position.Y);
                 _balls.Add(modelBall);
-                ball.PropertyChanged += modelBall.UpdateBall!;
+                ball.LogicBallPositionChanged += modelBall.UpdateBall!;
             }
             return _balls;
         }
@@ -41,11 +41,7 @@ namespace Model
         public override void ClearBoard()
         {
             _logicAPI.ClearBoard();
-        }
-
-        public override void CreateRandomBallLocation() 
-        {
-            _logicAPI.CreateRandomBallLocation(); 
+            _balls.Clear();
         }
 
 
@@ -53,3 +49,4 @@ namespace Model
     }
 
 }
+

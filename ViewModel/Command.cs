@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ViewModel
 {
     public class Command : ICommand
     {
-        private Action _execute;
-        private Func<bool> _canExecute;
-        public event EventHandler? CanExecuteChanged;
+        private readonly Action _execute;
+        private readonly Func<bool>? _canExecute;
 
-        public Command(Action execute) : this(execute, null) { }
-        public Command(Action execute, Func<bool> canExecute)
+        public Command(Action execute, Func<bool>? canExecute = null)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
@@ -32,7 +28,9 @@ namespace ViewModel
             _execute();
         }
 
-        public void RaiseCanExecuteChanged()
+        public event EventHandler? CanExecuteChanged;
+
+        internal void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
