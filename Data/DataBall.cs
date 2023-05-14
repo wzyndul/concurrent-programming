@@ -14,24 +14,22 @@ namespace Data
     {
         private Vector2 _position { get; set; }
         private int _weight { get; }
-        private float _xSpeed { get; set; }
-        private float _ySpeed { get; set; }
+        private Vector2 _velocity { get; set; }
 
         public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
         internal DataBall(float xPosition, float yPosition, int weight, float xSpeed, float ySpeed)
         {
             _position = new Vector2(xPosition, yPosition);
-            _xSpeed = xSpeed;
-            _ySpeed = ySpeed;
+            _velocity = new Vector2(xSpeed, ySpeed);
             _weight = weight;
             Task.Run(StartMoving);
         }
 
         private void MoveBall()
         {
-            Vector2 movedPos = new Vector2(Position.X + XSpeed, Position.Y + YSpeed);
+            Vector2 movedPos = new Vector2(Position.X + Velocity.X, Position.Y + Velocity.Y);
             Position = movedPos;
-            
+
             DataBallEventArgs args = new DataBallEventArgs(this);
             DataBallPositionChanged?.Invoke(this, args);
 
@@ -71,31 +69,18 @@ namespace Data
         }
 
 
-        public override float XSpeed
+        public override Vector2 Velocity
         {
-            get => _xSpeed;
+            get => _velocity;
+
             set
             {
-                if (_xSpeed != value)
+                if (_velocity != value)
                 {
-                    _xSpeed = value;               
+                    _velocity = value;
                 }
             }
         }
-        public override float YSpeed
-        {
-            get => _ySpeed;
-            set
-            {
-                if (_ySpeed != value)
-                {
-                    _ySpeed = value;
-                }
-            }
-        }
-
-        
-
     }
 }
 

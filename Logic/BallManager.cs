@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Data;
@@ -76,14 +77,14 @@ namespace Logic
         private void WallCollision(Object source, DataBallEventArgs e)
         {
             IDataBall ball = (IDataBall)source;
-            if (ball.Position.X + ball.XSpeed + _ballRadius >= _boardWidth || ball.Position.X + ball.XSpeed <= _ballRadius)
+            if (ball.Position.X + ball.Velocity.X + _ballRadius >= _boardWidth || ball.Position.X + ball.Velocity.X <= _ballRadius)
             {
-                ball.XSpeed *= -1f;
+                ball.Velocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
             }
 
-            if (ball.Position.Y + ball.YSpeed + _ballRadius >= _boardHeight || ball.Position.Y + ball.YSpeed <= _ballRadius)
+            if (ball.Position.Y + ball.Velocity.Y + _ballRadius >= _boardHeight || ball.Position.Y + ball.Velocity.Y <= _ballRadius)
             {
-                ball.YSpeed *= -1f;
+                ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
             }
 
         }
@@ -97,8 +98,8 @@ namespace Logic
             List<IDataBall> collidingBalls = new List<IDataBall>();
             foreach (IDataBall otherBall in _data.GetBalls())
             {
-                double distance = Math.Sqrt(Math.Pow(ball.Position.X + ball.XSpeed - (otherBall.Position.X + otherBall.XSpeed), 2)
-                                + Math.Pow(ball.Position.Y + ball.YSpeed - (otherBall.Position.Y + otherBall.YSpeed), 2));
+                double distance = Math.Sqrt(Math.Pow(ball.Position.X + ball.Velocity.X - (otherBall.Position.X + otherBall.Velocity.X), 2)
+                                + Math.Pow(ball.Position.Y + ball.Velocity.Y - (otherBall.Position.Y + otherBall.Velocity.Y), 2));
                 if (otherBall != ball && distance <= _ballRadius * 2)
                 {
                     collidingBalls.Add(otherBall);
@@ -109,20 +110,19 @@ namespace Logic
             {
                 foreach (IDataBall otherBall in collidingBalls)
                 {
-                    float otherBallXSpeed = otherBall.XSpeed * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
-                                           + ball.Weight * ball.XSpeed * 2f / (otherBall.Weight + ball.Weight);
-                    float otherBallYSpeed = otherBall.YSpeed * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
-                                           + ball.Weight * ball.YSpeed * 2f / (otherBall.Weight + ball.Weight);
+                    float otherBallXSpeed = otherBall.Velocity.X * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
+                                           + ball.Weight * ball.Velocity.X * 2f / (otherBall.Weight + ball.Weight);
+                    float otherBallYSpeed = otherBall.Velocity.Y * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
+                                           + ball.Weight * ball.Velocity.Y * 2f / (otherBall.Weight + ball.Weight);
 
-                    float ballXSpeed = ball.XSpeed * (ball.Weight - otherBall.Weight) / (ball.Weight + ball.Weight)
-                                      + otherBall.Weight * otherBall.XSpeed * 2f / (ball.Weight + otherBall.Weight);
-                    float ballYSpeed = ball.YSpeed * (ball.Weight - otherBall.Weight) / (ball.Weight + ball.Weight)
-                                      + otherBall.Weight * otherBall.YSpeed * 2f / (ball.Weight + otherBall.Weight);
+                    float ballXSpeed = ball.Velocity.X * (ball.Weight - otherBall.Weight) / (ball.Weight + ball.Weight)
+                                      + otherBall.Weight * otherBall.Velocity.X * 2f / (ball.Weight + otherBall.Weight);
+                    float ballYSpeed = ball.Velocity.Y * (ball.Weight - otherBall.Weight) / (ball.Weight + ball.Weight)
+                                      + otherBall.Weight * otherBall.Velocity.Y * 2f / (ball.Weight + otherBall.Weight);
 
-                    otherBall.XSpeed = otherBallXSpeed;
-                    otherBall.YSpeed = otherBallYSpeed;
-                    ball.XSpeed = ballXSpeed;
-                    ball.YSpeed = ballYSpeed;
+                    otherBall.Velocity = new Vector2(otherBallXSpeed, otherBallYSpeed);
+                    ball.Velocity = new Vector2(ballXSpeed, ballYSpeed);
+
                 }
             }
 

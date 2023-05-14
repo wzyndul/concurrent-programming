@@ -20,9 +20,6 @@ namespace Data
         // Properties 
         public abstract Vector2 Position { get; set; }
         public abstract int Weight { get; }
-        public abstract float XSpeed { get; set; }
-        public abstract float YSpeed { get; set; }
-
-        
+        public abstract Vector2 Velocity { get; set; }
     }
 }
