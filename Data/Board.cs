@@ -35,6 +35,10 @@ namespace Data
 
         public override void ClearBoard()
         {
+            foreach (IDataBall b in _balls)
+            {
+                b.TurnOff();
+            }
             _balls.Clear();
         }
 

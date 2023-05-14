@@ -8,7 +8,7 @@ namespace Model
     {
         public static ModelAbstractAPI CreateAPI(LogicAbstractAPI logicAbstractAPI = default)
         {
-            return new ModelAPI(logicAbstractAPI ?? LogicAbstractAPI.CreateAPI(575, 420, 10.0));
+            return new ModelAPI(logicAbstractAPI ?? LogicAbstractAPI.CreateAPI(580, 420, 10.0)); 
         }
 
         public abstract ObservableCollection<IModelBall> GetBalls();

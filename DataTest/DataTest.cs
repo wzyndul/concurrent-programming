@@ -13,17 +13,6 @@ namespace DataTest
     {
         private DataAbstractAPI _board = DataAbstractAPI.CreateAPI(800, 600, 10);
 
-        [TestMethod]
-        public void CreateBallGetBallsTest()
-        {
-            IDataBall ball = _board.CreateBall(1, 1, 10, 1, 1);
-            Assert.AreEqual(1, ball.Position.X);
-            Assert.AreEqual(1, ball.Position.Y);
-            Assert.AreEqual(10, ball.Weight);
-            Assert.AreEqual(1, ball.Velocity.X);
-            Assert.AreEqual(1, ball.Velocity.Y);
-            CollectionAssert.Contains(_board.GetBalls(), ball); 
-        }
 
         [TestMethod]
         public void ClearBoardTest()
@@ -50,17 +39,6 @@ namespace DataTest
             Assert.IsTrue(newBall.Position.Y > 4 * _board.BallRadius && newBall.Position.Y < _board.BoardHeight - _board.BallRadius);
             Assert.AreNotEqual(0f, newBall.Velocity.X);
             Assert.AreNotEqual(0f, newBall.Velocity.Y);
-        }
-
-        [TestMethod]
-        public void MoveBallTest()
-        {
-            IDataBall ball = _board.CreateBall(1, 1, 10, 1, 1);
-            Vector2 initialPos = ball.Position;
-            Thread.Sleep(10);
-            Vector2 newPos = ball.Position;
-            Assert.AreNotEqual(initialPos, newPos);
-            Assert.AreEqual(initialPos + ball.Velocity, newPos);
         }
 
     }

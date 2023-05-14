@@ -15,6 +15,7 @@ namespace Data
         private Vector2 _position { get; set; }
         private int _weight { get; }
         private Vector2 _velocity { get; set; }
+        private bool _isRunning;
 
         public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
         internal DataBall(float xPosition, float yPosition, int weight, float xSpeed, float ySpeed)
@@ -22,6 +23,7 @@ namespace Data
             _position = new Vector2(xPosition, yPosition);
             _velocity = new Vector2(xSpeed, ySpeed);
             _weight = weight;
+            _isRunning = true;
             Task.Run(StartMoving);
         }
 
@@ -37,7 +39,7 @@ namespace Data
 
         private async void StartMoving()
         {
-            while (true)
+            while (_isRunning)
             {
                 lock (this)
                 {
@@ -48,33 +50,11 @@ namespace Data
             }
         }
 
-        public override void ClearBalls()
+
+
+        public override void TurnOff()
         {
-/*            bool isAllTasksCompleted = false;
-
-
-            while (!isAllTasksCompleted)
-            {
-                isAllTasksCompleted = true;
-                foreach (Task task in _tasks)
-                {
-                    if (!task.IsCompleted)
-                    {
-                        isAllTasksCompleted = false;
-                        break;
-                    }
-                }
-            }
-
-            foreach (Task task in _tasks)
-            {
-                try
-                {
-                    task.Dispose();
-                }
-                catch (Exception ex) { }
-            }
-            _tasks.Clear();*/
+            _isRunning = false;
         }
 
 

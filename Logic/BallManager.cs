@@ -46,9 +46,6 @@ namespace Logic
                 dataBall.DataBallPositionChanged += logicBall.UpdateBall!;
                 dataBall.DataBallPositionChanged += WallCollision!;
                 dataBall.DataBallPositionChanged += BallsCollision!;
-
-                _balls.Add(logicBall);
-
             }
         }
 
@@ -59,15 +56,7 @@ namespace Logic
 
         public override void ClearBoard()
         {
-            foreach (ILogicBall logicBall in _balls)
-            {
-                foreach (IDataBall dataBall in _data.GetBalls())
-                {
-                    dataBall.DataBallPositionChanged -= logicBall.UpdateBall!;
-                    dataBall.DataBallPositionChanged -= WallCollision!;
-                    dataBall.DataBallPositionChanged -= BallsCollision!;
-                }
-            }
+            _data.ClearBoard();
             _balls.Clear();
         }
 
@@ -89,23 +78,6 @@ namespace Logic
 
         }
 
-        /*        private void WallCollision(Object source, DataBallEventArgs e)
-                {
-                    IDataBall ball = (IDataBall)source;
-                    if (0 >= (ball.Position.X - _ballRadius) ||
-                        (ball.Position.X + _ballRadius) >= _boardWidth - 5)
-                    {
-                        ball.Velocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
-                    }
-
-                    if (0 >= (ball.Position.Y - _ballRadius) ||
-                        (ball.Position.Y + _ballRadius) >= _boardHeight)
-                    {
-                        ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
-                    }
-
-                }*/
-
 
 
 
@@ -113,7 +85,7 @@ namespace Logic
         {
             IDataBall ball = (IDataBall)source;
             List<IDataBall> collidingBalls = new List<IDataBall>();
-            foreach (IDataBall otherBall in _data.GetBalls())
+            foreach (IDataBall otherBall in _data.GetBalls().ToArray())
             {
                 double distance = Math.Sqrt(Math.Pow(ball.Position.X + ball.Velocity.X - (otherBall.Position.X + otherBall.Velocity.X), 2)
                                 + Math.Pow(ball.Position.Y + ball.Velocity.Y - (otherBall.Position.Y + otherBall.Velocity.Y), 2));
