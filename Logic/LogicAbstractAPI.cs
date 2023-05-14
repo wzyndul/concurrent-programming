@@ -13,11 +13,10 @@ namespace Logic
         {
             return new BallManager(dataAbstractApi ?? DataAbstractAPI.CreateAPI(boardWidth, boardHeight, ballRadius));
         }
-        public abstract ILogicBall CreateBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0);
+        public abstract ILogicBall CreateBall(double xPosition, double yPosition);
 
         public abstract void AddBalls(int number);
         public abstract List<ILogicBall> GetBalls();
         public abstract void ClearBoard();
-        public abstract void MoveBalls();
     }
 }

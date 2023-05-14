@@ -9,42 +9,46 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class DataBall : IDataBall, INotifyPropertyChanged
+    internal class DataBall : IDataBall
     {
         private double _xPosition { get; set; }
         private double _yPosition { get; set; }
+        private int _weight { get; }
         private double _xSpeed { get; set; }
         private double _ySpeed { get; set; }
-        //private double _radius { get; set; }
-        private int _weight { get; }
 
+        public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
         internal DataBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
             _xSpeed = xSpeed;
             _ySpeed = ySpeed;
-            //_radius = radius;
             _weight = weight;
+            Task.Run(StartMoving);
         }
 
-
-        // miało być prywatne ponoć???
-/*        public override void MoveBall()
+        private void MoveBall()
         {
-            this.XPosition += _xSpeed;
-            this.YPosition += _ySpeed;
-        }*/
+            XPosition += XSpeed;
+            YPosition += YSpeed;
+            DataBallEventArgs args = new DataBallEventArgs(this);
+            DataBallPositionChanged?.Invoke(this, args);
 
+        }
 
-        // przeniesione do boarda ale na razie tu zostawiam
-        /*public override bool CheckBorderColision(int width, int height)
+        private async void StartMoving()
         {
-            if (_xPosition + _xSpeed + _radius >= width || _yPosition + _ySpeed + _radius >= height
-                || _xPosition - _radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
-            return true;
-        }*/
+            while (true)
+            {
+                lock (this)
+                {
+                    MoveBall();
+                }
+                await Task.Delay(10);
 
+            }
+        }
 
 
         // Properties 
@@ -57,7 +61,6 @@ namespace Data
                 if (_xPosition != value)
                 {
                     _xPosition = value;
-                    RaisePropertyChanged(() => XPosition);
                 }
             }
         }
@@ -70,7 +73,6 @@ namespace Data
                 if (_yPosition != value)
                 {
                     _yPosition = value;
-                    RaisePropertyChanged(() => YPosition);
                 }
             }
         }
@@ -80,15 +82,6 @@ namespace Data
             get => _weight;
         }
 
-        /*public override double Radius
-        {
-            get => _radius;
-            set
-            {
-                _radius = value;
-                RaisePropertyChanged();
-            }
-        }*/
 
         public override double XSpeed
         {
@@ -97,8 +90,7 @@ namespace Data
             {
                 if (_xSpeed != value)
                 {
-                    _xSpeed = value;
-                    RaisePropertyChanged(() => XSpeed);
+                    _xSpeed = value;               
                 }
             }
         }
@@ -110,20 +102,11 @@ namespace Data
                 if (_ySpeed != value)
                 {
                     _ySpeed = value;
-                    RaisePropertyChanged(() => YSpeed);
                 }
             }
         }
 
-        public override event PropertyChangedEventHandler? PropertyChanged;
-        private void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
-        {
-            if (propertyExpression.Body is MemberExpression memberExpression)
-            {
-                string propertyName = memberExpression.Member.Name;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+        
 
     }
 }

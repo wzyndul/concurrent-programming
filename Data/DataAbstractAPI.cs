@@ -16,7 +16,7 @@ namespace Data
 
         public abstract void ClearBoard();
         public abstract List<IDataBall> GetBalls();
-        public abstract IDataBall CreateRandomBallLocation();
+        public abstract IDataBall CreateRandomBallLocation(List<IDataBall> balls);
         public abstract int BoardWidth { get; }
         public abstract int BoardHeight { get; }
         public abstract double BallRadius { get; }

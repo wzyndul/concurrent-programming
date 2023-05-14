@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,6 @@ namespace Logic
         private DataAbstractAPI _data;
         private List<ILogicBall> _balls;
         
-        private List<Task> _tasks;
-        private bool _isRunning = false;
-        private SemaphoreSlim _Semaphore = new SemaphoreSlim(1);
 
         public BallManager(DataAbstractAPI dataLayer)
         {
@@ -26,13 +24,12 @@ namespace Logic
             this._boardHeight = _data.BoardHeight;
             this._ballRadius = _data.BallRadius;
             this._balls = new List<ILogicBall>();
-            this._tasks = new List<Task>();
         }
 
-        public override ILogicBall CreateBall(double xPos, double yPos,  int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        public override ILogicBall CreateBall(double xPos, double yPos)
         {
 
-            ILogicBall ball = new LogicBall(xPos, yPos, weight, xSpeed, ySpeed);
+            ILogicBall ball = new LogicBall(xPos, yPos);
             _balls.Add(ball);
             return ball;
         }
@@ -42,29 +39,15 @@ namespace Logic
         {
             for (int i = 0; i < n; i++)
             {
-                IDataBall dataBall = _data.CreateRandomBallLocation();
-                ILogicBall logicBall = CreateBall(dataBall.XPosition, dataBall.YPosition, dataBall.Weight, dataBall.XSpeed, dataBall.YSpeed);
-                dataBall.PropertyChanged += logicBall.UpdateBall!;
+                IDataBall dataBall = _data.CreateRandomBallLocation(_data.GetBalls());
+                ILogicBall logicBall = CreateBall(dataBall.XPosition, dataBall.YPosition);
+
+                dataBall.DataBallPositionChanged += logicBall.UpdateBall!;
+                dataBall.DataBallPositionChanged += WallCollision!;
+                dataBall.DataBallPositionChanged += BallsCollision!;
+
                 _balls.Add(logicBall);
 
-                Task task = new Task(async () =>
-                {
-
-                    while (this._isRunning)
-                    {
-                        await this._Semaphore.WaitAsync();
-                        //if (dataBall.CheckBorderColision(_boardWidth, _boardHeight))
-                        //{
-                        //    dataBall.MoveBall();
-                        //}
-                        WallCollision(dataBall);
-                        BallCollision(dataBall);
-                        MoveBall(dataBall);
-                        _Semaphore.Release();
-                        await Task.Delay(10);
-                    }
-                });
-                _tasks.Add(task);
             }
         }
 
@@ -75,76 +58,42 @@ namespace Logic
 
         public override void ClearBoard()
         {
-            _isRunning = false;
-            bool isAllTasksCompleted = false;
-
-            while (!isAllTasksCompleted)
+            foreach (ILogicBall logicBall in _balls)
             {
-                isAllTasksCompleted = true;
-                foreach (Task task in _tasks)
+                foreach (IDataBall dataBall in _data.GetBalls())
                 {
-                    if (!task.IsCompleted)
-                    {
-                        isAllTasksCompleted = false;
-                        break;
-                    }
+                    dataBall.DataBallPositionChanged -= logicBall.UpdateBall!;
+                    dataBall.DataBallPositionChanged -= WallCollision!;
+                    dataBall.DataBallPositionChanged -= BallsCollision!;
                 }
             }
-
-            foreach (Task task in _tasks)
-            {
-                try
-                {
-                    task.Dispose();
-                }
-                catch (Exception ex) { }
-            }
-            _tasks.Clear();
             _balls.Clear();
         }
 
-        public override void MoveBalls()
+
+
+
+        private void WallCollision(Object source, DataBallEventArgs e)
         {
-            this._isRunning = true;
-            foreach (Task task in this._tasks)
-            {
-
-                task.Start();
-
-            }
-
-        }
-
-        private void MoveBall(IDataBall ball)
-        {
-            ball.XPosition += ball.XSpeed;
-            ball.YPosition += ball.YSpeed;
-        }
-
-        private void WallCollision(IDataBall ball)
-        {
-            if (ball.XPosition + ball.XSpeed + _ballRadius >= _boardWidth || ball.XPosition + ball.XSpeed <= 2 * _ballRadius)
+            IDataBall ball = (IDataBall)source;
+            if (ball.XPosition + ball.XSpeed + _ballRadius >= _boardWidth || ball.XPosition + ball.XSpeed <= _ballRadius)
             {
                 ball.XSpeed *= -1.0;
             }
 
-            if (ball.YPosition + ball.YSpeed + _ballRadius >= _boardHeight || ball.YPosition + ball.YSpeed <= 2 * _ballRadius)
+            if (ball.YPosition + ball.YSpeed + _ballRadius >= _boardHeight || ball.YPosition + ball.YSpeed <= _ballRadius)
             {
                 ball.YSpeed *= -1.0;
             }
 
         }
 
-        // używamy?
-        private bool CheckBorderCollision(IDataBall ball, int width, int height)
-        {
-            if (ball.XPosition + ball.XSpeed + _ballRadius >= width || ball.YPosition + ball.YSpeed + _ballRadius >= height
-                || ball.XPosition - _ballRadius * 2 + ball.XSpeed <= 0 || ball.YPosition - _ballRadius * 2 + ball.YSpeed <= 0) { return false; }
-            return true;
-        }
 
-        private void BallCollision(IDataBall ball)
+
+
+        private void BallsCollision(Object source, DataBallEventArgs e)
         {
+            IDataBall ball = (IDataBall)source;
             List<IDataBall> collidingBalls = new List<IDataBall>();
             foreach (IDataBall otherBall in _data.GetBalls())
             {
@@ -156,8 +105,8 @@ namespace Logic
                 }
             }
 
-           lock (collidingBalls)
-           {
+            lock (collidingBalls)
+            {
                 foreach (IDataBall otherBall in collidingBalls)
                 {
                     double otherBallXSpeed = otherBall.XSpeed * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
@@ -175,7 +124,7 @@ namespace Logic
                     ball.XSpeed = ballXSpeed;
                     ball.YSpeed = ballYSpeed;
                 }
-           }
+            }
 
         }
 

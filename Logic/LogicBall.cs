@@ -15,19 +15,13 @@ namespace Logic
     {
         private double _xPosition { get; set; }
         private double _yPosition { get; set; }
-        private double _xSpeed { get; set; }
-        private double _ySpeed { get; set; }
-        //private double _radius { get; set; }
-        private int _weight { get; set; }
 
-        internal LogicBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+
+        internal LogicBall(double xPosition, double yPosition)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
-            _xSpeed = xSpeed;
-            _ySpeed = ySpeed;
-            //_radius = radius;
-            _weight = weight;
+
         }
 
 
@@ -39,8 +33,7 @@ namespace Logic
             {
                 if (_xPosition != value)
                 {
-                    _xPosition = value;
-                    RaisePropertyChanged(() => XPosition);
+                    _xPosition = value;                   
                 }
             }
         }
@@ -52,66 +45,21 @@ namespace Logic
             {
                 if (_yPosition != value)
                 {
-                    _yPosition = value;
-                    RaisePropertyChanged(() => YPosition);
+                    _yPosition = value;                 
                 }
             }
         }
 
-        /*public override double Radius
-        {
-            get => _radius;
-            set
-            {
-                _radius = value;
-                RaisePropertyChanged();
-            }
-        }*/
+        public override event EventHandler<LogicBallEventArgs> LogicBallPositionChanged;
 
-        public override double XSpeed
-        {
-            get => _xSpeed;
-            set
-            {
-                if (_xSpeed != value)
-                {
-                    _xSpeed = value;
-                    RaisePropertyChanged(() => XSpeed);
-                }
-            }
-        }
 
-        public override double YSpeed
+        public override void UpdateBall(object source, DataBallEventArgs e)
         {
-            get => _ySpeed;
-            set
-            {
-                if (_ySpeed != value)
-                {
-                    _ySpeed = value;
-                    RaisePropertyChanged(() => YSpeed);
-                }
-            }
-        }
-
-        public override event PropertyChangedEventHandler? PropertyChanged;
-        private void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
-        {
-            if (propertyExpression.Body is MemberExpression memberExpression)
-            {
-                string propertyName = memberExpression.Member.Name;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public override void UpdateBall(Object source, PropertyChangedEventArgs e)
-        {
-            IDataBall sourceBall = (IDataBall)source;
-            GetType().GetProperty(e.PropertyName!)!.SetValue(
-                this, sourceBall.GetType().GetProperty(e.PropertyName!)!.GetValue(sourceBall)
-            );
-            /*            this.XPosition = sourceBall.XPosition;
-                        this.XPosition = sourceBall.YPosition;*/
+            IDataBall ball = (IDataBall)source;
+            XPosition = ball.XPosition;
+            YPosition = ball.YPosition;
+            LogicBallEventArgs args = new LogicBallEventArgs(this);
+            LogicBallPositionChanged?.Invoke(this, args);
         }
     }
 }

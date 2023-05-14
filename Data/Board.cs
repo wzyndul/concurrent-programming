@@ -23,7 +23,7 @@ namespace Data
         }
 
 
-        public Board(int boardWidth, int boardHeight, double ballRadius = 10.0)             // tu dodałam 10.0 na razie
+        public Board(int boardWidth, int boardHeight, double ballRadius)             
         {
             this._boardWidth = boardWidth;
             this._boardHeight = boardHeight;
@@ -44,12 +44,31 @@ namespace Data
         }
 
 
-        public override IDataBall CreateRandomBallLocation()
+        public override IDataBall CreateRandomBallLocation(List<IDataBall> balls)
         {
-            return CreateBall(GenerateRandomDouble(4 * _ballRadius, _boardWidth - _ballRadius),
-                     GenerateRandomDouble(4 * _ballRadius, _boardHeight - _ballRadius), 20,                 // tu ustawiamy wagę?
-                     GenerateRandomDouble(-1.5, 1.5), GenerateRandomDouble(-1.5, 1.5));
+            double xPos;
+            double yPos;
+
+            // generate random position until it is not the same as any existing ball
+            do
+            {
+                xPos = GenerateRandomDouble(4 * _ballRadius, _boardWidth - _ballRadius);
+                yPos = GenerateRandomDouble(4 * _ballRadius, _boardHeight - _ballRadius);
+            } while (balls.Any(b => Math.Sqrt(Math.Pow(b.XPosition - xPos, 2) + Math.Pow(b.YPosition - yPos, 2)) <= 2 * _ballRadius));
+
+            double xSpeed;
+            double ySpeed;
+
+            // speed can't be 0
+            do
+            {
+                xSpeed = GenerateRandomDouble(-1.5, 1.5);
+                ySpeed = GenerateRandomDouble(-1.5, 1.5);
+            } while (xSpeed == 0 || ySpeed == 0);
+
+            return CreateBall(xPos, yPos, 20, xSpeed, ySpeed);
         }
+
 
 
 
@@ -74,12 +93,7 @@ namespace Data
         private double GenerateRandomDouble(double min, double max)
         {
             Random rand = new Random();
-            double value;
-            do
-            {
-                value = rand.NextDouble() * (max - min) + min;
-            } while (value == 0);
-            return value;
+            return rand.NextDouble() * (max - min) + min;
         }
         private int GenerateRandomInt(int min, int max)
         {

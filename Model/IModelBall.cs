@@ -10,16 +10,15 @@ namespace Model
 {
     public abstract class IModelBall
     {
-        public abstract void UpdateBall(Object source, PropertyChangedEventArgs e);
+        public abstract void UpdateBall(Object source, LogicBallEventArgs e);
         public static IModelBall CreateModelBall(double xPos, double yPos)
         { 
             return new ModelBall(xPos, yPos); 
         }
         
-        // Properties needed for ModelBall
+        // Properties 
         public abstract double XPosition { get; set; }
         public abstract double YPosition { get; set; }
-        //public abstract double Radius { get; set; }
 
         public abstract event PropertyChangedEventHandler? PropertyChanged;
 
