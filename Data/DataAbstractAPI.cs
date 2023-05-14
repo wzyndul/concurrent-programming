@@ -12,7 +12,7 @@ namespace Data
         {
             return new Board(boardWidth, boardHeight, ballRadius);
         }
-        public abstract IDataBall CreateBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0);
+        public abstract IDataBall CreateBall(float xPosition, float yPosition, int weight, float xSpeed, float ySpeed);
 
         public abstract void ClearBoard();
         public abstract List<IDataBall> GetBalls();

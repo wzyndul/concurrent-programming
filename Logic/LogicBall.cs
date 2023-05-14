@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,39 +14,25 @@ namespace Logic
 {
     internal class LogicBall : ILogicBall
     {
-        private double _xPosition { get; set; }
-        private double _yPosition { get; set; }
+        private Vector2 _position { get; set; }
 
 
-        internal LogicBall(double xPosition, double yPosition)
+        internal LogicBall(float xPosition, float yPosition)
         {
-            _xPosition = xPosition;
-            _yPosition = yPosition;
-
+            _position = new Vector2(xPosition, yPosition);
         }
 
 
         // Properties 
-        public override double XPosition
-        {
-            get => _xPosition;
-            set
-            {
-                if (_xPosition != value)
-                {
-                    _xPosition = value;                   
-                }
-            }
-        }
 
-        public override double YPosition
+        public override Vector2 Position
         {
-            get => _yPosition;
+            get => _position;
             set
             {
-                if (_yPosition != value)
+                if (_position != value)
                 {
-                    _yPosition = value;                 
+                    _position = value;
                 }
             }
         }
@@ -56,8 +43,7 @@ namespace Logic
         public override void UpdateBall(object source, DataBallEventArgs e)
         {
             IDataBall ball = (IDataBall)source;
-            XPosition = ball.XPosition;
-            YPosition = ball.YPosition;
+            Position = ball.Position;
             LogicBallEventArgs args = new LogicBallEventArgs(this);
             LogicBallPositionChanged?.Invoke(this, args);
         }
