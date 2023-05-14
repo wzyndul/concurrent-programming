@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,31 +14,19 @@ namespace Model
     {
         private double _xPosition { get; set; }
         private double _yPosition { get; set; }
-        private double _radius { get; set; }
 
-        public ModelBall(double xPos, double yPos, double radius)
+        public ModelBall(double xPos, double yPos)
         {
             this._xPosition = xPos;        
             this._yPosition = yPos;
-            this._radius = radius;
         }
 
 
-        public override void UpdateBall(Object source, PropertyChangedEventArgs e) 
+        public override void UpdateBall(Object source, LogicBallEventArgs e) 
         {
             ILogicBall sourceBall = (ILogicBall)source;
-            if (e.PropertyName == "XPosition")
-            {
-                this.XPosition = sourceBall.XPosition - sourceBall.Radius;       
-            }
-            if (e.PropertyName == "YPosition")
-            {
-                this.YPosition = sourceBall.YPosition - sourceBall.Radius;               
-            }
-            if (e.PropertyName == "Radius")
-            {
-                this.Radius = sourceBall.Radius;
-            }
+            XPosition = sourceBall.XPosition;
+            YPosition = sourceBall.YPosition;
         }
 
 
@@ -46,8 +35,11 @@ namespace Model
             get => _xPosition;
             set
             {
-                _xPosition = value;
-                RaisePropertyChanged();
+                if (_xPosition != value)
+                {
+                    _xPosition = value;
+                    RaisePropertyChanged(() => XPosition);
+                }
             }
         }
 
@@ -56,25 +48,23 @@ namespace Model
             get => _yPosition;
             set
             {
-                _yPosition = value;
-                RaisePropertyChanged();
+                if (_yPosition != value)
+                {
+                    _yPosition = value;
+                    RaisePropertyChanged(() => YPosition);
+                }
             }
         }
 
-        public override double Radius 
-        {
-            get => _radius;
-            set
-            {
-                _radius = value; 
-                RaisePropertyChanged();
-            } 
-        }
 
         public override event PropertyChangedEventHandler? PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        private void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (propertyExpression.Body is MemberExpression memberExpression)
+            {
+                string propertyName = memberExpression.Member.Name;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

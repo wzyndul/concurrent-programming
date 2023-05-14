@@ -2,49 +2,66 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class DataBall : IDataBall, INotifyPropertyChanged
+    internal class DataBall : IDataBall
     {
         private double _xPosition { get; set; }
         private double _yPosition { get; set; }
+        private int _weight { get; }
         private double _xSpeed { get; set; }
         private double _ySpeed { get; set; }
-        private double _radius { get; set; }
-        private int _weight { get; set; }
 
-        internal DataBall(double xPosition, double yPosition, double radius, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
+        public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
+        internal DataBall(double xPosition, double yPosition, int weight, double xSpeed = 0.0, double ySpeed = 0.0)
         {
             _xPosition = xPosition;
             _yPosition = yPosition;
             _xSpeed = xSpeed;
             _ySpeed = ySpeed;
-            _radius = radius;
             _weight = weight;
+            Task.Run(StartMoving);
         }
 
-
-
-        public override void MoveBall()
+        private void MoveBall()
         {
-            this.XPosition += _xSpeed;
-            this.YPosition += _ySpeed;
+            XPosition += XSpeed;
+            YPosition += YSpeed;
+            DataBallEventArgs args = new DataBallEventArgs(this);
+            DataBallPositionChanged?.Invoke(this, args);
+
+        }
+
+        private async void StartMoving()
+        {
+            while (true)
+            {
+                lock (this)
+                {
+                    MoveBall();
+                }
+                await Task.Delay(10);
+
+            }
         }
 
 
+        // Properties 
 
-        // Properties needed for ModelBall
         public override double XPosition
         {
             get => _xPosition;
             set
             {
-                _xPosition = value;
-                RaisePropertyChanged();
+                if (_xPosition != value)
+                {
+                    _xPosition = value;
+                }
             }
         }
 
@@ -53,64 +70,44 @@ namespace Data
             get => _yPosition;
             set
             {
-                _yPosition = value;
-                RaisePropertyChanged();
-            }
-        }
-        public override double Radius
-        {
-            get => _radius;
-            set
-            {
-                _radius = value;
-                RaisePropertyChanged();
+                if (_yPosition != value)
+                {
+                    _yPosition = value;
+                }
             }
         }
 
-        public override double XSpeed
-        {
-            get => _xSpeed;
-            set {
-                _xSpeed = value; RaisePropertyChanged();
-            }
-        }
-
-        public override double YSpeed
-        {
-            get => _ySpeed;
-            set
-            {
-                _ySpeed = value; RaisePropertyChanged();
-            }
-        }
         public override int Weight
         {
             get => _weight;
         }
 
-        public override event PropertyChangedEventHandler? PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+
+        public override double XSpeed
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => _xSpeed;
+            set
+            {
+                if (_xSpeed != value)
+                {
+                    _xSpeed = value;               
+                }
+            }
+        }
+        public override double YSpeed
+        {
+            get => _ySpeed;
+            set
+            {
+                if (_ySpeed != value)
+                {
+                    _ySpeed = value;
+                }
+            }
         }
 
-        public override bool CheckBorderColision(int width, int height)
-        {
-            if (_xPosition + _xSpeed + _radius >= width || _yPosition + _ySpeed + _radius >= height
-                || _xPosition - _radius * 2 + _xSpeed <= 0 || _yPosition - _radius * 2 + _ySpeed <= 0) { return false; }
-            return true;
-        }
-      
+        
 
-        public override void OppositeXSpeed()
-        {
-            XSpeed *= -1.0;
-        }
-
-        public override void OppositeYSpeed()
-        {
-            YSpeed *= -1.0;
-        }
     }
 }
 

@@ -22,7 +22,6 @@ namespace Model
         {
             _logicAPI.ClearBoard();
             _logicAPI.AddBalls(number);
-            _logicAPI.MoveBalls();
         }
 
 
@@ -31,9 +30,9 @@ namespace Model
             _balls.Clear();
             foreach (ILogicBall ball in _logicAPI.GetBalls())
             {
-                IModelBall modelBall = IModelBall.CreateModelBall(ball.XPosition, ball.YPosition, ball.Radius);
+                IModelBall modelBall = IModelBall.CreateModelBall(ball.XPosition, ball.YPosition);
                 _balls.Add(modelBall);
-                ball.PropertyChanged += modelBall.UpdateBall!;
+                ball.LogicBallPositionChanged += modelBall.UpdateBall!;
             }
             return _balls;
         }

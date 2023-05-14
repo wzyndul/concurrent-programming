@@ -10,7 +10,7 @@ namespace LogicTest
     [TestClass]
     public class LogicTest
     {
-        //private LogicAbstractAPI _board = LogicAbstractAPI.CreateAPI(20, 30, 5);
+        private LogicAbstractAPI _ballManager = LogicAbstractAPI.CreateAPI(20, 30, 5);
         //private IBall _ball;
 
         //[TestMethod]
