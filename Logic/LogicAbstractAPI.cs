@@ -9,9 +9,9 @@ namespace Logic
 {
     public abstract class LogicAbstractAPI
     {
-        public static LogicAbstractAPI CreateAPI(int boardWidth, int boardHeight, double ballRadius, DataAbstractAPI? dataAbstractApi = null)
+        public static LogicAbstractAPI CreateAPI(int boardWidth, int boardHeight, double ballRadius, DataAbstractAPI? dataAbstractApi = default)
         {
-            return new BallManager(dataAbstractApi ?? DataAbstractAPI.CreateAPI(boardWidth, boardHeight, ballRadius));
+            return new BallManager(dataAbstractApi == null ? DataAbstractAPI.CreateAPI(boardWidth, boardHeight, ballRadius) : dataAbstractApi);
         }
         public abstract ILogicBall CreateBall(float xPosition, float yPosition);
 

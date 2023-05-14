@@ -32,6 +32,7 @@ namespace Data
         }
 
 
+
         public override void ClearBoard()
         {
             _balls.Clear();
@@ -64,7 +65,7 @@ namespace Data
             {
                 xSpeed = GenerateRandomFloat(-1.5f, 1.5f);
                 ySpeed = GenerateRandomFloat(-1.5f, 1.5f);
-            } while (xSpeed == 0f || ySpeed == 0f);
+            } while (xSpeed == 0.0f || ySpeed == 0.0f);
 
             return CreateBall(xPos, yPos, 20, xSpeed, ySpeed);
         }

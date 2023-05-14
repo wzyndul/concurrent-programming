@@ -77,17 +77,34 @@ namespace Logic
         private void WallCollision(Object source, DataBallEventArgs e)
         {
             IDataBall ball = (IDataBall)source;
-            if (ball.Position.X + ball.Velocity.X + _ballRadius >= _boardWidth || ball.Position.X + ball.Velocity.X <= _ballRadius)
+            if (ball.Position.X + ball.Velocity.X + _ballRadius > _boardWidth || ball.Position.X + ball.Velocity.X - _ballRadius < 0)
             {
                 ball.Velocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
             }
 
-            if (ball.Position.Y + ball.Velocity.Y + _ballRadius >= _boardHeight || ball.Position.Y + ball.Velocity.Y <= _ballRadius)
+            if (ball.Position.Y + ball.Velocity.Y + _ballRadius > _boardHeight || ball.Position.Y + ball.Velocity.Y - _ballRadius < 0)
             {
                 ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
             }
 
         }
+
+        /*        private void WallCollision(Object source, DataBallEventArgs e)
+                {
+                    IDataBall ball = (IDataBall)source;
+                    if (0 >= (ball.Position.X - _ballRadius) ||
+                        (ball.Position.X + _ballRadius) >= _boardWidth - 5)
+                    {
+                        ball.Velocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
+                    }
+
+                    if (0 >= (ball.Position.Y - _ballRadius) ||
+                        (ball.Position.Y + _ballRadius) >= _boardHeight)
+                    {
+                        ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
+                    }
+
+                }*/
 
 
 

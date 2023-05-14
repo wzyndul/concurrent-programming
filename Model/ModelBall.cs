@@ -13,7 +13,6 @@ namespace Model
 {
     internal class ModelBall : IModelBall, INotifyPropertyChanged
     {
-        private Vector2 _position { get; set; }
         private float _xPosition { get; set; }
         private float _yPosition { get; set; }
 

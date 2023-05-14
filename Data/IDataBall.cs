@@ -16,6 +16,7 @@ namespace Data
             return new DataBall(x, y, weight, speedX, speedY);
         }
 
+        public abstract void ClearBalls();
 
         // Properties 
         public abstract Vector2 Position { get; set; }

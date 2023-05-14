@@ -48,6 +48,35 @@ namespace Data
             }
         }
 
+        public override void ClearBalls()
+        {
+/*            bool isAllTasksCompleted = false;
+
+
+            while (!isAllTasksCompleted)
+            {
+                isAllTasksCompleted = true;
+                foreach (Task task in _tasks)
+                {
+                    if (!task.IsCompleted)
+                    {
+                        isAllTasksCompleted = false;
+                        break;
+                    }
+                }
+            }
+
+            foreach (Task task in _tasks)
+            {
+                try
+                {
+                    task.Dispose();
+                }
+                catch (Exception ex) { }
+            }
+            _tasks.Clear();*/
+        }
+
 
         // Properties 
 

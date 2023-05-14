@@ -18,7 +18,6 @@ namespace Model
         }
         
         // Properties 
-        //public abstract Vector2 Position { get; set; }
         public abstract float XPosition { get; set; }
         public abstract float YPosition { get; set; }
 
