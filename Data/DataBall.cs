@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Numerics;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class DataBall : IDataBall
+    internal class DataBall : IDataBall, IDisposable
     {
         private Vector2 _position;
         private int _weight { get; }
@@ -29,8 +30,10 @@ namespace Data
 
         private void MoveBall()
         {
-            _position.X += Velocity.X;
-            _position.Y += Velocity.Y;
+            Vector2 _tempPosition = _position;
+            Vector2 _tempVelocity = _velocity;
+            _tempPosition = new Vector2(_tempPosition.X + _tempVelocity.X, _tempPosition.Y + _tempVelocity.Y);
+            _position = _tempPosition;
             DataBallEventArgs args = new DataBallEventArgs(this);
             DataBallPositionChanged?.Invoke(this, args);
 
@@ -38,18 +41,23 @@ namespace Data
 
         private async void StartMoving()
         {
+            Stopwatch stopwatch = new Stopwatch();
             while (_isRunning)
             {
-
-            MoveBall();           
-            await Task.Delay(10);
-
+                //double _inverseSpeed = 1 / Math.Sqrt(_velocity.X * _velocity.X + _velocity.Y * _velocity.Y); nie wiem czy z tego bede korzystac
+                stopwatch.Start();
+                MoveBall();
+                stopwatch.Stop();
+                if ((int)stopwatch.ElapsedMilliseconds < 10)
+                {
+                    await Task.Delay(10 - (int) stopwatch.ElapsedMilliseconds);
+                }
+                stopwatch.Reset();
             }
         }
 
 
-
-        public override void TurnOff()
+        public override void Dispose()
         {
             _isRunning = false;
         }

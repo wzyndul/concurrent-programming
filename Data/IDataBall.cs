@@ -21,6 +21,6 @@ namespace Data
         public abstract Vector2 Position { get; }
         public abstract int Weight { get; }
         public abstract Vector2 Velocity { get; set; }
-        public abstract void TurnOff();
+        public abstract void Dispose();
     }
 }

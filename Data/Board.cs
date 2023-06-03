@@ -37,7 +37,7 @@ namespace Data
         {
             foreach (IDataBall b in _balls)
             {
-                b.TurnOff();
+                b.Dispose();
             }
             _balls.Clear();
         }
