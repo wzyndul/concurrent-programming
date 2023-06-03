@@ -17,10 +17,12 @@ namespace Data
         private int _weight { get; }
         private Vector2 _velocity;
         private bool _isRunning;
+        private LoggerAbstract _logger;
 
         public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
-        internal DataBall(float xPosition, float yPosition, int weight, float xSpeed, float ySpeed)
+        internal DataBall(float xPosition, float yPosition, int weight, float xSpeed, float ySpeed, LoggerAbstract logger)
         {
+            this._logger = logger;
             _position = new Vector2(xPosition, yPosition);
             _velocity = new Vector2(xSpeed, ySpeed);
             _weight = weight;
@@ -47,6 +49,7 @@ namespace Data
                 //double _inverseSpeed = 1 / Math.Sqrt(_velocity.X * _velocity.X + _velocity.Y * _velocity.Y); nie wiem czy z tego bede korzystac
                 stopwatch.Start();
                 MoveBall();
+                _logger.AddLogToSave(this);
                 stopwatch.Stop();
                 if ((int)stopwatch.ElapsedMilliseconds < 10)
                 {

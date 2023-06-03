@@ -11,9 +11,9 @@ namespace Data
     public abstract class IDataBall
     {
         public abstract event EventHandler<DataBallEventArgs> DataBallPositionChanged;
-        public static IDataBall CreateBall(float x, float y, int weight, float speedX, float speedY)
+        public static IDataBall CreateBall(float x, float y, int weight, float speedX, float speedY, LoggerAbstract logger)
         {
-            return new DataBall(x, y, weight, speedX, speedY);
+            return new DataBall(x, y, weight, speedX, speedY, logger);
         }
 
 

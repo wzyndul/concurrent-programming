@@ -12,12 +12,13 @@ namespace Data
         private int _boardHeight { get; }
         private double _ballRadius { get; } 
         private List<IDataBall> _balls;
+        private LoggerAbstract _logger = LoggerAbstract.CreateLogger();
 
 
         public override IDataBall CreateBall(float xPos, float yPos, int weight, float xSpeed, float ySpeed)
         {
 
-            IDataBall ball = new DataBall(xPos, yPos, weight, xSpeed, ySpeed);
+            IDataBall ball = new DataBall(xPos, yPos, weight, xSpeed, ySpeed, _logger);
             _balls.Add(ball);
             return ball;
         }
