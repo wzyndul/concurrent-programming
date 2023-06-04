@@ -11,16 +11,16 @@ namespace Data
     public abstract class IDataBall
     {
         public abstract event EventHandler<DataBallEventArgs> DataBallPositionChanged;
-        public static IDataBall CreateBall(float x, float y, int weight, float speedX, float speedY)
+        public static IDataBall CreateBall(int id, float x, float y, float speedX, float speedY, LoggerAbstract logger)
         {
-            return new DataBall(x, y, weight, speedX, speedY);
+            return new DataBall(id, x, y, speedX, speedY, logger);
         }
 
 
         // Properties 
+        public abstract int Id {get; }
         public abstract Vector2 Position { get; }
-        public abstract int Weight { get; }
         public abstract Vector2 Velocity { get; set; }
-        public abstract void TurnOff();
+        public abstract void Dispose();
     }
 }

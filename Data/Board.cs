@@ -12,12 +12,13 @@ namespace Data
         private int _boardHeight { get; }
         private double _ballRadius { get; } 
         private List<IDataBall> _balls;
+        private LoggerAbstract _logger = LoggerAbstract.CreateLogger();
 
 
-        public override IDataBall CreateBall(float xPos, float yPos, int weight, float xSpeed, float ySpeed)
+        public override IDataBall CreateBall(int id,float xPos, float yPos, float xSpeed, float ySpeed)
         {
 
-            IDataBall ball = new DataBall(xPos, yPos, weight, xSpeed, ySpeed);
+            IDataBall ball = new DataBall(id, xPos, yPos, xSpeed, ySpeed, _logger);
             _balls.Add(ball);
             return ball;
         }
@@ -29,6 +30,7 @@ namespace Data
             this._boardHeight = boardHeight;
             this._ballRadius = ballRadius;
             this._balls = new List<IDataBall>();
+            _logger.AddBoardToSave(this);
         }
 
 
@@ -37,7 +39,7 @@ namespace Data
         {
             foreach (IDataBall b in _balls)
             {
-                b.TurnOff();
+                b.Dispose();
             }
             _balls.Clear();
         }
@@ -49,7 +51,7 @@ namespace Data
         }
 
 
-        public override IDataBall CreateRandomBallLocation(List<IDataBall> balls)
+        public override IDataBall CreateRandomBallLocation(List<IDataBall> balls, int id)
         {
             float xPos;
             float yPos;
@@ -71,7 +73,7 @@ namespace Data
                 ySpeed = GenerateRandomFloat(-1.5f, 1.5f);
             } while (xSpeed == 0.0f || ySpeed == 0.0f);
 
-            return CreateBall(xPos, yPos, 20, xSpeed, ySpeed);
+            return CreateBall(id, xPos, yPos, xSpeed, ySpeed);
         }
 
 
