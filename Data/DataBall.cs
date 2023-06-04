@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Numerics;
@@ -10,27 +11,32 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class DataBall : IDataBall
+    internal class DataBall : IDataBall, IDisposable
     {
         private Vector2 _position;
-        private int _weight { get; }
         private Vector2 _velocity;
+        private int _id;
         private bool _isRunning;
+        private LoggerAbstract _logger;
 
         public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
-        internal DataBall(float xPosition, float yPosition, int weight, float xSpeed, float ySpeed)
+        internal DataBall(int id, float xPosition, float yPosition, float xSpeed, float ySpeed, LoggerAbstract logger)
         {
+            _id = id;
+            _logger = logger;
             _position = new Vector2(xPosition, yPosition);
             _velocity = new Vector2(xSpeed, ySpeed);
-            _weight = weight;
             _isRunning = true;
             Task.Run(StartMoving);
         }
 
-        private void MoveBall()
+        private void MoveBall(float time)
         {
-            _position.X += Velocity.X;
-            _position.Y += Velocity.Y;
+            time = 1f;
+            Vector2 _tempPosition = _position;
+            Vector2 _tempVelocity = _velocity;
+            _tempPosition = new Vector2(_tempPosition.X + _tempVelocity.X * time, _tempPosition.Y + _tempVelocity.Y * time);
+            _position = _tempPosition;
             DataBallEventArgs args = new DataBallEventArgs(this);
             DataBallPositionChanged?.Invoke(this, args);
 
@@ -38,18 +44,29 @@ namespace Data
 
         private async void StartMoving()
         {
+            Stopwatch stopwatch = new Stopwatch();
+            float timeDifference = 1f;
             while (_isRunning)
             {
-
-            MoveBall();           
-            await Task.Delay(10);
-
+                int _inverseSpeed = (int)(5 / Math.Sqrt(_velocity.X * _velocity.X + _velocity.Y * _velocity.Y));
+                stopwatch.Start();
+                MoveBall(timeDifference);
+                stopwatch.Stop();
+                _logger.AddBallToSave(this);
+                if (_inverseSpeed < 15)
+                {
+                    await Task.Delay(5 + _inverseSpeed);
+                } else
+                {
+                    await Task.Delay(20);
+                }
+                timeDifference = stopwatch.ElapsedMilliseconds;
+                stopwatch.Reset();
             }
         }
 
 
-
-        public override void TurnOff()
+        public override void Dispose()
         {
             _isRunning = false;
         }
@@ -60,11 +77,6 @@ namespace Data
         public override Vector2 Position
         {
             get => _position;
-        }
-
-        public override int Weight
-        {
-            get => _weight;
         }
 
 
@@ -79,6 +91,11 @@ namespace Data
                     _velocity = value;
                 }
             }
+        }
+
+        public override int Id
+        {
+            get => _id;
         }
     }
 }
