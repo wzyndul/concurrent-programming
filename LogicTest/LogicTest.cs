@@ -17,10 +17,11 @@ namespace LogicTest
             private int _boardHeight { get; }
             private double _ballRadius { get; }
             private List<IDataBall> _balls;
+            private LoggerAbstract _logger = LoggerAbstract.CreateLogger();
 
-            public override IDataBall CreateBall(float xPos, float yPos, int weight, float xSpeed, float ySpeed)
+            public override IDataBall CreateBall(int id, float xPos, float yPos, float xSpeed, float ySpeed)
             {
-                IDataBall ball = IDataBall.CreateBall(xPos, yPos, weight, xSpeed, ySpeed);
+                IDataBall ball = IDataBall.CreateBall(id, xPos, yPos, xSpeed, ySpeed, _logger);
                 _balls.Add(ball);
                 return ball;
             }
@@ -31,6 +32,7 @@ namespace LogicTest
                 this._boardHeight = boardHeight;
                 this._ballRadius = ballRadius;
                 this._balls = new List<IDataBall>();
+                _logger.AddBoardToSave(this);
             }
 
             public override void ClearBoard()
@@ -45,7 +47,7 @@ namespace LogicTest
             }
 
 
-            public override IDataBall CreateRandomBallLocation(List<IDataBall> balls)
+            public override IDataBall CreateRandomBallLocation(List<IDataBall> balls, int id)
             {
                 float xPos;
                 float yPos;
@@ -67,7 +69,7 @@ namespace LogicTest
                     ySpeed = GenerateRandomFloat(-1.5f, 1.5f);
                 } while (xSpeed == 0.0f || ySpeed == 0.0f);
 
-                return CreateBall(xPos, yPos, 20, xSpeed, ySpeed);
+                return CreateBall(id, xPos, yPos, xSpeed, ySpeed);
             }
 
 
@@ -102,47 +104,31 @@ namespace LogicTest
         // TESTS
 
         [TestMethod]
-        public void GetBallsTest()
+        public void LogicAllTest()
         {
             ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
             LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
+
+            //BoardParameterTest
+            Assert.AreEqual(400, impostorDataAPI.BoardHeight);
+            Assert.AreEqual(500, impostorDataAPI.BoardWidth);
+            Assert.AreEqual(10, impostorDataAPI.BallRadius);
+
+            //GetBallsTest
             for (int i = 0; i < 10; i++)
             {
                 logicAPI.CreateBall(1, 1);
             }
             Assert.AreEqual(10, logicAPI.GetBalls().Count);
-        }
+            logicAPI.ClearBoard();
+            Assert.AreEqual(0, logicAPI.GetBalls().Count);
 
 
-        [TestMethod]
-        public void AddBallsTest()
-        {
-            ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
-            LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
-            logicAPI.AddBalls(5);
-            Assert.AreEqual(5, logicAPI.GetBalls().Count());
-        }
-
-
-        [TestMethod]
-        public void ClearBoardTest()
-        {
-            ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
-            LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
+            //ClearBoardTest
             logicAPI.AddBalls(5);
             Assert.AreEqual(5, logicAPI.GetBalls().Count());
             logicAPI.ClearBoard();
-            Assert.AreEqual(0, logicAPI.GetBalls().Count());
-        }
-
-        [TestMethod]
-        public void BoardParameterTest()
-        {
-            ImpostorDataAPI impostorDataAPI = new ImpostorDataAPI(500, 400, 10);
-            LogicAbstractAPI logicAPI = LogicAbstractAPI.CreateAPI(500, 400, 10, impostorDataAPI);
-            Assert.AreEqual(400, impostorDataAPI.BoardHeight);
-            Assert.AreEqual(500, impostorDataAPI.BoardWidth);
-            Assert.AreEqual(10, impostorDataAPI.BallRadius);
+            Assert.AreEqual(0, logicAPI.GetBalls().Count);
         }
     }
 }

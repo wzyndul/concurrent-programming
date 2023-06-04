@@ -51,8 +51,8 @@ namespace Data
                 int _inverseSpeed = (int)(5 / Math.Sqrt(_velocity.X * _velocity.X + _velocity.Y * _velocity.Y));
                 stopwatch.Start();
                 MoveBall(timeDifference);
-                _logger.AddBallToSave(this);
                 stopwatch.Stop();
+                _logger.AddBallToSave(this);
                 if (_inverseSpeed < 15)
                 {
                     await Task.Delay(5 + _inverseSpeed);
