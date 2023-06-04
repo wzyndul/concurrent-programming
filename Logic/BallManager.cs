@@ -40,7 +40,7 @@ namespace Logic
         {
             for (int i = 0; i < n; i++)
             {
-                IDataBall dataBall = _data.CreateRandomBallLocation(_data.GetBalls());
+                IDataBall dataBall = _data.CreateRandomBallLocation(_data.GetBalls(), i);
                 ILogicBall logicBall = CreateBall(dataBall.Position.X, dataBall.Position.Y);
 
                 dataBall.DataBallPositionChanged += logicBall.UpdateBall!;
@@ -99,18 +99,14 @@ namespace Logic
             {
                 foreach (IDataBall otherBall in collidingBalls)
                 {
-                    float otherBallXSpeed = otherBall.Velocity.X * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
-                                           + ball.Weight * ball.Velocity.X * 2f / (otherBall.Weight + ball.Weight);
-                    float otherBallYSpeed = otherBall.Velocity.Y * (otherBall.Weight - ball.Weight) / (otherBall.Weight + ball.Weight)
-                                           + ball.Weight * ball.Velocity.Y * 2f / (otherBall.Weight + ball.Weight);
+                    float otherBallXSpeed = otherBall.Velocity.X;
+                    float otherBallYSpeed = otherBall.Velocity.Y;
 
-                    float ballXSpeed = ball.Velocity.X * (ball.Weight - otherBall.Weight) / (ball.Weight + ball.Weight)
-                                      + otherBall.Weight * otherBall.Velocity.X * 2f / (ball.Weight + otherBall.Weight);
-                    float ballYSpeed = ball.Velocity.Y * (ball.Weight - otherBall.Weight) / (ball.Weight + ball.Weight)
-                                      + otherBall.Weight * otherBall.Velocity.Y * 2f / (ball.Weight + otherBall.Weight);
+                    float ballXSpeed = ball.Velocity.X;
+                    float ballYSpeed = ball.Velocity.Y;
 
-                    otherBall.Velocity = new Vector2(otherBallXSpeed, otherBallYSpeed);
-                    ball.Velocity = new Vector2(ballXSpeed, ballYSpeed);
+                    otherBall.Velocity = new Vector2(ballXSpeed, ballYSpeed);
+                    ball.Velocity = new Vector2(otherBallXSpeed, otherBallYSpeed);
 
                 }
             }

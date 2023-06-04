@@ -22,7 +22,7 @@ namespace Data
         public Logger()
         {
             string PathToSave = Path.GetTempPath();
-            _pathToFile = PathToSave + "ballsLogs.json";
+            _pathToFile = PathToSave + "DataLog.json";
 
             //If file doesnt exists create new one.
             if (File.Exists(_pathToFile))
@@ -43,7 +43,7 @@ namespace Data
             File.Create(_pathToFile);
         }
 
-        public override void AddLogToSave(IDataBall ball)
+        public override void AddBallToSave(IDataBall ball)
         {
             queueMutex.WaitOne();
             try
@@ -63,16 +63,16 @@ namespace Data
             }
         }
 
-        private async Task LogToFile()
+        private void LogToFile()
         {
             //Append logs until queue empty
-            while (BallQueue.TryDequeue(out JObject ball))
+            while (BallQueue.TryDequeue(out JObject data))
             {
-                DataArray.Add(ball);
+                DataArray.Add(data);
             }
 
             // Convert data to string and save it
-            string output = JsonConvert.SerializeObject(DataArray);
+            string output = JsonConvert.SerializeObject(DataArray, Newtonsoft.Json.Formatting.Indented);
 
             fileMutex.WaitOne();
             try
@@ -85,7 +85,28 @@ namespace Data
             }
         }
 
-        ~Logger()
+        public override void AddBoardToSave(DataAbstractAPI board)
+        {
+            queueMutex.WaitOne();
+            try
+            {
+                JObject itemToAdd = JObject.FromObject(board);
+                itemToAdd["Time"] = DateTime.Now.ToString("HH:mm:ss");
+                BallQueue.Enqueue(itemToAdd);
+
+                if (LoggerTask == null || LoggerTask.IsCompleted)
+                {
+                    LoggerTask = Task.Factory.StartNew(this.LogToFile);
+                }
+            }
+            finally
+            {
+                queueMutex.ReleaseMutex();
+            }
+        }
+
+
+~Logger()
         {
             fileMutex.WaitOne();
             fileMutex.ReleaseMutex();

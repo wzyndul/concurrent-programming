@@ -8,7 +8,8 @@ namespace Data
 {
     public abstract class LoggerAbstract
     {
-        public abstract void AddLogToSave(IDataBall ball);
+        public abstract void AddBallToSave(IDataBall ball);
+        public abstract void AddBoardToSave(DataAbstractAPI board);
 
         public static LoggerAbstract CreateLogger()
         {

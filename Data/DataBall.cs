@@ -14,18 +14,18 @@ namespace Data
     internal class DataBall : IDataBall, IDisposable
     {
         private Vector2 _position;
-        private int _weight { get; }
         private Vector2 _velocity;
+        private int _id;
         private bool _isRunning;
         private LoggerAbstract _logger;
 
         public override event EventHandler<DataBallEventArgs>? DataBallPositionChanged;
-        internal DataBall(float xPosition, float yPosition, int weight, float xSpeed, float ySpeed, LoggerAbstract logger)
+        internal DataBall(int id, float xPosition, float yPosition, float xSpeed, float ySpeed, LoggerAbstract logger)
         {
-            this._logger = logger;
+            _id = id;
+            _logger = logger;
             _position = new Vector2(xPosition, yPosition);
             _velocity = new Vector2(xSpeed, ySpeed);
-            _weight = weight;
             _isRunning = true;
             Task.Run(StartMoving);
         }
@@ -49,7 +49,7 @@ namespace Data
                 //double _inverseSpeed = 1 / Math.Sqrt(_velocity.X * _velocity.X + _velocity.Y * _velocity.Y); nie wiem czy z tego bede korzystac
                 stopwatch.Start();
                 MoveBall();
-                _logger.AddLogToSave(this);
+                _logger.AddBallToSave(this);
                 stopwatch.Stop();
                 if ((int)stopwatch.ElapsedMilliseconds < 10)
                 {
@@ -73,11 +73,6 @@ namespace Data
             get => _position;
         }
 
-        public override int Weight
-        {
-            get => _weight;
-        }
-
 
         public override Vector2 Velocity
         {
@@ -90,6 +85,11 @@ namespace Data
                     _velocity = value;
                 }
             }
+        }
+
+        public override int Id
+        {
+            get => _id;
         }
     }
 }
