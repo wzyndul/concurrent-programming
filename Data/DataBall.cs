@@ -30,11 +30,12 @@ namespace Data
             Task.Run(StartMoving);
         }
 
-        private void MoveBall()
+        private void MoveBall(float time)
         {
+            time = 1f;
             Vector2 _tempPosition = _position;
             Vector2 _tempVelocity = _velocity;
-            _tempPosition = new Vector2(_tempPosition.X + _tempVelocity.X, _tempPosition.Y + _tempVelocity.Y);
+            _tempPosition = new Vector2(_tempPosition.X + _tempVelocity.X * time, _tempPosition.Y + _tempVelocity.Y * time);
             _position = _tempPosition;
             DataBallEventArgs args = new DataBallEventArgs(this);
             DataBallPositionChanged?.Invoke(this, args);
@@ -44,17 +45,22 @@ namespace Data
         private async void StartMoving()
         {
             Stopwatch stopwatch = new Stopwatch();
+            float timeDifference = 1f;
             while (_isRunning)
             {
-                //double _inverseSpeed = 1 / Math.Sqrt(_velocity.X * _velocity.X + _velocity.Y * _velocity.Y); nie wiem czy z tego bede korzystac
+                int _inverseSpeed = (int)(5 / Math.Sqrt(_velocity.X * _velocity.X + _velocity.Y * _velocity.Y));
                 stopwatch.Start();
-                MoveBall();
+                MoveBall(timeDifference);
                 _logger.AddBallToSave(this);
                 stopwatch.Stop();
-                if ((int)stopwatch.ElapsedMilliseconds < 10)
+                if (_inverseSpeed < 15)
                 {
-                    await Task.Delay(10 - (int) stopwatch.ElapsedMilliseconds);
+                    await Task.Delay(5 + _inverseSpeed);
+                } else
+                {
+                    await Task.Delay(20);
                 }
+                timeDifference = stopwatch.ElapsedMilliseconds;
                 stopwatch.Reset();
             }
         }

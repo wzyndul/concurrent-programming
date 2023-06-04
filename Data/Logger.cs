@@ -24,7 +24,7 @@ namespace Data
             string PathToSave = Path.GetTempPath();
             _pathToFile = PathToSave + "DataLog.json";
 
-            //If file doesnt exists create new one.
+            // jesli nie ma pliku to tworzy nowy
             if (File.Exists(_pathToFile))
             {
                 try
@@ -65,13 +65,13 @@ namespace Data
 
         private void LogToFile()
         {
-            //Append logs until queue empty
+            //dodaje dane dopoki kolejka nie jest pusta
             while (BallQueue.TryDequeue(out JObject data))
             {
                 DataArray.Add(data);
             }
 
-            // Convert data to string and save it
+            // zamienia dane na stringa i potem je zapisujemy
             string output = JsonConvert.SerializeObject(DataArray, Newtonsoft.Json.Formatting.Indented);
 
             fileMutex.WaitOne();
